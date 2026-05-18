@@ -1509,7 +1509,68 @@
     .form-row { grid-template-columns: 1fr; }
     .form-row-3 { grid-template-columns: 1fr; }
   }
+
+  /* ===== Session bar / auth UI ===== */
+  .session-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    margin: 0 0 12px;
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+  }
+  .session-bar .who { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .session-bar .who strong { color: var(--text); }
+  .session-bar .who small { color: var(--text-muted); display: block; font-size: 10.5px; }
+  .session-bar .logout {
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    border-radius: var(--radius-sm);
+    padding: 4px 8px;
+    font-size: 11px;
+    color: var(--text-soft);
+  }
+  .session-bar .logout:hover { background: var(--danger-soft); color: var(--danger); border-color: var(--danger); }
+  .admin-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    margin: 0 0 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    font-size: 12px;
+    color: var(--text-soft);
+    text-decoration: none;
+  }
+  .admin-link:hover { background: var(--primary-soft); color: var(--primary); border-color: var(--primary); }
+  .sync-indicator {
+    font-size: 10.5px;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .sync-indicator.ok { background: var(--success-soft); color: var(--success); }
+  .sync-indicator.warn { background: var(--warning-soft); color: #8a6a2c; }
+  .sync-indicator.err { background: var(--danger-soft); color: var(--danger); }
+  .sync-indicator.busy { background: var(--primary-soft); color: var(--primary); }
 </style>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/crypto-utils.js"></script>
+<script src="assets/js/github-api.js"></script>
+<script src="assets/js/session.js"></script>
+<script>
+  /* Auth guard - bloque le rendu si non connecte. */
+  if (!window.QASession.requireAuth()) {
+    document.documentElement.style.display = 'none';
+  }
+</script>
 </head>
 <body>
 
@@ -1536,10 +1597,17 @@
       <span>Catalogue de Tests</span>
     </div>
 
+    <div class="session-bar" id="session-bar"></div>
+    <a href="admin.html" class="admin-link" id="admin-link" style="display:none;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/></svg>
+      <span>Administration</span>
+    </a>
+    <div id="sync-indicator" class="sync-indicator" style="display:none;"></div>
+
     <nav class="nav" id="nav"></nav>
 
     <div class="sidebar-footer">
-      <div id="file-sync-section" style="margin-bottom:12px;"></div>
+      <div id="file-sync-section" style="margin-bottom:12px;display:none;"></div>
       <div style="display:flex;gap:6px;margin-bottom:14px;">
         <button class="btn btn-sm" id="sb-export" data-tip="Télécharger une sauvegarde JSON ponctuelle" style="flex:1;">Export</button>
         <button class="btn btn-sm" id="sb-import" data-tip="Restaurer depuis un fichier JSON" style="flex:1;">Import</button>
@@ -1860,14 +1928,63 @@ async function reconnectFile() {
 }
 
 /* ===== Persistence ===== */
+let _githubSha = null;        // sha du data.json distant (pour eviter conflits)
+let _githubSyncTimer = null;  // debounce ecriture
+let _githubSyncBusy = false;
+
+function setSyncIndicator(state, text) {
+  const el = document.getElementById('sync-indicator');
+  if (!el) return;
+  el.className = 'sync-indicator ' + state;
+  el.textContent = text;
+  el.style.display = state === 'hidden' ? 'none' : '';
+}
+
+async function pushToGitHub() {
+  if (_githubSyncBusy) { scheduleGithubSync(); return; }
+  if (!window.QAGitHub || !QAGitHub.getPat()) {
+    setSyncIndicator('warn', 'Mode local · PAT requis (Admin)');
+    return;
+  }
+  _githubSyncBusy = true;
+  setSyncIndicator('busy', 'Synchro GitHub…');
+  try {
+    // On garde users/role inchanges, on ne touche qu'a state.
+    const remote = await QAGitHub.fetchData().catch(() => null);
+    const doc = (remote && remote.data) || { users: [], state: {} };
+    doc.state = state;
+    doc.updatedAt = new Date().toISOString();
+    doc.updatedBy = (QASession.username && QASession.username()) || 'unknown';
+    const sha = await QAGitHub.saveData(doc, (remote && remote.sha) || _githubSha, `Update state by ${doc.updatedBy}`);
+    _githubSha = sha;
+    setSyncIndicator('ok', 'Synchronise sur GitHub');
+  } catch (e) {
+    console.warn('Push GitHub echoue', e);
+    if (e.message === 'CONFLICT') {
+      setSyncIndicator('err', 'Conflit · rechargez la page');
+      toast('Conflit de sync : un autre utilisateur a ecrit. Rechargez.');
+    } else {
+      setSyncIndicator('err', 'Sync impossible · ' + e.message);
+    }
+  } finally {
+    _githubSyncBusy = false;
+  }
+}
+
+function scheduleGithubSync() {
+  if (_githubSyncTimer) clearTimeout(_githubSyncTimer);
+  _githubSyncTimer = setTimeout(pushToGitHub, 1500);
+}
+
 async function save() {
   try {
     await dbSet('state', state);
     if (fileHandle) {
-      // Best-effort, non-blocking
       syncToFile().then(ok => { if (!ok) console.warn('File sync skipped (no permission)'); });
     }
     updateStorageIndicator();
+    // Sync GitHub (debounced)
+    scheduleGithubSync();
   } catch (e) {
     console.error('Save failed', e);
     toast('Erreur de sauvegarde');
@@ -1876,21 +1993,43 @@ async function save() {
 
 async function load() {
   try {
-    // One-shot migration from localStorage if a previous version was used
-    const legacy = localStorage.getItem(STORAGE_KEY_LEGACY);
-    if (legacy) {
-      try {
-        const parsed = JSON.parse(legacy);
-        await dbSet('state', parsed);
-        state = Object.assign(state, parsed);
-        localStorage.removeItem(STORAGE_KEY_LEGACY);
-        console.log('Migration localStorage → IndexedDB OK');
-      } catch (e) {
-        console.warn('Legacy migration failed', e);
+    // Fetch shared state from GitHub. If successful, it wins over local cache.
+    let loadedFromGitHub = false;
+    try {
+      setSyncIndicator('busy', 'Chargement GitHub…');
+      const remote = await QAGitHub.fetchData();
+      if (remote && remote.data && remote.data.state) {
+        state = Object.assign(state, remote.data.state);
+        _githubSha = remote.sha;
+        await dbSet('state', state);
+        setSyncIndicator(remote.source === 'cache' ? 'warn' : 'ok',
+          remote.source === 'cache' ? 'Cache local (hors ligne)' : 'Charge depuis GitHub');
+        loadedFromGitHub = remote.source !== 'cache';
+      } else {
+        setSyncIndicator('warn', 'data.json incomplet');
       }
-    } else {
-      const stored = await dbGet('state');
-      if (stored) state = Object.assign(state, stored);
+    } catch (e) {
+      console.warn('Load GitHub echoue, fallback IndexedDB', e);
+      setSyncIndicator('warn', 'Hors ligne · IndexedDB');
+    }
+
+    if (!loadedFromGitHub) {
+      // One-shot migration from localStorage if a previous version was used
+      const legacy = localStorage.getItem(STORAGE_KEY_LEGACY);
+      if (legacy) {
+        try {
+          const parsed = JSON.parse(legacy);
+          await dbSet('state', parsed);
+          state = Object.assign(state, parsed);
+          localStorage.removeItem(STORAGE_KEY_LEGACY);
+          console.log('Migration localStorage → IndexedDB OK');
+        } catch (e) {
+          console.warn('Legacy migration failed', e);
+        }
+      } else {
+        const stored = await dbGet('state');
+        if (stored) state = Object.assign(state, stored);
+      }
     }
     // Restore file handle (permission re-validated lazily on first save)
     const handle = await dbGet('fileHandle');
@@ -8590,7 +8729,28 @@ function emptyState(title, sub) {
 }
 
 /* ===== Init ===== */
+function renderSessionBar() {
+  const sess = QASession.get();
+  const bar = document.getElementById('session-bar');
+  if (!bar || !sess) return;
+  bar.innerHTML = `
+    <div class="who">
+      <strong>${escapeHtml(sess.username)}</strong>
+      <small>${escapeHtml(sess.role || 'user')}</small>
+    </div>
+    <button class="logout" id="btn-logout" title="Se deconnecter">Sortir</button>
+  `;
+  document.getElementById('btn-logout').onclick = () => QASession.logout();
+  if (sess.role === 'admin') {
+    document.getElementById('admin-link').style.display = '';
+  }
+  if (sess.mustChangePassword) {
+    toast('Pensez a changer votre mot de passe par defaut (Administration).');
+  }
+}
+
 async function init() {
+  renderSessionBar();
   await load();
   buildNav();
   switchTab('dashboard');

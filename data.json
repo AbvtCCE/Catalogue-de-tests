@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": null,
+  "updatedBy": null,
+  "users": [
+    {
+      "username": "abvt",
+      "role": "admin",
+      "passwordHash": "dd5d145feb30893db03eddb895535d54a9108d9d1d2127a7dca0fefab87005d5",
+      "createdAt": "2026-05-18",
+      "mustChangePassword": false
+    }
+  ],
+  "state": {
+    "projects": [],
+    "environments": [],
+    "testCases": [],
+    "testSuites": [],
+    "testPlans": [],
+    "anomalies": [],
+    "testerLevels": [],
+    "testers": [],
+    "dataTables": [],
+    "businessDivisions": [],
+    "stepBlocks": [],
+    "settings": { "jiraBaseUrl": "" }
+  }
+}

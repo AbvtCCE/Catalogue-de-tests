@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connexion · Catalogue de Tests</title>
+<link rel="stylesheet" href="assets/css/auth.css">
+</head>
+<body>
+<div class="auth-shell">
+  <div class="auth-card">
+    <h1>Catalogue de Tests</h1>
+    <div class="subtitle">Connectez-vous avec votre compte.</div>
+
+    <div id="msg"></div>
+
+    <form id="login-form">
+      <div class="form-row">
+        <label for="u">Identifiant</label>
+        <input type="text" id="u" name="username" autocomplete="username" required autofocus>
+      </div>
+      <div class="form-row">
+        <label for="p">Mot de passe</label>
+        <input type="password" id="p" name="password" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" id="submit">Se connecter</button>
+    </form>
+
+    <div class="help" style="margin-top:18px;text-align:center;">
+      Les donnees sont stockees dans le repo GitHub.<br>
+      Mot de passe oublie ? Contactez votre admin.
+    </div>
+  </div>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/crypto-utils.js"></script>
+<script src="assets/js/github-api.js"></script>
+<script src="assets/js/session.js"></script>
+<script>
+(async function () {
+  if (QASession.isAuthenticated()) {
+    location.replace('catalog.html');
+    return;
+  }
+
+  const msg = document.getElementById('msg');
+  const form = document.getElementById('login-form');
+  const submit = document.getElementById('submit');
+
+  function showMsg(text, kind) {
+    msg.innerHTML = `<div class="alert alert-${kind}">${text}</div>`;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    submit.disabled = true;
+    submit.textContent = 'Connexion...';
+    msg.innerHTML = '';
+
+    const username = document.getElementById('u').value.trim();
+    const password = document.getElementById('p').value;
+
+    try {
+      const { data } = await QAGitHub.fetchData();
+      const user = (data.users || []).find(u => u.username.toLowerCase() === username.toLowerCase());
+      if (!user) {
+        showMsg('Identifiant ou mot de passe invalide.', 'error');
+        return;
+      }
+      const ok = await QACrypto.verifyPassword(user.username, password, user.passwordHash);
+      if (!ok) {
+        showMsg('Identifiant ou mot de passe invalide.', 'error');
+        return;
+      }
+      QASession.set({
+        username: user.username,
+        role: user.role || 'user',
+        loginAt: new Date().toISOString(),
+        mustChangePassword: !!user.mustChangePassword,
+      });
+      const params = new URLSearchParams(location.search);
+      const next = params.get('next') || 'catalog.html';
+      // Whitelist destinations to avoid open redirect via querystring.
+      const allowed = ['catalog.html', 'admin.html'];
+      location.replace(allowed.includes(next) ? next : 'catalog.html');
+    } catch (err) {
+      console.error(err);
+      showMsg('Impossible de joindre GitHub. Verifiez votre connexion.', 'error');
+    } finally {
+      submit.disabled = false;
+      submit.textContent = 'Se connecter';
+    }
+  });
+})();
+</script>
+</body>
+</html>
