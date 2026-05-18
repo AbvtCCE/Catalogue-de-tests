@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-18T11:51:31.541Z",
+  "updatedAt": "2026-05-18T11:51:53.679Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9546,8 +9546,8 @@
       {
         "id": "8f41bb74-bb17-401c-a651-9e7cabf7267e",
         "name": "Smoke CRM",
-        "startDate": "2026-05-06",
-        "endDate": "2026-05-07",
+        "startDate": "2026-05-20",
+        "endDate": "2026-05-20",
         "planIds": [
           "e4c1c02b-d9b9-4fe8-9072-fb4b3d376108"
         ]
