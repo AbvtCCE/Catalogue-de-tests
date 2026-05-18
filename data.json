@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-18T12:59:31.269Z",
+  "updatedAt": "2026-05-18T13:00:24.446Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9614,7 +9614,7 @@
       },
       {
         "id": "a6a99374-60ac-432e-bfff-2149d92ff1eb",
-        "name": "Gre Finance",
+        "name": "Comptabilité",
         "order": 1,
         "divisionId": "d515b70b-2280-4de2-a86a-aa422891bf40"
       },
