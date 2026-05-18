@@ -36,12 +36,12 @@
   function requireAuth(opts) {
     opts = opts || {};
     if (!isAuthenticated()) {
-      const here = encodeURIComponent(location.pathname.split('/').pop() || 'catalog.html');
+      const here = encodeURIComponent(location.pathname.split('/').pop() || 'index.html');
       location.replace(`login.html?next=${here}`);
       return false;
     }
     if (opts.adminOnly && !isAdmin()) {
-      location.replace('catalog.html');
+      location.replace('index.html');
       return false;
     }
     return true;
