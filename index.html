@@ -1324,6 +1324,120 @@
     opacity: 0.25;
     cursor: not-allowed;
   }
+  .ordered-item.has-data-panel { flex-wrap: wrap; }
+  .row-data-panel {
+    flex: 1 1 100%;
+    margin-top: 6px;
+    padding: 10px 12px;
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 12.5px;
+  }
+  .row-data-panel .rdp-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .row-data-panel .rdp-title {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .row-data-panel .rdp-actions {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+  .row-data-panel .rdp-actions button {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-soft);
+  }
+  .row-data-panel .rdp-actions button:hover { background: var(--bg); color: var(--text); }
+  .row-data-panel .rdp-case {
+    margin-bottom: 10px;
+  }
+  .row-data-panel .rdp-case:last-child { margin-bottom: 0; }
+  .row-data-panel .rdp-case-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-soft);
+    margin-bottom: 4px;
+  }
+  .row-data-panel .rdp-table {
+    margin: 4px 0 8px 0;
+    padding: 6px 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+  }
+  .row-data-panel .rdp-table-name {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 4px;
+  }
+  .row-data-panel .rdp-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 4px;
+    border-radius: 3px;
+    font-size: 12px;
+  }
+  .row-data-panel .rdp-row:hover { background: var(--surface-soft); }
+  .row-data-panel .rdp-row input[type="checkbox"] { margin: 0; flex-shrink: 0; }
+  .row-data-panel .rdp-row-content {
+    flex: 1;
+    min-width: 0;
+    color: var(--text-soft);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .row-data-panel .rdp-row-content b {
+    color: var(--text);
+    font-family: inherit;
+    font-weight: 600;
+  }
+  .row-data-panel .rdp-empty {
+    color: var(--text-muted);
+    font-style: italic;
+    font-size: 11.5px;
+    padding: 2px 4px;
+  }
+  .row-data-panel .rdp-skipped {
+    color: var(--text-muted);
+    font-size: 11px;
+    padding: 2px 4px;
+    font-style: italic;
+  }
+  .ordered-item .item-actions button.data-btn {
+    width: auto;
+    padding: 0 6px;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .ordered-item .item-actions button.data-btn.active {
+    background: var(--primary-soft);
+    color: var(--primary);
+  }
+  .ordered-item .item-actions button.data-btn.partial {
+    color: var(--accent);
+  }
+
+  /* Per-case data section inside checklist (built at export time, hidden styles in HTML output) */
 
   /* ===== File sync card ===== */
   .file-sync {
@@ -4806,9 +4920,134 @@ function openTestPlanModal(id) {
     : { id: uid(), title: '', items: [] };
   let items = [...(plan.items || [])];
   let dragKey = null;
+  const expandedKeys = new Set();
 
   // Helper to make a stable key for an item (type + id)
   const keyOf = (item) => `${item.type}:${item.id}`;
+
+  // Summarize the data row picker state for an item: how many selected vs valid rows
+  // across all of its cases × tables. Returns { tables: N, valid: M, selected: S }
+  function summarizeItemData(item) {
+    let tables = 0, valid = 0, selected = 0;
+    const cases = casesOfPlanItem(item);
+    cases.forEach(c => {
+      const eff = effectiveSelectionForCase(item, c);
+      eff.forEach((indices, tableId) => {
+        const table = (state.dataTables || []).find(t => t.id === tableId);
+        if (!table) return;
+        const req = requiredColumnsForCase(c).get(tableId) || new Set();
+        const v = validRowIndices(table, req).length;
+        if (v > 0) tables++;
+        valid += v;
+        selected += indices.length;
+      });
+    });
+    return { tables, valid, selected };
+  }
+
+  // Build inline HTML for the row selection panel of one item
+  function renderItemDataPanel(item) {
+    const cases = casesOfPlanItem(item);
+    let html = '<div class="row-data-panel">';
+    html += '<div class="rdp-header">';
+    html += '<span class="rdp-title">Sélection des lignes de données</span>';
+    html += '<span class="rdp-actions">';
+    html += `<button type="button" data-rdp-all="${keyOf(item)}" title="Sélectionner toutes les lignes valides">Tout cocher</button>`;
+    html += `<button type="button" data-rdp-none="${keyOf(item)}" title="Désélectionner toutes les lignes">Tout décocher</button>`;
+    html += `<button type="button" data-rdp-reset="${keyOf(item)}" title="Réinitialiser au défaut (toutes les lignes valides)">Défaut</button>`;
+    html += '</span>';
+    html += '</div>';
+
+    let anyTable = false;
+    cases.forEach(c => {
+      const required = requiredColumnsForCase(c);
+      if (required.size === 0) return;
+      anyTable = true;
+      const caseTitle = c.title || '(sans titre)';
+      const showCaseTitle = cases.length > 1;
+      let caseHtml = showCaseTitle ? `<div class="rdp-case-title">${escapeHtml(caseTitle)}</div>` : '';
+      let tablesHtml = '';
+      required.forEach((cols, tableId) => {
+        const table = (state.dataTables || []).find(t => t.id === tableId);
+        if (!table) {
+          tablesHtml += `<div class="rdp-table"><div class="rdp-table-name">(table supprimée)</div></div>`;
+          return;
+        }
+        const valid = validRowIndices(table, cols);
+        const userSel = item.dataSelections && item.dataSelections[c.id] && item.dataSelections[c.id][tableId];
+        const selectedSet = Array.isArray(userSel) ? new Set(userSel) : new Set(valid);
+        const colNames = Array.from(cols).map(cid => {
+          const col = (table.columns || []).find(x => x.id === cid);
+          return col ? col.name : '?';
+        });
+        tablesHtml += `<div class="rdp-table">`;
+        tablesHtml += `<div class="rdp-table-name">${escapeHtml(table.name)} <span style="color:var(--text-muted);font-weight:400;font-size:10.5px;text-transform:none;letter-spacing:0;">— colonnes requises : ${escapeHtml(colNames.join(', '))}</span></div>`;
+        if (valid.length === 0) {
+          tablesHtml += `<div class="rdp-empty">Aucune ligne ne renseigne toutes les colonnes requises (${escapeHtml(colNames.join(', '))}).</div>`;
+        } else {
+          valid.forEach(idx => {
+            const row = table.rows[idx];
+            const cells = (table.columns || []).map(col => {
+              const isRequired = cols.has(col.id);
+              const v = row[col.id] || '';
+              return `${isRequired ? '<b>' : ''}${escapeHtml(col.name)}: ${escapeHtml(v)}${isRequired ? '</b>' : ''}`;
+            }).join(' · ');
+            const checked = selectedSet.has(idx) ? 'checked' : '';
+            tablesHtml += `<label class="rdp-row"><input type="checkbox" ${checked} data-rdp-row="${keyOf(item)}|${c.id}|${tableId}|${idx}"><span class="rdp-row-content">L${idx + 1} — ${cells}</span></label>`;
+          });
+          const skipped = (table.rows || []).length - valid.length;
+          if (skipped > 0) {
+            tablesHtml += `<div class="rdp-skipped">${skipped} ligne${skipped > 1 ? 's' : ''} ignorée${skipped > 1 ? 's' : ''} (valeur manquante dans une colonne requise).</div>`;
+          }
+        }
+        tablesHtml += `</div>`;
+      });
+      caseHtml += tablesHtml;
+      html += `<div class="rdp-case">${caseHtml}</div>`;
+    });
+
+    if (!anyTable) {
+      html += '<div class="rdp-empty">Ce ' + (item.type === 'suite' ? 'groupe ne contient aucun cas utilisant une' : 'cas n\'utilise aucune') + ' table de données.</div>';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  // Apply a row selection update to an item, normalising the structure
+  function setRowSelection(item, caseId, tableId, idx, checked) {
+    if (!item.dataSelections) item.dataSelections = {};
+    if (!item.dataSelections[caseId]) {
+      // Initialize from current effective (defaults to all valid)
+      const eff = effectiveSelectionForCase(item, state.testCases.find(c => c.id === caseId));
+      item.dataSelections[caseId] = {};
+      eff.forEach((indices, tid) => { item.dataSelections[caseId][tid] = indices.slice(); });
+    }
+    const sel = item.dataSelections[caseId][tableId] || [];
+    const set = new Set(sel);
+    if (checked) set.add(idx); else set.delete(idx);
+    item.dataSelections[caseId][tableId] = Array.from(set).sort((a, b) => a - b);
+  }
+
+  // Replace selection with "all valid" / "none" / clear (back to default)
+  function bulkApply(item, mode) {
+    const cases = casesOfPlanItem(item);
+    if (mode === 'reset') {
+      delete item.dataSelections;
+      return;
+    }
+    item.dataSelections = item.dataSelections || {};
+    cases.forEach(c => {
+      const required = requiredColumnsForCase(c);
+      if (required.size === 0) return;
+      item.dataSelections[c.id] = item.dataSelections[c.id] || {};
+      required.forEach((cols, tableId) => {
+        const table = (state.dataTables || []).find(t => t.id === tableId);
+        if (!table) { item.dataSelections[c.id][tableId] = []; return; }
+        if (mode === 'all') item.dataSelections[c.id][tableId] = validRowIndices(table, cols);
+        else if (mode === 'none') item.dataSelections[c.id][tableId] = [];
+      });
+    });
+  }
 
   function renderLists(body) {
     const selectedList = body.querySelector('#plan-selected');
@@ -4832,18 +5071,33 @@ function openTestPlanModal(id) {
           kindBadge = '<span class="badge" style="font-size:9.5px;padding:1px 5px;">CAS</span>';
           metaText = c ? folderOf(c).name : '';
         }
+        const sum = summarizeItemData(item);
+        const hasData = sum.tables > 0 || sum.valid > 0;
+        let dataBtn = '';
+        if (hasData) {
+          const isPartial = sum.selected > 0 && sum.selected < sum.valid;
+          const isAllOff = sum.selected === 0;
+          const isExpanded = expandedKeys.has(keyOf(item));
+          const cls = isExpanded ? 'data-btn active' : (isPartial || isAllOff ? 'data-btn partial' : 'data-btn');
+          dataBtn = `<button class="${cls}" data-toggle-data="${keyOf(item)}" title="Sélection des lignes de données utilisées">Données ${sum.selected}/${sum.valid}</button>`;
+        }
+        const isExpanded = expandedKeys.has(keyOf(item));
+        const panelHtml = isExpanded ? renderItemDataPanel(item) : '';
+        const liCls = 'ordered-item' + (isExpanded ? ' has-data-panel' : '');
         return `
-          <li class="ordered-item" draggable="true" data-key="${keyOf(item)}">
+          <li class="${liCls}" draggable="true" data-key="${keyOf(item)}">
             <span class="drag-handle" title="Glisser pour réordonner">⋮⋮</span>
             <span class="order-num">${i + 1}</span>
             ${kindBadge}
             <span class="item-title" title="${escapeHtml(label)}">${escapeHtml(label)}</span>
             <span class="item-meta">${escapeHtml(metaText)}</span>
             <div class="item-actions">
+              ${dataBtn}
               <button data-move-up="${keyOf(item)}" ${i === 0 ? 'disabled' : ''} title="Monter">↑</button>
               <button data-move-down="${keyOf(item)}" ${i === items.length - 1 ? 'disabled' : ''} title="Descendre">↓</button>
               <button data-remove="${keyOf(item)}" title="Retirer">×</button>
             </div>
+            ${panelHtml}
           </li>
         `;
       }).join('');
@@ -4952,9 +5206,56 @@ function openTestPlanModal(id) {
       if (i >= 0 && i < items.length - 1) { [items[i + 1], items[i]] = [items[i], items[i + 1]]; renderLists(body); }
     });
 
+    // Toggle the inline data-row panel
+    body.querySelectorAll('[data-toggle-data]').forEach(b => b.onclick = (ev) => {
+      ev.stopPropagation();
+      const k = b.dataset.toggleData;
+      if (expandedKeys.has(k)) expandedKeys.delete(k); else expandedKeys.add(k);
+      renderLists(body);
+    });
+
+    // Row checkbox: per-item, per-case, per-table, per-row-index
+    body.querySelectorAll('[data-rdp-row]').forEach(cb => cb.onchange = (ev) => {
+      const [k, caseId, tableId, idxStr] = cb.dataset.rdpRow.split('|');
+      const item = items.find(it => keyOf(it) === k);
+      if (!item) return;
+      setRowSelection(item, caseId, tableId, Number(idxStr), cb.checked);
+      renderLists(body);
+    });
+
+    // Bulk buttons inside the panel
+    body.querySelectorAll('[data-rdp-all]').forEach(b => b.onclick = (ev) => {
+      ev.stopPropagation();
+      const item = items.find(it => keyOf(it) === b.dataset.rdpAll);
+      if (!item) return;
+      bulkApply(item, 'all');
+      renderLists(body);
+    });
+    body.querySelectorAll('[data-rdp-none]').forEach(b => b.onclick = (ev) => {
+      ev.stopPropagation();
+      const item = items.find(it => keyOf(it) === b.dataset.rdpNone);
+      if (!item) return;
+      bulkApply(item, 'none');
+      renderLists(body);
+    });
+    body.querySelectorAll('[data-rdp-reset]').forEach(b => b.onclick = (ev) => {
+      ev.stopPropagation();
+      const item = items.find(it => keyOf(it) === b.dataset.rdpReset);
+      if (!item) return;
+      bulkApply(item, 'reset');
+      renderLists(body);
+    });
+
+    // Stop drag from initiating inside the data panel
+    body.querySelectorAll('.row-data-panel').forEach(panel => {
+      panel.addEventListener('mousedown', (e) => e.stopPropagation());
+      panel.addEventListener('dragstart', (e) => { e.preventDefault(); e.stopPropagation(); });
+    });
+
     // Drag and drop
     selectedList.querySelectorAll('[draggable]').forEach(el => {
       el.ondragstart = (e) => {
+        if (e.target && e.target.closest && e.target.closest('.row-data-panel')) { e.preventDefault(); return; }
         dragKey = el.dataset.key;
         el.classList.add('dragging');
         e.dataTransfer.effectAllowed = 'move';
@@ -5558,6 +5859,26 @@ function generateChecklist(item, kind, tester, date, projectId) {
     if (linkedProject) projectName = linkedProject.name;
   }
 
+  // Compute per-case row selection (caseId → { tableId: number[] }).
+  // For plans: use item.dataSelections (first plan-item containing the case wins).
+  // For lone suites: default to "all valid rows" for each case.
+  const caseSelections = {};
+  if (kind === 'plan') {
+    const map = planEffectiveSelections(item);
+    map.forEach((selMap, caseId) => {
+      const obj = {};
+      selMap.forEach((indices, tableId) => { obj[tableId] = indices.slice(); });
+      caseSelections[caseId] = obj;
+    });
+  } else {
+    cases.forEach(c => {
+      const eff = effectiveSelectionForCase(null, c);
+      const obj = {};
+      eff.forEach((indices, tableId) => { obj[tableId] = indices.slice(); });
+      caseSelections[c.id] = obj;
+    });
+  }
+
   // Snapshot the data tables used by these cases — embedded in the checklist for the tester
   const usedTableIds = tablesUsedByCases(cases);
   const usedTables = (state.dataTables || [])
@@ -5622,6 +5943,7 @@ function generateChecklist(item, kind, tester, date, projectId) {
       isInterface: !!c.isInterface,
       estimatedTime: c.estimatedTime || null,
       jiraTickets: (c.jiraTickets || []).filter(t => t.key).map(t => ({ key: t.key, summary: t.summary || '', url: jiraUrlFor(t.key) })),
+      dataRowsByTable: caseSelections[c.id] || {},
       steps: expandSteps(c.steps).filter(s => (s.action || '').trim() || (s.expected || '').trim()).map(s => ({
         action: s.action || '',
         expected: s.expected || '',
@@ -6150,9 +6472,34 @@ function buildChecklistHTML(data) {
     background: var(--surface-soft); font-weight: 600;
     color: var(--text-soft); position: sticky; top: 0;
   }
+  .case-data-section {
+    background: var(--surface-soft); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 8px 10px;
+    margin: 4px 0 10px;
+  }
+  .case-data-title {
+    font-size: 10.5px; font-weight: 600; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .case-data-block { margin-bottom: 8px; }
+  .case-data-block:last-child { margin-bottom: 0; }
+  .case-data-name {
+    font-size: 12px; font-weight: 600; color: var(--text);
+    margin-bottom: 4px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .case-data-name .case-data-count {
+    font-size: 10.5px; color: var(--text-muted); font-weight: 500;
+  }
+  .case-data-empty {
+    font-size: 11.5px; color: var(--text-muted);
+    font-style: italic; padding: 4px 0;
+  }
   @media print {
     .var-pill { background: #DDE6F0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }    .data-section { background: white !important; }
     .data-table-grid th { background: #f5f5f5 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .case-data-section { background: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
 </style>
 </head>
@@ -6245,26 +6592,28 @@ const TABLE_LOOKUP = (function () {
   return map;
 })();
 
-function renderTextWithPills(text) {
+function renderTextWithPills(text, caseObj) {
   if (!text) return "";
   const escaped = esc(text);
+  // Per-case row selection: pills only use values from those rows.
+  const sel = (caseObj && caseObj.dataRowsByTable) || {};
   return escaped.replace(/\\{\\{([^}.]+)\\.([^}]+)\\}\\}/g, function (m, tid, cid) {
     const t = TABLE_LOOKUP[tid];
     if (!t) return '<span class="var-pill missing">?</span>';
     const c = t.columns[cid];
     if (!c) return '<span class="var-pill missing">?</span>';
-    // Collect values for this column from all rows
-    const values = (t.table.rows || []).map(function (r) { return r[cid] || ''; }).filter(Boolean);
+    const rowIdxs = Array.isArray(sel[tid]) ? sel[tid] : (t.table.rows || []).map(function (_, i) { return i; });
+    const values = rowIdxs.map(function (i) {
+      const r = (t.table.rows || [])[i];
+      return r ? (r[cid] || '') : '';
+    }).filter(Boolean);
     if (values.length === 1) {
-      // Single row → display name + value inline
       return '<span class="var-pill" title="' + esc(t.table.name) + '"><span class="vp-name">' + esc(c.name) + '</span><span class="vp-value">' + esc(values[0]) + '</span></span>';
     }
     if (values.length > 1) {
-      // Multi rows → tooltip lists all values
       const tooltip = t.table.name + ' → ' + c.name + '\\n' + values.map(function (v, i) { return (i + 1) + '. ' + v; }).join('\\n');
       return '<span class="var-pill" data-multi="1" title="' + esc(tooltip) + '"><span class="vp-name">' + esc(c.name) + '</span></span>';
     }
-    // No values → fallback, name only
     return '<span class="var-pill" title="' + esc(t.table.name + ' → ' + c.name) + '"><span class="vp-name">' + esc(c.name) + '</span></span>';
   }).replace(/\\n/g, '<br>');
 }
@@ -6339,8 +6688,8 @@ function renderCases() {
         stepsHtml += ' <span class="step-block-tag" title="Étape issue d’un bloc réutilisable">via Bloc « ' + esc(blockLbl) + ' »</span>';
       }
       stepsHtml += "</div>";
-      if (s.action) stepsHtml += '<div class="row"><strong>Action :</strong> ' + renderTextWithPills(s.action) + "</div>";
-      if (s.expected) stepsHtml += '<div class="row"><strong>Résultat attendu :</strong> ' + renderTextWithPills(s.expected) + "</div>";
+      if (s.action) stepsHtml += '<div class="row"><strong>Action :</strong> ' + renderTextWithPills(s.action, c) + "</div>";
+      if (s.expected) stepsHtml += '<div class="row"><strong>Résultat attendu :</strong> ' + renderTextWithPills(s.expected, c) + "</div>";
 
       // Compact tools row: remarks button + (if requested) screenshots button
       stepsHtml += '<div class="step-tools">';
@@ -6411,6 +6760,40 @@ function renderCases() {
         }
       });
       html += "</div>";
+    }
+
+    // Per-case data row block: only the rows assigned to this case
+    const drBy = c.dataRowsByTable || {};
+    const drTids = Object.keys(drBy);
+    if (drTids.length > 0) {
+      let drHtml = '';
+      drTids.forEach(function (tid) {
+        const t = TABLE_LOOKUP[tid];
+        if (!t) return;
+        const idxs = drBy[tid] || [];
+        drHtml += '<div class="case-data-block"><div class="case-data-name">' + esc(t.table.name);
+        drHtml += ' <span class="case-data-count">' + idxs.length + ' ligne' + (idxs.length > 1 ? 's' : '') + '</span></div>';
+        if (idxs.length === 0) {
+          drHtml += '<div class="case-data-empty">Aucune ligne sélectionnée pour ce cas.</div>';
+        } else if ((t.table.columns || []).length === 0) {
+          drHtml += '<div class="case-data-empty">Aucune colonne.</div>';
+        } else {
+          drHtml += '<div class="data-table-grid"><table><thead><tr>';
+          (t.table.columns || []).forEach(function (col) { drHtml += '<th>' + esc(col.name) + '</th>'; });
+          drHtml += '</tr></thead><tbody>';
+          idxs.forEach(function (i) {
+            const r = (t.table.rows || [])[i] || {};
+            drHtml += '<tr>';
+            (t.table.columns || []).forEach(function (col) { drHtml += '<td>' + esc(r[col.id] || '') + '</td>'; });
+            drHtml += '</tr>';
+          });
+          drHtml += '</tbody></table></div>';
+        }
+        drHtml += '</div>';
+      });
+      if (drHtml) {
+        html += '<div class="case-data-section"><div class="case-data-title">Données pour ce cas</div>' + drHtml + '</div>';
+      }
     }
 
     if (c.steps.length === 0) {
@@ -7670,6 +8053,92 @@ function tablesUsedByCases(cases) {
     });
   });
   return ids;
+}
+
+/* Returns Map<tableId, Set<columnId>> of all variables referenced by a single case
+   (across all expanded steps, action + expected). Empty map if none. */
+function requiredColumnsForCase(c) {
+  const map = new Map();
+  if (!c) return map;
+  expandSteps(c.steps).forEach(s => {
+    [s.action || '', s.expected || ''].forEach(text => {
+      extractVariables(text).forEach(v => {
+        if (!map.has(v.tableId)) map.set(v.tableId, new Set());
+        map.get(v.tableId).add(v.columnId);
+      });
+    });
+  });
+  return map;
+}
+
+/* Returns the list of cases attached to a plan-item (case or suite). */
+function casesOfPlanItem(item) {
+  if (!item) return [];
+  if (item.type === 'case') {
+    const c = state.testCases.find(x => x.id === item.id);
+    return c ? [c] : [];
+  }
+  if (item.type === 'suite') {
+    const s = state.testSuites.find(x => x.id === item.id);
+    if (!s) return [];
+    return (s.testCaseIds || []).map(cid => state.testCases.find(x => x.id === cid)).filter(Boolean);
+  }
+  return [];
+}
+
+/* For a given table and a Set of required column ids, returns the indices
+   of rows where every required column has a non-empty value (!= ""). */
+function validRowIndices(table, requiredColumnIds) {
+  if (!table || !Array.isArray(table.rows)) return [];
+  const cols = Array.from(requiredColumnIds || []);
+  const out = [];
+  table.rows.forEach((r, i) => {
+    const ok = cols.every(cid => {
+      const v = r[cid];
+      return typeof v === 'string' ? v.trim() !== '' : (v !== undefined && v !== null && v !== '');
+    });
+    if (ok) out.push(i);
+  });
+  return out;
+}
+
+/* Resolves the effective row selection for one case under a plan-item.
+   Returns Map<tableId, number[]> with row indices to use.
+   - Looks up item.dataSelections[caseId][tableId] if set
+   - Otherwise defaults to all valid rows (rows where required columns are non-empty)
+*/
+function effectiveSelectionForCase(item, c) {
+  const result = new Map();
+  if (!c) return result;
+  const required = requiredColumnsForCase(c);
+  required.forEach((cols, tableId) => {
+    const table = (state.dataTables || []).find(t => t.id === tableId);
+    if (!table) { result.set(tableId, []); return; }
+    const valid = validRowIndices(table, cols);
+    const sel = item && item.dataSelections && item.dataSelections[c.id] && item.dataSelections[c.id][tableId];
+    if (Array.isArray(sel)) {
+      // Keep only indices that are still valid
+      const validSet = new Set(valid);
+      result.set(tableId, sel.filter(i => validSet.has(i)));
+    } else {
+      result.set(tableId, valid.slice());
+    }
+  });
+  return result;
+}
+
+/* For a given plan, return a map caseId → Map<tableId, number[]> of effective
+   row indices selected for that case. First plan-item containing the case wins
+   (matches the dedupe=true semantics used by the checklist). */
+function planEffectiveSelections(plan) {
+  const out = new Map();
+  (plan.items || []).forEach(item => {
+    casesOfPlanItem(item).forEach(c => {
+      if (out.has(c.id)) return;
+      out.set(c.id, effectiveSelectionForCase(item, c));
+    });
+  });
+  return out;
 }
 
 /* Render text as HTML with var pills — used for read-only display (checklist, spec) */
