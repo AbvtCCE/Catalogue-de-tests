@@ -23,7 +23,11 @@
 
   function isAdmin() {
     const s = get();
-    return !!(s && s.role === 'admin');
+    return !!(s && (s.role === 'admin' || s.role === 'qa_manager'));
+  }
+  function role() {
+    const s = get();
+    return s ? s.role : null;
   }
 
   function username() {
@@ -52,5 +56,5 @@
     location.replace('login.html');
   }
 
-  window.QASession = { get, set, clear, isAuthenticated, isAdmin, username, requireAuth, logout };
+  window.QASession = { get, set, clear, isAuthenticated, isAdmin, role, username, requireAuth, logout };
 })();

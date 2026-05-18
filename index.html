@@ -118,6 +118,20 @@
     color: var(--surface);
   }
   .nav-btn svg { flex-shrink: 0; }
+  .nav-section {
+    margin-top: 14px;
+    padding: 0 12px 4px;
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+  }
+  .nav-section:first-child { margin-top: 0; }
+  .nav-btn.nested {
+    padding-left: 22px;
+    font-size: 13px;
+  }
 
   .sidebar-footer {
     margin-top: auto;
@@ -1565,6 +1579,7 @@
 <script src="assets/js/crypto-utils.js"></script>
 <script src="assets/js/github-api.js"></script>
 <script src="assets/js/session.js"></script>
+<script src="assets/js/permissions.js"></script>
 <script>
   /* Auth guard - bloque le rendu si non connecte. */
   if (!window.QASession.requireAuth()) {
@@ -1612,9 +1627,9 @@
 
     <div class="sidebar-footer">
       <div id="file-sync-section" style="margin-bottom:12px;display:none;"></div>
-      <div style="display:flex;gap:6px;margin-bottom:14px;">
-        <button class="btn btn-sm" id="sb-export" data-tip="Télécharger une sauvegarde JSON ponctuelle" style="flex:1;">Export</button>
-        <button class="btn btn-sm" id="sb-import" data-tip="Restaurer depuis un fichier JSON" style="flex:1;">Import</button>
+      <div style="display:flex;gap:6px;margin-bottom:14px;" id="sb-export-import-row">
+        <button class="btn btn-sm" id="sb-export" data-perm="export:read" data-tip="Télécharger une sauvegarde JSON ponctuelle" style="flex:1;">Export</button>
+        <button class="btn btn-sm" id="sb-import" data-perm="export:update" data-tip="Restaurer depuis un fichier JSON" style="flex:1;">Import</button>
         <input type="file" id="sb-import-file" accept=".json" style="display:none;">
       </div>
       <div>Stockage</div>
@@ -2394,32 +2409,53 @@ function planDisplayTitle(plan) {
 
 /* ===== Navigation ===== */
 const TABS = [
-  { id: 'dashboard',    label: 'Dashboard',    icon: ICON.dashboard, render: renderDashboard    },
-  { id: 'projects',     label: 'Projets',      icon: ICON.calendar,  render: renderProjects     },
-  { id: 'testers',      label: 'Testeurs',     icon: ICON.users,     render: renderTesters      },
-  { id: 'data',         label: 'Données',      icon: ICON.table,     render: renderDataTables   },
-  { id: 'environments', label: 'Environnements', icon: ICON.env,     render: renderEnvironments },
-  { id: 'blocks',       label: 'Blocs',         icon: ICON.layers,    render: renderStepBlocks   },
-  { id: 'testcases',    label: 'Cas de tests', icon: ICON.case,      render: renderTestCases    },
-  { id: 'testsuites',   label: 'Suites',       icon: ICON.suite,     render: renderTestSuites   },
-  { id: 'testplans',    label: 'Plans',        icon: ICON.plan,      render: renderTestPlans    },
-  { id: 'anomalies',    label: 'Anomalies',    icon: ICON.bug,       render: renderAnomalies    },
-  { id: 'export',       label: 'Export',       icon: ICON.export,    render: renderExport       },
+  { id: 'dashboard',    label: 'Tableau de bord', resource: 'dashboard',    group: null,       icon: ICON.dashboard, render: renderDashboard    },
+  { id: 'testcases',    label: 'Cas de tests',    resource: 'testcases',    group: 'Tests',    icon: ICON.case,      render: renderTestCases    },
+  { id: 'blocks',       label: "Blocs d'étapes", resource: 'stepblocks',  group: 'Tests',    icon: ICON.layers,    render: renderStepBlocks   },
+  { id: 'testsuites',   label: 'Suites',          resource: 'testsuites',   group: 'Tests',    icon: ICON.suite,     render: renderTestSuites   },
+  { id: 'testplans',    label: 'Plans',           resource: 'testplans',    group: 'Tests',    icon: ICON.plan,      render: renderTestPlans    },
+  { id: 'anomalies',    label: 'Anomalies',       resource: 'anomalies',    group: null,       icon: ICON.bug,       render: renderAnomalies    },
+  { id: 'projects',     label: 'Projets',         resource: 'projects',     group: 'Données', icon: ICON.calendar,  render: renderProjects     },
+  { id: 'data',         label: 'Tables de données', resource: 'dataTables', group: 'Données', icon: ICON.table, render: renderDataTables   },
+  { id: 'environments', label: 'Environnements',  resource: 'environments', group: 'Données', icon: ICON.env,    render: renderEnvironments },
+  { id: 'testers',      label: 'Testeurs',        resource: 'testers',      group: 'Équipe', icon: ICON.users,    render: renderTesters      },
+  { id: 'export',       label: 'Export / Import', resource: 'export',       group: 'Système',icon: ICON.export,    render: renderExport       },
 ];
+
+function visibleTabs() {
+  return TABS.filter(t => !window.QAPerm || QAPerm.canRead(t.resource));
+}
+
 function buildNav() {
   const nav = document.getElementById('nav');
-  nav.innerHTML = TABS.map(t =>
-    `<button class="nav-btn ${t.id === currentTab ? 'active' : ''}" data-tab="${t.id}">${t.icon}<span>${t.label}</span></button>`
-  ).join('');
+  const tabs = visibleTabs();
+  const html = [];
+  let lastGroup = undefined;
+  tabs.forEach(t => {
+    if (t.group !== lastGroup) {
+      if (t.group) html.push(`<div class="nav-section">${escapeHtml(t.group)}</div>`);
+      lastGroup = t.group;
+    }
+    const nested = t.group ? ' nested' : '';
+    html.push(`<button class="nav-btn${nested} ${t.id === currentTab ? 'active' : ''}" data-tab="${t.id}">${t.icon}<span>${escapeHtml(t.label)}</span></button>`);
+  });
+  nav.innerHTML = html.join('');
   nav.querySelectorAll('[data-tab]').forEach(b => b.addEventListener('click', () => switchTab(b.dataset.tab)));
 }
+
 function switchTab(id) {
+  // Si l'utilisateur n'a pas le droit de lire cet onglet, retombe sur le dashboard.
+  const tab = TABS.find(t => t.id === id);
+  if (!tab || (window.QAPerm && !QAPerm.canRead(tab.resource))) {
+    id = 'dashboard';
+  }
   currentTab = id;
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === id));
   document.querySelectorAll('.tab-view').forEach(v => v.classList.remove('active'));
   const view = document.getElementById('view-' + id);
   view.classList.add('active');
   TABS.find(t => t.id === id).render(view);
+  if (window.QAPerm) QAPerm.applyPermissionGates(view);
 }
 
 /* ===== Modal helpers ===== */
@@ -2522,7 +2558,7 @@ function renderDashboard(view) {
         <div class="subtitle">Suivi du catalogue (${totalCases} cas · ${state.environments.length} env · ${state.testSuites.length} suite${state.testSuites.length !== 1 ? 's' : ''} · ${state.testPlans.length} plan${state.testPlans.length !== 1 ? 's' : ''} · ${(state.projects || []).length} projet${(state.projects || []).length !== 1 ? 's' : ''}) et des campagnes de tests en cours</div>
       </div>
       <div class="actions">
-        <button class="btn" id="add-project-from-dash">${ICON.plus}<span>Nouveau projet</span></button>
+        <button class="btn" id="add-project-from-dash" data-perm="projects:create">${ICON.plus}<span>Nouveau projet</span></button>
       </div>
     </div>
 
@@ -2736,7 +2772,7 @@ function renderEnvironments(view) {
         <div class="subtitle">Définissez où vos cas de tests s'exécutent. Chaque environnement forme un dossier.</div>
       </div>
       <div class="actions">
-        <button class="btn btn-primary" id="add-env">${ICON.plus}<span>Nouvel environnement</span></button>
+        <button class="btn btn-primary" id="add-env" data-perm="environments:create">${ICON.plus}<span>Nouvel environnement</span></button>
       </div>
     </div>
 
@@ -2891,7 +2927,7 @@ function renderTestCases(view) {
       </div>
       <div class="actions">
         <button class="btn" id="import-tc">${ICON.upload}<span>Importer CSV</span></button>
-        <button class="btn btn-primary" id="add-tc">${ICON.plus}<span>Nouveau cas</span></button>
+        <button class="btn btn-primary" id="add-tc" data-perm="testcases:create">${ICON.plus}<span>Nouveau cas</span></button>
       </div>
     </div>
 
@@ -4284,7 +4320,7 @@ function renderTestSuites(view) {
         <div class="subtitle">Catégorisation et environnement dérivés des cas. Glisser pour ordonner l'exécution.</div>
       </div>
       <div class="actions">
-        <button class="btn btn-primary" id="add-suite">${ICON.plus}<span>Nouvelle suite</span></button>
+        <button class="btn btn-primary" id="add-suite" data-perm="testsuites:create">${ICON.plus}<span>Nouvelle suite</span></button>
       </div>
     </div>
 
@@ -4660,7 +4696,7 @@ function renderTestPlans(view) {
       </div>
       <div class="actions">
         <button class="btn" id="export-plan" ${plans.length === 0 ? 'disabled' : ''}>${ICON.print}<span>Spec imprimable</span></button>
-        <button class="btn btn-primary" id="add-plan">${ICON.plus}<span>Nouveau plan</span></button>
+        <button class="btn btn-primary" id="add-plan" data-perm="testplans:create">${ICON.plus}<span>Nouveau plan</span></button>
       </div>
     </div>
 
@@ -6918,7 +6954,7 @@ function renderProjects(view) {
         <div class="subtitle">Campagnes de tests. La date de début marque le démarrage des tests effectifs, la date de fin marque la clôture.</div>
       </div>
       <div class="actions">
-        <button class="btn btn-primary" id="add-project">${ICON.plus}<span>Nouveau projet</span></button>
+        <button class="btn btn-primary" id="add-project" data-perm="projects:create">${ICON.plus}<span>Nouveau projet</span></button>
       </div>
     </div>
 
@@ -7185,9 +7221,9 @@ function renderTesters(view) {
         <div class="subtitle">Définissez les niveaux d'expertise et l'équipe de testeurs disponible. Chaque cas de test peut exiger un niveau minimum, ce qui sert à estimer les ressources nécessaires pour chaque campagne.</div>
       </div>
       <div class="actions">
-        <button class="btn" id="add-level">${ICON.plus}<span>Nouveau niveau</span></button>
-        <button class="btn" id="add-division">${ICON.plus}<span>Nouvelle division</span></button>
-        <button class="btn btn-primary" id="add-tester">${ICON.plus}<span>Nouveau testeur</span></button>
+        <button class="btn" id="add-level" data-perm="testers:create">${ICON.plus}<span>Nouveau niveau</span></button>
+        <button class="btn" id="add-division" data-perm="testers:create">${ICON.plus}<span>Nouvelle division</span></button>
+        <button class="btn btn-primary" id="add-tester" data-perm="testers:create">${ICON.plus}<span>Nouveau testeur</span></button>
       </div>
     </div>
 
@@ -7198,7 +7234,7 @@ function renderTesters(view) {
     ${levels.length === 0 ? `
       <div style="padding:18px;text-align:center;background:var(--surface);border:1px dashed var(--border-strong);border-radius:var(--radius);margin-bottom:24px;">
         <div style="font-size:13px;color:var(--text-soft);margin-bottom:10px;">Aucun niveau défini. Commencez par créer vos niveaux (par ex. « Niveau 1 — Manuel », « Niveau 2 — Automaticien »).</div>
-        <button class="btn btn-primary" id="add-level-empty">${ICON.plus}<span>Créer un niveau</span></button>
+        <button class="btn btn-primary" id="add-level-empty" data-perm="testers:create">${ICON.plus}<span>Créer un niveau</span></button>
       </div>
     ` : `
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:24px;">
@@ -7230,7 +7266,7 @@ function renderTesters(view) {
     ${divisions.length === 0 ? `
       <div style="padding:18px;text-align:center;background:var(--surface);border:1px dashed var(--border-strong);border-radius:var(--radius);margin-bottom:24px;">
         <div style="font-size:13px;color:var(--text-soft);margin-bottom:10px;">Aucune division définie. Par exemple : « Finance », « Call center », « RH ». Permet de filtrer les cas, suites, plans et testeurs par domaine métier.</div>
-        <button class="btn btn-primary" id="add-division-empty">${ICON.plus}<span>Créer une division</span></button>
+        <button class="btn btn-primary" id="add-division-empty" data-perm="testers:create">${ICON.plus}<span>Créer une division</span></button>
       </div>
     ` : `
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:24px;">
@@ -7772,7 +7808,7 @@ function renderDataTables(view) {
         <div class="subtitle">Définissez des tables réutilisables (clients, montants, comptes, etc.). Leurs colonnes deviennent des variables insérables dans les étapes des cas de tests, et leurs lignes alimentent la checklist du testeur.</div>
       </div>
       <div class="actions">
-        <button class="btn btn-primary" id="add-table">${ICON.plus}<span>Nouvelle table</span></button>
+        <button class="btn btn-primary" id="add-table" data-perm="dataTables:create">${ICON.plus}<span>Nouvelle table</span></button>
       </div>
     </div>
 
@@ -8046,7 +8082,7 @@ function renderStepBlocks(view) {
         <div class="subtitle">Définissez des séquences d'étapes réutilisables (ex. « Ouvrir profil client », « Connexion admin »). Chaque cas de test peut les insérer comme un seul élément ; les étapes du bloc seront expansées dans la checklist du testeur et le rapport.</div>
       </div>
       <div class="actions">
-        <button class="btn btn-primary" id="add-block">${ICON.plus}<span>Nouveau bloc</span></button>
+        <button class="btn btn-primary" id="add-block" data-perm="stepblocks:create">${ICON.plus}<span>Nouveau bloc</span></button>
       </div>
     </div>
 
@@ -8427,7 +8463,7 @@ function renderAnomalies(view) {
         <div class="subtitle">Défauts découverts pendant les tests. Liez chaque anomalie au cas de test qui l'a révélée.</div>
       </div>
       <div class="actions">
-        <button class="btn btn-primary" id="add-anomaly">${ICON.plus}<span>Nouvelle anomalie</span></button>
+        <button class="btn btn-primary" id="add-anomaly" data-perm="anomalies:create">${ICON.plus}<span>Nouvelle anomalie</span></button>
       </div>
     </div>
 
@@ -8737,15 +8773,16 @@ function renderSessionBar() {
   const sess = QASession.get();
   const bar = document.getElementById('session-bar');
   if (!bar || !sess) return;
+  const label = (window.QAPerm && QAPerm.roleLabel(sess.role)) || sess.role || 'user';
   bar.innerHTML = `
     <div class="who">
       <strong>${escapeHtml(sess.username)}</strong>
-      <small>${escapeHtml(sess.role || 'user')}</small>
+      <small>${escapeHtml(label)}</small>
     </div>
     <button class="logout" id="btn-logout" title="Se deconnecter">Sortir</button>
   `;
   document.getElementById('btn-logout').onclick = () => QASession.logout();
-  if (sess.role === 'admin') {
+  if (window.QAPerm && QAPerm.canManageUsers()) {
     document.getElementById('admin-link').style.display = '';
   }
   if (sess.mustChangePassword) {
@@ -8776,6 +8813,8 @@ async function init() {
     switchTab(currentTab || 'dashboard');
     toast('Donnees rechargees depuis GitHub');
   };
+  // Applique les droits sur les boutons de la sidebar (export/import) une fois le DOM pret.
+  if (window.QAPerm) QAPerm.applyPermissionGates(document);
 }
 init();
 </script>
