@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-18T12:46:45.451Z",
+  "updatedAt": "2026-05-18T12:59:31.269Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9597,32 +9597,38 @@
       {
         "id": "e84f8201-e732-4036-a85d-74eeed512a24",
         "name": "Level 1",
-        "order": 4
+        "order": 4,
+        "divisionId": null
       },
       {
         "id": "4b0b7498-8b22-493f-97bf-5a771a1fc7c5",
         "name": "Level 2",
-        "order": 5
+        "order": 5,
+        "divisionId": null
       },
       {
         "id": "80e2ed23-78d1-4273-92d3-c071054b3f72",
         "name": "PU",
-        "order": 6
+        "order": 6,
+        "divisionId": null
       },
       {
         "id": "a6a99374-60ac-432e-bfff-2149d92ff1eb",
         "name": "Gre Finance",
-        "order": 1
+        "order": 1,
+        "divisionId": "d515b70b-2280-4de2-a86a-aa422891bf40"
       },
       {
         "id": "080a3599-c0be-4076-9f37-b5e1c41acfde",
         "name": "Gre DEM",
-        "order": 2
+        "order": 2,
+        "divisionId": null
       },
       {
         "id": "ccd372f7-9815-4e4f-b6e6-275926ef5504",
         "name": "Gre Celsius",
-        "order": 3
+        "order": 3,
+        "divisionId": null
       }
     ],
     "testers": [
@@ -9772,35 +9778,43 @@
     "businessDivisions": [
       {
         "id": "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-        "name": "CSC"
+        "name": "CSC",
+        "parentId": null
       },
       {
         "id": "6ae217ab-a265-4bcc-9ed6-a2b002d87de1",
-        "name": "Billing"
+        "name": "Billing",
+        "parentId": null
       },
       {
         "id": "9465d9fa-a88c-4893-80e0-c83134d1e9ea",
-        "name": "I.T"
+        "name": "I.T",
+        "parentId": null
       },
       {
         "id": "13ab2d73-f7e2-4e34-9807-9a41155da605",
-        "name": "GRE DEM"
+        "name": "GRE DEM",
+        "parentId": null
       },
       {
         "id": "180f9b83-d46a-42de-a79c-c37077fa5495",
-        "name": "Portail"
+        "name": "Portail",
+        "parentId": null
       },
       {
         "id": "d6471abe-e8df-42df-b06c-18f091dbebfb",
-        "name": "GRE Celsius"
+        "name": "GRE Celsius",
+        "parentId": null
       },
       {
         "id": "d515b70b-2280-4de2-a86a-aa422891bf40",
-        "name": "GRE Finance"
+        "name": "GRE Finance",
+        "parentId": null
       },
       {
         "id": "20645828-a8b8-4851-99e3-e19c4d3e819d",
-        "name": "Nimbus"
+        "name": "Nimbus",
+        "parentId": null
       }
     ],
     "stepBlocks": [
