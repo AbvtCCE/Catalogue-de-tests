@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-18T13:00:24.446Z",
+  "updatedAt": "2026-05-18T13:02:26.147Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9629,6 +9629,12 @@
         "name": "Gre Celsius",
         "order": 3,
         "divisionId": null
+      },
+      {
+        "id": "c9f6819c-2177-4eca-affd-37485d8dc5cb",
+        "name": "Crédit management",
+        "divisionId": "d515b70b-2280-4de2-a86a-aa422891bf40",
+        "order": 7
       }
     ],
     "testers": [
