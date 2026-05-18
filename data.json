@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "updatedAt": null,
-  "updatedBy": null,
+  "updatedAt": "2026-05-18T11:10:02.760Z",
+  "updatedBy": "abvt",
   "users": [
     {
       "username": "abvt",
@@ -9,6 +9,13 @@
       "passwordHash": "dd5d145feb30893db03eddb895535d54a9108d9d1d2127a7dca0fefab87005d5",
       "createdAt": "2026-05-18",
       "mustChangePassword": false
+    },
+    {
+      "username": "test_utilisateur",
+      "role": "user",
+      "passwordHash": "c7e2d222c6c1c502e4c1d5304a6b63bbdd48c3f5f34037d85fed84a52e738b01",
+      "createdAt": "2026-05-18",
+      "mustChangePassword": true
     }
   ],
   "state": {
@@ -23,6 +30,8 @@
     "dataTables": [],
     "businessDivisions": [],
     "stepBlocks": [],
-    "settings": { "jiraBaseUrl": "" }
+    "settings": {
+      "jiraBaseUrl": ""
+    }
   }
 }
