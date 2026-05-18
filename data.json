@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-18T11:51:53.679Z",
+  "updatedAt": "2026-05-18T12:46:45.451Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -26,7 +26,24 @@
     }
   ],
   "state": {
-    "project": {},
+    "projects": [
+      {
+        "id": "949a0ee1-b118-45d9-b1d9-306e3dbb2245",
+        "name": "Upgrade S/4",
+        "startDate": "2026-04-27",
+        "endDate": "2026-06-17",
+        "planIds": []
+      },
+      {
+        "id": "8f41bb74-bb17-401c-a651-9e7cabf7267e",
+        "name": "Smoke CRM",
+        "startDate": "2026-05-20",
+        "endDate": "2026-05-20",
+        "planIds": [
+          "e4c1c02b-d9b9-4fe8-9072-fb4b3d376108"
+        ]
+      }
+    ],
     "environments": [
       {
         "id": "db216a60-62c6-4ea3-972d-d20a55fc1ac6",
@@ -9535,24 +9552,6 @@
         ]
       }
     ],
-    "projects": [
-      {
-        "id": "949a0ee1-b118-45d9-b1d9-306e3dbb2245",
-        "name": "Upgrade S/4",
-        "startDate": "2026-04-27",
-        "endDate": "2026-06-17",
-        "planIds": []
-      },
-      {
-        "id": "8f41bb74-bb17-401c-a651-9e7cabf7267e",
-        "name": "Smoke CRM",
-        "startDate": "2026-05-20",
-        "endDate": "2026-05-20",
-        "planIds": [
-          "e4c1c02b-d9b9-4fe8-9072-fb4b3d376108"
-        ]
-      }
-    ],
     "anomalies": [
       {
         "id": "60e2432e-69a1-4736-adbd-c7f7bd91d0a1",
@@ -9758,6 +9757,14 @@
             "f11873fe-0a53-4515-88f0-ec359430261c": "Bucher (-Bovet)",
             "a9624fa5-725a-4e46-b5a2-b87164c9f9d1": "test4gre+173119@gmail.com",
             "19976c04-e758-4872-a8e6-c0b5d9e12a49": "2111840"
+          },
+          {
+            "65b2b7e6-0ab0-4453-8daa-d275a44cb1ad": "254353",
+            "dbecd8cb-4303-48ae-896a-a7601080497c": "test",
+            "f11873fe-0a53-4515-88f0-ec359430261c": "tetst",
+            "a9624fa5-725a-4e46-b5a2-b87164c9f9d1": "",
+            "19976c04-e758-4872-a8e6-c0b5d9e12a49": "3543455",
+            "d21a1e8b-1d7b-4545-9846-09fc695f39dc": ""
           }
         ]
       }
