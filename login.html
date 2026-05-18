@@ -40,7 +40,7 @@
 <script>
 (async function () {
   if (QASession.isAuthenticated()) {
-    location.replace('catalog.html');
+    location.replace('index.html');
     return;
   }
 
@@ -80,10 +80,10 @@
         mustChangePassword: !!user.mustChangePassword,
       });
       const params = new URLSearchParams(location.search);
-      const next = params.get('next') || 'catalog.html';
+      const next = params.get('next') || 'index.html';
       // Whitelist destinations to avoid open redirect via querystring.
-      const allowed = ['catalog.html', 'admin.html'];
-      location.replace(allowed.includes(next) ? next : 'catalog.html');
+      const allowed = ['index.html', 'admin.html', ''];
+      location.replace(allowed.includes(next) ? (next || 'index.html') : 'index.html');
     } catch (err) {
       console.error(err);
       showMsg('Impossible de joindre GitHub. Verifiez votre connexion.', 'error');

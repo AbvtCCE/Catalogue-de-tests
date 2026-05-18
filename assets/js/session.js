@@ -23,7 +23,11 @@
 
   function isAdmin() {
     const s = get();
-    return !!(s && s.role === 'admin');
+    return !!(s && (s.role === 'admin' || s.role === 'qa_manager'));
+  }
+  function role() {
+    const s = get();
+    return s ? s.role : null;
   }
 
   function username() {
@@ -36,12 +40,12 @@
   function requireAuth(opts) {
     opts = opts || {};
     if (!isAuthenticated()) {
-      const here = encodeURIComponent(location.pathname.split('/').pop() || 'catalog.html');
+      const here = encodeURIComponent(location.pathname.split('/').pop() || 'index.html');
       location.replace(`login.html?next=${here}`);
       return false;
     }
     if (opts.adminOnly && !isAdmin()) {
-      location.replace('catalog.html');
+      location.replace('index.html');
       return false;
     }
     return true;
@@ -52,5 +56,5 @@
     location.replace('login.html');
   }
 
-  window.QASession = { get, set, clear, isAuthenticated, isAdmin, username, requireAuth, logout };
+  window.QASession = { get, set, clear, isAuthenticated, isAdmin, role, username, requireAuth, logout };
 })();

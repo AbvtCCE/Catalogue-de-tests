@@ -14,7 +14,7 @@
       <div class="who" id="who"></div>
     </div>
     <div class="row-actions">
-      <a href="catalog.html" class="btn">Retour au catalogue</a>
+      <a href="index.html" class="btn">Retour au catalogue</a>
       <button class="btn btn-ghost" id="logout">Deconnexion</button>
     </div>
   </div>
@@ -74,9 +74,10 @@
     </div>
     <div class="form-row" style="margin-top:10px;">
       <label for="new-role">Role</label>
-      <select id="new-role" style="max-width:180px;">
-        <option value="user">Utilisateur</option>
-        <option value="admin">Administrateur</option>
+      <select id="new-role" style="max-width:240px;">
+        <option value="testeur">Testeur</option>
+        <option value="fonctionnel">Fonctionnel</option>
+        <option value="qa_manager">QA Manager</option>
       </select>
     </div>
   </div>
@@ -102,12 +103,15 @@
 <script src="assets/js/crypto-utils.js"></script>
 <script src="assets/js/github-api.js"></script>
 <script src="assets/js/session.js"></script>
+<script src="assets/js/permissions.js"></script>
 <script>
 (async function () {
   if (!QASession.requireAuth({ adminOnly: true })) return;
+  if (!QAPerm.canManageUsers()) { location.replace('index.html'); return; }
   const sess = QASession.get();
-  document.getElementById('who').textContent = `Connecte en tant que ${sess.username} (${sess.role})`;
+  document.getElementById('who').textContent = `Connecte en tant que ${sess.username} (${QAPerm.roleLabel(sess.role)})`;
   document.getElementById('logout').onclick = () => QASession.logout();
+  const isManagerRole = r => r === 'admin' || r === 'qa_manager';
 
   const msgEl = document.getElementById('msg');
   function flash(text, kind, durationMs) {
@@ -135,14 +139,22 @@
       tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:20px;">Aucun utilisateur</td></tr>';
       return;
     }
+    const roleOptions = (current) => QAPerm.ASSIGNABLE_ROLES.map(r => {
+      const sel = (QAPerm.normalize(current) === r) ? ' selected' : '';
+      return `<option value="${r}"${sel}>${QAPerm.roleLabel(r)}</option>`;
+    }).join('');
+
     tbody.innerHTML = users.map(u => `
       <tr data-u="${escapeAttr(u.username)}">
         <td><strong>${escapeHtml(u.username)}</strong>${u.username === sess.username ? ' <span class="badge user">vous</span>' : ''}</td>
-        <td><span class="badge ${u.role === 'admin' ? 'admin' : 'user'}">${u.role || 'user'}</span></td>
+        <td>
+          <select data-action="role" style="font-size:12px;padding:3px 6px;border:1px solid var(--border-strong);border-radius:var(--radius-sm);background:var(--surface);">
+            ${roleOptions(u.role)}
+          </select>
+        </td>
         <td>${escapeHtml(u.createdAt || '—')}</td>
         <td class="row-actions">
           <button class="btn" data-action="reset">Reinitialiser MDP</button>
-          <button class="btn" data-action="role">${u.role === 'admin' ? 'Retirer admin' : 'Promouvoir admin'}</button>
           <button class="btn btn-danger" data-action="delete" ${u.username === sess.username ? 'disabled title="Vous ne pouvez pas vous supprimer"' : ''}>Supprimer</button>
         </td>
       </tr>
@@ -154,8 +166,14 @@
         const username = tr.getAttribute('data-u');
         const action = btn.getAttribute('data-action');
         if (action === 'reset') resetPassword(username);
-        else if (action === 'role') toggleRole(username);
         else if (action === 'delete') deleteUser(username);
+      });
+    });
+    tbody.querySelectorAll('select[data-action="role"]').forEach(sel => {
+      sel.addEventListener('change', async () => {
+        const tr = sel.closest('tr');
+        const username = tr.getAttribute('data-u');
+        changeRole(username, sel.value, sel);
       });
     });
   }
@@ -194,21 +212,26 @@
     if (ok) flash(`Mot de passe de ${username} reinitialise.`, 'success', 4000);
   }
 
-  async function toggleRole(username) {
+  async function changeRole(username, newRole, selectEl) {
     const user = cache.data.users.find(u => u.username === username);
     if (!user) return;
-    if (user.username === sess.username && user.role === 'admin') {
-      const admins = cache.data.users.filter(u => u.role === 'admin');
-      if (admins.length <= 1) {
-        flash('Impossible : il faut au moins un admin.', 'error', 4000);
+    const wasManager = isManagerRole(user.role);
+    const willBeManager = isManagerRole(newRole);
+    if (wasManager && !willBeManager) {
+      const managers = cache.data.users.filter(u => isManagerRole(u.role));
+      if (managers.length <= 1) {
+        flash('Impossible : il faut au moins un QA Manager.', 'error', 4000);
+        if (selectEl) selectEl.value = QAPerm.normalize(user.role);
         return;
       }
     }
-    user.role = user.role === 'admin' ? 'user' : 'admin';
-    const ok = await commit(`Change role of ${username} to ${user.role}`);
+    user.role = newRole;
+    const ok = await commit(`Change role of ${username} to ${newRole}`);
     if (ok) {
-      flash(`${username} est maintenant ${user.role}.`, 'success', 4000);
+      flash(`${username} est maintenant ${QAPerm.roleLabel(newRole)}.`, 'success', 4000);
       renderUsers();
+    } else if (selectEl) {
+      selectEl.value = QAPerm.normalize(user.role);
     }
   }
 
@@ -217,8 +240,8 @@
     if (username === sess.username) return;
     const before = cache.data.users.length;
     cache.data.users = cache.data.users.filter(u => u.username !== username);
-    if (cache.data.users.filter(u => u.role === 'admin').length === 0) {
-      flash('Impossible : il faut au moins un admin.', 'error', 4000);
+    if (cache.data.users.filter(u => isManagerRole(u.role)).length === 0) {
+      flash('Impossible : il faut au moins un QA Manager.', 'error', 4000);
       await reload();
       return;
     }
