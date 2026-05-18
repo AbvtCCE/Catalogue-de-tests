@@ -2097,6 +2097,21 @@ async function load() {
     });
     // Ensure business divisions exist
     if (!Array.isArray(state.businessDivisions)) state.businessDivisions = [];
+    // Sub-divisions: ensure parentId field (null = top-level)
+    state.businessDivisions.forEach(d => {
+      if (typeof d.parentId === 'undefined') d.parentId = null;
+    });
+    // Enforce 1-level depth: if a division's parent itself has a parent, promote to top-level
+    state.businessDivisions.forEach(d => {
+      if (d.parentId) {
+        const parent = state.businessDivisions.find(x => x.id === d.parentId);
+        if (!parent || parent.parentId) d.parentId = null;
+      }
+    });
+    // Levels scoped to a division: ensure divisionId field (null = unassigned legacy)
+    state.testerLevels.forEach(l => {
+      if (typeof l.divisionId === 'undefined') l.divisionId = null;
+    });
     // Migrate legacy single divisionId → divisionIds (array, 0-n)
     ['testCases', 'testSuites', 'testPlans', 'testers'].forEach(key => {
       if (Array.isArray(state[key])) {
@@ -7136,12 +7151,17 @@ function sortedLevels() {
 }
 
 /* Cases that a tester at the given level can execute.
-   Rule: tester.level >= case.minLevel. Case without minLevel = anyone. */
+   Rule: case without minLevel = anyone; otherwise the tester's level must be in the
+   SAME division as the case's required level and its order must be >= the required order. */
 function casesAccessibleTo(tester, cases) {
-  const lvlOrder = levelOrder(tester.levelId);
+  const myLvl = levelById(tester.levelId);
   return (cases || []).filter(c => {
     if (!c.minLevelId) return true;
-    return lvlOrder >= levelOrder(c.minLevelId);
+    if (!myLvl) return false;
+    const reqLvl = levelById(c.minLevelId);
+    if (!reqLvl) return false;
+    if (reqLvl.divisionId && myLvl.divisionId && reqLvl.divisionId !== myLvl.divisionId) return false;
+    return myLvl.order >= reqLvl.order;
   });
 }
 
@@ -7228,38 +7248,6 @@ function renderTesters(view) {
     </div>
 
     <div style="display:flex;align-items:center;gap:8px;margin:8px 0 12px;">
-      <h2 style="margin:0;font-size:16px;letter-spacing:-0.01em;">Niveaux d'expertise</h2>
-      <span style="font-size:12px;color:var(--text-muted);">${levels.length} défini${levels.length > 1 ? 's' : ''}</span>
-    </div>
-    ${levels.length === 0 ? `
-      <div style="padding:18px;text-align:center;background:var(--surface);border:1px dashed var(--border-strong);border-radius:var(--radius);margin-bottom:24px;">
-        <div style="font-size:13px;color:var(--text-soft);margin-bottom:10px;">Aucun niveau défini. Commencez par créer vos niveaux (par ex. « Niveau 1 — Manuel », « Niveau 2 — Automaticien »).</div>
-        <button class="btn btn-primary" id="add-level-empty" data-perm="testers:create">${ICON.plus}<span>Créer un niveau</span></button>
-      </div>
-    ` : `
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:24px;">
-        ${levels.map((lvl, i) => {
-          const tCount = testerCountByLevel[lvl.id] || 0;
-          const cCount = caseCountByMinLevel[lvl.id] || 0;
-          return `
-            <div style="display:grid;grid-template-columns:60px 1fr auto auto auto;gap:12px;padding:12px 14px;align-items:center;${i > 0 ? 'border-top:1px solid var(--border);' : ''}">
-              <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;font-weight:600;">N° ${lvl.order}</div>
-              <div style="font-weight:500;">${escapeHtml(lvl.name)}</div>
-              <span class="badge">${tCount} testeur${tCount > 1 ? 's' : ''}</span>
-              <span class="badge ${cCount > 0 ? 'badge-primary' : 'badge-muted'}">${cCount} cas requ${cCount > 1 ? 'ièrent' : 'iert'} ce niveau min.</span>
-              <div style="display:flex;gap:2px;">
-                <button class="btn-icon btn-ghost" data-level-up="${lvl.id}" ${i === 0 ? 'disabled' : ''} title="Monter">↑</button>
-                <button class="btn-icon btn-ghost" data-level-down="${lvl.id}" ${i === levels.length - 1 ? 'disabled' : ''} title="Descendre">↓</button>
-                <button class="btn-icon btn-ghost" data-level-edit="${lvl.id}" title="Renommer">${ICON.edit}</button>
-                <button class="btn-icon btn-ghost" data-level-delete="${lvl.id}" title="Supprimer">${ICON.trash}</button>
-              </div>
-            </div>
-          `;
-        }).join('')}
-      </div>
-    `}
-
-    <div style="display:flex;align-items:center;gap:8px;margin:8px 0 12px;">
       <h2 style="margin:0;font-size:16px;letter-spacing:-0.01em;">Divisions métier</h2>
       <span style="font-size:12px;color:var(--text-muted);">${divisions.length} définie${divisions.length > 1 ? 's' : ''}</span>
     </div>
@@ -7270,23 +7258,145 @@ function renderTesters(view) {
       </div>
     ` : `
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:24px;">
-        ${divisions.map((div, i) => {
-          const tCount = testerCountByDivision[div.id] || 0;
-          const cCount = caseCountByDivision[div.id] || 0;
+        ${(() => {
+          const tops = divisions.filter(d => !d.parentId);
+          const rows = [];
+          let i = 0;
+          tops.forEach(top => {
+            const subs = divisions.filter(d => d.parentId === top.id);
+            const tCount = testerCountByDivision[top.id] || 0;
+            const cCount = caseCountByDivision[top.id] || 0;
+            const lvlCount = (state.testerLevels || []).filter(l => l.divisionId === top.id).length;
+            rows.push(`
+              <div style="display:grid;grid-template-columns:20px 1fr auto auto auto auto;gap:12px;padding:12px 14px;align-items:center;${i > 0 ? 'border-top:1px solid var(--border);' : ''}">
+                <span style="color:var(--accent);">${ICON.briefcase}</span>
+                <div style="font-weight:500;">${escapeHtml(top.name)}</div>
+                <span class="badge badge-muted">${lvlCount} niveau${lvlCount > 1 ? 'x' : ''}</span>
+                <span class="badge">${tCount} testeur${tCount > 1 ? 's' : ''}</span>
+                <span class="badge ${cCount > 0 ? 'badge-primary' : 'badge-muted'}">${cCount} cas</span>
+                <div style="display:flex;gap:2px;">
+                  <button class="btn-icon btn-ghost" data-division-edit="${top.id}" title="Modifier">${ICON.edit}</button>
+                  <button class="btn-icon btn-ghost" data-division-delete="${top.id}" title="Supprimer">${ICON.trash}</button>
+                </div>
+              </div>
+            `);
+            i++;
+            subs.forEach(sub => {
+              const stCount = testerCountByDivision[sub.id] || 0;
+              const scCount = caseCountByDivision[sub.id] || 0;
+              const slvlCount = (state.testerLevels || []).filter(l => l.divisionId === sub.id).length;
+              rows.push(`
+                <div style="display:grid;grid-template-columns:20px 1fr auto auto auto auto;gap:12px;padding:10px 14px 10px 36px;align-items:center;border-top:1px solid var(--border);background:var(--surface-soft, transparent);">
+                  <span style="color:var(--text-muted);">↳</span>
+                  <div style="font-weight:500;font-size:13.5px;">${escapeHtml(sub.name)}</div>
+                  <span class="badge badge-muted">${slvlCount} niveau${slvlCount > 1 ? 'x' : ''}</span>
+                  <span class="badge">${stCount} testeur${stCount > 1 ? 's' : ''}</span>
+                  <span class="badge ${scCount > 0 ? 'badge-primary' : 'badge-muted'}">${scCount} cas</span>
+                  <div style="display:flex;gap:2px;">
+                    <button class="btn-icon btn-ghost" data-division-edit="${sub.id}" title="Modifier">${ICON.edit}</button>
+                    <button class="btn-icon btn-ghost" data-division-delete="${sub.id}" title="Supprimer">${ICON.trash}</button>
+                  </div>
+                </div>
+              `);
+              i++;
+            });
+          });
+          // Orphan sub-divisions whose parent no longer exists
+          const orphans = divisions.filter(d => d.parentId && !divisions.find(x => x.id === d.parentId));
+          orphans.forEach(o => {
+            rows.push(`
+              <div style="display:grid;grid-template-columns:20px 1fr auto auto auto auto;gap:12px;padding:12px 14px;align-items:center;border-top:1px solid var(--border);">
+                <span style="color:var(--danger,#c0392b);">!</span>
+                <div style="font-weight:500;">${escapeHtml(o.name)} <span style="font-size:11px;color:var(--text-muted);">(parent introuvable)</span></div>
+                <span class="badge badge-muted">—</span>
+                <span class="badge">—</span>
+                <span class="badge badge-muted">—</span>
+                <div style="display:flex;gap:2px;">
+                  <button class="btn-icon btn-ghost" data-division-edit="${o.id}" title="Modifier">${ICON.edit}</button>
+                  <button class="btn-icon btn-ghost" data-division-delete="${o.id}" title="Supprimer">${ICON.trash}</button>
+                </div>
+              </div>
+            `);
+          });
+          return rows.join('');
+        })()}
+      </div>
+    `}
+
+    <div style="display:flex;align-items:center;gap:8px;margin:8px 0 12px;">
+      <h2 style="margin:0;font-size:16px;letter-spacing:-0.01em;">Niveaux d'expertise</h2>
+      <span style="font-size:12px;color:var(--text-muted);">${levels.length} défini${levels.length > 1 ? 's' : ''}</span>
+    </div>
+    ${levels.length === 0 ? `
+      <div style="padding:18px;text-align:center;background:var(--surface);border:1px dashed var(--border-strong);border-radius:var(--radius);margin-bottom:24px;">
+        <div style="font-size:13px;color:var(--text-soft);margin-bottom:10px;">Aucun niveau défini. ${divisions.length === 0 ? 'Créez d\'abord une division, puis ses niveaux (par ex. « Niveau 1 — Manuel »).' : 'Créez des niveaux propres à chaque division (par ex. « Niveau 1 — Manuel »).'}</div>
+        <button class="btn btn-primary" id="add-level-empty" data-perm="testers:create" ${divisions.length === 0 ? 'disabled' : ''}>${ICON.plus}<span>Créer un niveau</span></button>
+      </div>
+    ` : `
+      ${(() => {
+        // Group levels by division id. Levels with no/missing division go to a special bucket.
+        const byDiv = new Map();
+        const unassigned = [];
+        levels.forEach(lvl => {
+          const div = lvl.divisionId ? divisions.find(d => d.id === lvl.divisionId) : null;
+          if (!div) { unassigned.push(lvl); return; }
+          if (!byDiv.has(div.id)) byDiv.set(div.id, { div, items: [] });
+          byDiv.get(div.id).items.push(lvl);
+        });
+        const renderLevelRow = (lvl, i, total) => {
+          const tCount = testerCountByLevel[lvl.id] || 0;
+          const cCount = caseCountByMinLevel[lvl.id] || 0;
           return `
-            <div style="display:grid;grid-template-columns:20px 1fr auto auto auto;gap:12px;padding:12px 14px;align-items:center;${i > 0 ? 'border-top:1px solid var(--border);' : ''}">
-              <span style="color:var(--accent);">${ICON.briefcase}</span>
-              <div style="font-weight:500;">${escapeHtml(div.name)}</div>
+            <div style="display:grid;grid-template-columns:60px 1fr auto auto auto;gap:12px;padding:10px 14px;align-items:center;${i > 0 ? 'border-top:1px solid var(--border);' : ''}">
+              <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;font-weight:600;">N° ${lvl.order}</div>
+              <div style="font-weight:500;">${escapeHtml(lvl.name)}</div>
               <span class="badge">${tCount} testeur${tCount > 1 ? 's' : ''}</span>
-              <span class="badge ${cCount > 0 ? 'badge-primary' : 'badge-muted'}">${cCount} cas</span>
+              <span class="badge ${cCount > 0 ? 'badge-primary' : 'badge-muted'}">${cCount} cas requ${cCount > 1 ? 'ièrent' : 'iert'} ce niveau min.</span>
               <div style="display:flex;gap:2px;">
-                <button class="btn-icon btn-ghost" data-division-edit="${div.id}" title="Renommer">${ICON.edit}</button>
-                <button class="btn-icon btn-ghost" data-division-delete="${div.id}" title="Supprimer">${ICON.trash}</button>
+                <button class="btn-icon btn-ghost" data-level-up="${lvl.id}" ${i === 0 ? 'disabled' : ''} title="Monter">↑</button>
+                <button class="btn-icon btn-ghost" data-level-down="${lvl.id}" ${i === total - 1 ? 'disabled' : ''} title="Descendre">↓</button>
+                <button class="btn-icon btn-ghost" data-level-edit="${lvl.id}" title="Modifier">${ICON.edit}</button>
+                <button class="btn-icon btn-ghost" data-level-delete="${lvl.id}" title="Supprimer">${ICON.trash}</button>
               </div>
             </div>
           `;
-        }).join('')}
-      </div>
+        };
+        const groupBlocks = [];
+        // Render groups by division tree order (top-level then subs).
+        const tops = divisions.filter(d => !d.parentId);
+        tops.forEach(top => {
+          const visit = (div) => {
+            if (byDiv.has(div.id)) {
+              const { items } = byDiv.get(div.id);
+              const sorted = items.sort((a, b) => a.order - b.order);
+              const parent = div.parentId ? divisions.find(d => d.id === div.parentId) : null;
+              const heading = parent ? `${escapeHtml(parent.name)} / ${escapeHtml(div.name)}` : escapeHtml(div.name);
+              groupBlocks.push(`
+                <div style="margin-bottom:14px;">
+                  <div style="font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;font-weight:600;margin:0 0 6px 2px;">${ICON.briefcase} ${heading}</div>
+                  <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+                    ${sorted.map((l, i) => renderLevelRow(l, i, sorted.length)).join('')}
+                  </div>
+                </div>
+              `);
+            }
+          };
+          visit(top);
+          divisions.filter(d => d.parentId === top.id).forEach(visit);
+        });
+        if (unassigned.length > 0) {
+          const sorted = unassigned.sort((a, b) => a.order - b.order);
+          groupBlocks.push(`
+            <div style="margin-bottom:14px;">
+              <div style="font-size:12px;color:var(--danger,#c0392b);text-transform:uppercase;letter-spacing:0.04em;font-weight:600;margin:0 0 6px 2px;">Niveaux sans division — à réassigner</div>
+              <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+                ${sorted.map((l, i) => renderLevelRow(l, i, sorted.length)).join('')}
+              </div>
+            </div>
+          `);
+        }
+        return groupBlocks.join('') || '<div style="font-size:12.5px;color:var(--text-muted);margin-bottom:24px;">Aucun niveau affecté à une division.</div>';
+      })()}
     `}
 
     <div style="display:flex;align-items:center;gap:8px;margin:8px 0 12px;">
@@ -7334,13 +7444,16 @@ function renderTesters(view) {
   `;
 
   // Wire level handlers
-  const addLevelHandler = () => openLevelModal();
+  const addLevelHandler = () => {
+    if ((state.businessDivisions || []).length === 0) {
+      toast('Créez d\'abord une division métier');
+      return;
+    }
+    openLevelModal();
+  };
   if (document.getElementById('add-level')) document.getElementById('add-level').onclick = addLevelHandler;
   if (document.getElementById('add-level-empty')) document.getElementById('add-level-empty').onclick = addLevelHandler;
-  document.getElementById('add-tester').onclick = () => {
-    if (levels.length === 0) { toast('Créez d\'abord au moins un niveau'); return; }
-    openTesterModal();
-  };
+  document.getElementById('add-tester').onclick = () => openTesterModal();
   view.querySelectorAll('[data-level-edit]').forEach(b => b.onclick = () => openLevelModal(b.dataset.levelEdit));
   view.querySelectorAll('[data-level-delete]').forEach(b => b.onclick = () => {
     const lid = b.dataset.levelDelete;
@@ -7369,22 +7482,36 @@ function renderTesters(view) {
   view.querySelectorAll('[data-division-edit]').forEach(b => b.onclick = () => openDivisionModal(b.dataset.divisionEdit));
   view.querySelectorAll('[data-division-delete]').forEach(b => b.onclick = () => {
     const did = b.dataset.divisionDelete;
-    const tCount = testerCountByDivision[did] || 0;
-    const cCount = caseCountByDivision[did] || 0;
-    let msg = 'Supprimer cette division ?';
-    if (tCount > 0 || cCount > 0) {
-      msg += ` ${tCount} testeur${tCount > 1 ? 's perdront' : ' perdra'} leur spécialité et ${cCount} cas perdr${cCount > 1 ? 'ont' : 'a'} leur catégorie métier.`;
-    }
+    const subIds = (state.businessDivisions || []).filter(d => d.parentId === did).map(d => d.id);
+    const allIds = [did, ...subIds];
+    const tCount = allIds.reduce((s, i) => s + (testerCountByDivision[i] || 0), 0);
+    const cCount = allIds.reduce((s, i) => s + (caseCountByDivision[i] || 0), 0);
+    const lCount = (state.testerLevels || []).filter(l => allIds.includes(l.divisionId)).length;
+    let msg = subIds.length > 0
+      ? `Supprimer cette division ainsi que ses ${subIds.length} sous-division${subIds.length > 1 ? 's' : ''} ?`
+      : 'Supprimer cette division ?';
+    const bits = [];
+    if (lCount > 0) bits.push(`${lCount} niveau${lCount > 1 ? 'x seront supprimés' : ' sera supprimé'}`);
+    if (tCount > 0) bits.push(`${tCount} testeur${tCount > 1 ? 's perdront' : ' perdra'} leur spécialité`);
+    if (cCount > 0) bits.push(`${cCount} cas perdr${cCount > 1 ? 'ont' : 'a'} leur catégorie métier`);
+    if (bits.length) msg += ' ' + bits.join(', ') + '.';
     confirmDialog(msg, () => {
       try {
-        state.businessDivisions = state.businessDivisions.filter(d => d.id !== did);
-        const stripFromArray = (arr) => arr.filter(x => x !== did);
+        const removeSet = new Set(allIds);
+        state.businessDivisions = state.businessDivisions.filter(d => !removeSet.has(d.id));
+        // Cascade: remove levels of those divisions, and clear any tester/case that referenced those levels.
+        const removedLevelIds = new Set((state.testerLevels || []).filter(l => removeSet.has(l.divisionId)).map(l => l.id));
+        state.testerLevels = (state.testerLevels || []).filter(l => !removeSet.has(l.divisionId));
+        state.testers.forEach(t => { if (removedLevelIds.has(t.levelId)) t.levelId = null; });
+        state.testCases.forEach(c => { if (removedLevelIds.has(c.minLevelId)) c.minLevelId = null; });
+        // Strip the division ids from all collections.
+        const stripFromArray = (arr) => arr.filter(x => !removeSet.has(x));
         state.testers.forEach(t => { t.divisionIds = stripFromArray(t.divisionIds || []); });
         state.testCases.forEach(c => { c.divisionIds = stripFromArray(c.divisionIds || []); });
         state.testSuites.forEach(s => { s.divisionIds = stripFromArray(s.divisionIds || []); });
         state.testPlans.forEach(p => { p.divisionIds = stripFromArray(p.divisionIds || []); });
         renderTesters(view);
-        toast('Division supprimée');
+        toast(subIds.length > 0 ? 'Divisions supprimées' : 'Division supprimée');
         save().catch(e => { console.error('Save after division delete failed', e); toast('Erreur de sauvegarde'); });
       } catch (e) {
         console.error('Division delete failed', e);
@@ -7406,12 +7533,14 @@ function renderTesters(view) {
 }
 
 function moveLevel(id, dir, view) {
-  const sorted = sortedLevels();
-  const idx = sorted.findIndex(l => l.id === id);
-  if (idx < 0) return;
+  const me = (state.testerLevels || []).find(l => l.id === id);
+  if (!me) return;
+  // Move within the same division scope so reordering matches the grouped display.
+  const scope = sortedLevels().filter(l => l.divisionId === me.divisionId);
+  const idx = scope.findIndex(l => l.id === id);
   const swapWith = idx + dir;
-  if (swapWith < 0 || swapWith >= sorted.length) return;
-  const a = sorted[idx], b = sorted[swapWith];
+  if (idx < 0 || swapWith < 0 || swapWith >= scope.length) return;
+  const a = scope[idx], b = scope[swapWith];
   const tmp = a.order; a.order = b.order; b.order = tmp;
   save();
   renderTesters(view);
@@ -7420,10 +7549,25 @@ function moveLevel(id, dir, view) {
 function openLevelModal(id) {
   const isNew = !id;
   const level = isNew
-    ? { id: uid(), name: '', order: ((state.testerLevels || []).reduce((m, l) => Math.max(m, l.order || 0), 0) + 1) }
+    ? { id: uid(), name: '', divisionId: null, order: ((state.testerLevels || []).reduce((m, l) => Math.max(m, l.order || 0), 0) + 1) }
     : JSON.parse(JSON.stringify(state.testerLevels.find(l => l.id === id)));
+  if (typeof level.divisionId === 'undefined') level.divisionId = null;
 
-  openModal(isNew ? 'Nouveau niveau' : 'Renommer le niveau', `
+  const divisions = (state.businessDivisions || []);
+  if (divisions.length === 0) {
+    toast('Créez d\'abord une division métier');
+    return;
+  }
+
+  openModal(isNew ? 'Nouveau niveau' : 'Modifier le niveau', `
+    <div class="form-group">
+      <label class="field-label">Division métier <span class="required">*</span></label>
+      <select id="lvl-division">
+        <option value="">— Choisir une division —</option>
+        ${divisionOptionsForLevel(level.divisionId)}
+      </select>
+      <div style="font-size:11.5px;color:var(--text-muted);margin-top:4px;">Le niveau ne s'appliquera qu'aux testeurs de cette division (ou de ses sous-divisions).</div>
+    </div>
     <div class="form-group">
       <label class="field-label">Libellé du niveau <span class="required">*</span></label>
       <input type="text" id="lvl-name" value="${escapeHtml(level.name)}" placeholder="Ex. Niveau 2 — Automaticien">
@@ -7437,7 +7581,10 @@ function openLevelModal(id) {
     document.getElementById('lvl-save').onclick = () => {
       const name = body.querySelector('#lvl-name').value.trim();
       if (!name) { toast('Le libellé est requis'); return; }
+      const divisionId = body.querySelector('#lvl-division').value;
+      if (!divisionId) { toast('Sélectionnez une division'); return; }
       level.name = name;
+      level.divisionId = divisionId;
       if (isNew) {
         state.testerLevels.push(level);
       } else {
@@ -7452,17 +7599,46 @@ function openLevelModal(id) {
   });
 }
 
+/* Build <option> tags for selecting a division when creating a level.
+   Top-level divisions appear as group headers; sub-divisions appear indented. */
+function divisionOptionsForLevel(selectedId) {
+  const divs = state.businessDivisions || [];
+  const tops = divs.filter(d => !d.parentId);
+  return tops.map(top => {
+    const subs = divs.filter(d => d.parentId === top.id);
+    const topOpt = `<option value="${top.id}" ${selectedId === top.id ? 'selected' : ''}>${escapeHtml(top.name)}</option>`;
+    const subOpts = subs.map(s => `<option value="${s.id}" ${selectedId === s.id ? 'selected' : ''}>&nbsp;&nbsp;↳ ${escapeHtml(top.name)} / ${escapeHtml(s.name)}</option>`).join('');
+    return topOpt + subOpts;
+  }).join('');
+}
+
 function openDivisionModal(id) {
   const isNew = !id;
   const division = isNew
-    ? { id: uid(), name: '' }
+    ? { id: uid(), name: '', parentId: null }
     : JSON.parse(JSON.stringify(state.businessDivisions.find(d => d.id === id)));
+  if (typeof division.parentId === 'undefined') division.parentId = null;
 
-  openModal(isNew ? 'Nouvelle division métier' : 'Renommer la division', `
+  // Eligible parents = top-level divisions, excluding self and any division that already has children
+  // (because we enforce 1-level depth).
+  const allDivs = state.businessDivisions || [];
+  const hasChildren = (did) => allDivs.some(d => d.parentId === did);
+  const eligibleParents = allDivs.filter(d => !d.parentId && d.id !== division.id);
+  // If editing a division that already has children, it must remain top-level.
+  const mustBeTopLevel = !isNew && hasChildren(division.id);
+
+  openModal(isNew ? 'Nouvelle division métier' : 'Modifier la division', `
     <div class="form-group">
-      <label class="field-label">Libellé de la division <span class="required">*</span></label>
+      <label class="field-label">Libellé <span class="required">*</span></label>
       <input type="text" id="div-name" value="${escapeHtml(division.name)}" placeholder="Ex. Finance, Call center, Logistique">
-      <div style="font-size:11.5px;color:var(--text-muted);margin-top:4px;">Permet de catégoriser par domaine métier les cas, suites, plans et testeurs.</div>
+    </div>
+    <div class="form-group">
+      <label class="field-label">Division parente <span class="hint">${mustBeTopLevel ? 'cette division a des sous-divisions, elle doit rester de haut niveau' : 'optionnel — laisser vide pour une division de haut niveau'}</span></label>
+      <select id="div-parent" ${mustBeTopLevel ? 'disabled' : ''}>
+        <option value="">— Aucune (division de haut niveau) —</option>
+        ${eligibleParents.map(p => `<option value="${p.id}" ${division.parentId === p.id ? 'selected' : ''}>${escapeHtml(p.name)}</option>`).join('')}
+      </select>
+      <div style="font-size:11.5px;color:var(--text-muted);margin-top:4px;">Une sous-division est limitée à un seul niveau de profondeur.</div>
     </div>
   `, `
     <button class="btn" data-close-modal>Annuler</button>
@@ -7472,7 +7648,10 @@ function openDivisionModal(id) {
     document.getElementById('div-save').onclick = () => {
       const name = body.querySelector('#div-name').value.trim();
       if (!name) { toast('Le libellé est requis'); return; }
+      const parentSel = body.querySelector('#div-parent');
+      const parentId = (parentSel && !parentSel.disabled) ? (parentSel.value || null) : (division.parentId || null);
       division.name = name;
+      division.parentId = parentId;
       if (isNew) {
         state.businessDivisions.push(division);
       } else {
@@ -7497,33 +7676,45 @@ function openTesterModal(id) {
     delete tester.divisionId;
   }
 
+  const allDivs = state.businessDivisions || [];
+  const topDivs = allDivs.filter(d => !d.parentId);
+
   openModal(isNew ? 'Nouveau testeur' : 'Modifier le testeur', `
-    <div class="form-row">
-      <div class="form-group">
-        <label class="field-label">Nom <span class="required">*</span></label>
-        <input type="text" id="tst-name" value="${escapeHtml(tester.name)}" placeholder="Ex. Jean Dupont">
-      </div>
-      <div class="form-group">
-        <label class="field-label">Niveau <span class="required">*</span></label>
-        <select id="tst-level">
-          <option value="">— Choisir un niveau —</option>
-          ${sortedLevels().map(l => `<option value="${l.id}" ${tester.levelId === l.id ? 'selected' : ''}>${escapeHtml(l.name)}</option>`).join('')}
-        </select>
-      </div>
+    <div class="form-group">
+      <label class="field-label">Nom <span class="required">*</span></label>
+      <input type="text" id="tst-name" value="${escapeHtml(tester.name)}" placeholder="Ex. Jean Dupont">
     </div>
     <div class="form-group">
-      <label class="field-label">Divisions métier <span class="hint">${(state.businessDivisions || []).length === 0 ? 'pas de division définie' : 'multi-sélection · spécialités'}</span></label>
-      ${(state.businessDivisions || []).length === 0
+      <label class="field-label">Divisions métier <span class="hint">${allDivs.length === 0 ? 'pas de division définie' : 'multi-sélection · spécialités (divisions et sous-divisions)'}</span></label>
+      ${allDivs.length === 0
         ? '<p style="font-size:12.5px;color:var(--text-muted);margin:0;">Pas de division définie. Le testeur sera considéré comme polyvalent.</p>'
-        : `<div class="check-group" id="tst-divisions">
-            ${(state.businessDivisions || []).map(d => `
-              <label class="check-pill ${(tester.divisionIds || []).includes(d.id) ? 'checked' : ''}">
-                <input type="checkbox" value="${d.id}" ${(tester.divisionIds || []).includes(d.id) ? 'checked' : ''}>
-                <span>${escapeHtml(d.name)}</span>
-              </label>
-            `).join('')}
+        : `<div id="tst-divisions" style="display:flex;flex-direction:column;gap:8px;">
+            ${topDivs.map(top => {
+              const subs = allDivs.filter(d => d.parentId === top.id);
+              return `
+                <div style="border:1px solid var(--border);border-radius:var(--radius);padding:8px 10px;">
+                  <label class="check-pill ${(tester.divisionIds || []).includes(top.id) ? 'checked' : ''}" style="margin-bottom:${subs.length ? '6px' : '0'};">
+                    <input type="checkbox" value="${top.id}" ${(tester.divisionIds || []).includes(top.id) ? 'checked' : ''}>
+                    <span><strong>${escapeHtml(top.name)}</strong></span>
+                  </label>
+                  ${subs.length ? `
+                    <div style="display:flex;flex-wrap:wrap;gap:6px;padding-left:14px;">
+                      ${subs.map(s => `
+                        <label class="check-pill ${(tester.divisionIds || []).includes(s.id) ? 'checked' : ''}" style="font-size:12px;">
+                          <input type="checkbox" value="${s.id}" ${(tester.divisionIds || []).includes(s.id) ? 'checked' : ''}>
+                          <span>↳ ${escapeHtml(s.name)}</span>
+                        </label>
+                      `).join('')}
+                    </div>` : ''}
+                </div>
+              `;
+            }).join('')}
           </div>
           <div style="font-size:11.5px;color:var(--text-muted);margin-top:4px;">Aucune sélection = polyvalent (toutes divisions)</div>`}
+    </div>
+    <div class="form-group">
+      <label class="field-label">Niveau <span class="hint" id="tst-level-hint">optionnel · dépend des divisions sélectionnées</span></label>
+      <select id="tst-level"></select>
     </div>
     <div class="form-group">
       <label class="field-label">Notes <span class="hint">disponibilités, contraintes, etc.</span></label>
@@ -7534,22 +7725,63 @@ function openTesterModal(id) {
     <button class="btn btn-primary" id="tst-save">${isNew ? 'Créer' : 'Enregistrer'}</button>
   `, (body) => {
     body.querySelector('#tst-name').focus();
-    // Wire division pills
+
+    // Compute the level options available for a given set of selected division ids.
+    // Eligible = levels whose divisionId is in the selected set or is the PARENT of a selected sub-division.
+    const refreshLevels = () => {
+      const selected = Array.from(body.querySelectorAll('#tst-divisions input:checked')).map(i => i.value);
+      const eligibleDivIds = new Set(selected);
+      selected.forEach(did => {
+        const d = allDivs.find(x => x.id === did);
+        if (d && d.parentId) eligibleDivIds.add(d.parentId);
+      });
+      const sel = body.querySelector('#tst-level');
+      const hint = body.querySelector('#tst-level-hint');
+      const eligibleLevels = sortedLevels().filter(l => l.divisionId && eligibleDivIds.has(l.divisionId));
+      // Keep current level if still eligible.
+      const keep = eligibleLevels.some(l => l.id === tester.levelId) ? tester.levelId : '';
+      tester.levelId = keep || tester.levelId; // don't clobber until save
+      if (eligibleLevels.length === 0) {
+        sel.innerHTML = '<option value="">— Aucun niveau disponible —</option>';
+        sel.disabled = true;
+        hint.textContent = selected.length === 0
+          ? 'sélectionnez une division pour voir les niveaux disponibles'
+          : 'aucun niveau défini pour les divisions sélectionnées';
+      } else {
+        sel.disabled = false;
+        // Group eligible levels by their division for readability.
+        const groups = new Map();
+        eligibleLevels.forEach(l => {
+          if (!groups.has(l.divisionId)) groups.set(l.divisionId, []);
+          groups.get(l.divisionId).push(l);
+        });
+        const optGroups = [...groups.entries()].map(([divId, lvls]) => {
+          const d = allDivs.find(x => x.id === divId);
+          const label = d ? d.name : '—';
+          return `<optgroup label="${escapeHtml(label)}">${lvls.map(l => `<option value="${l.id}" ${keep === l.id ? 'selected' : ''}>${escapeHtml(l.name)}</option>`).join('')}</optgroup>`;
+        }).join('');
+        sel.innerHTML = `<option value="">— Sans niveau —</option>${optGroups}`;
+        hint.textContent = 'optionnel · laissez vide pour un testeur sans niveau';
+      }
+    };
+
+    // Wire division pills (any input toggle should refresh levels)
     body.querySelectorAll('#tst-divisions .check-pill').forEach(pill => {
       pill.addEventListener('click', (ev) => {
         ev.preventDefault();
         const cb = pill.querySelector('input');
         cb.checked = !cb.checked;
         pill.classList.toggle('checked', cb.checked);
+        refreshLevels();
       });
     });
+    refreshLevels();
+
     document.getElementById('tst-save').onclick = () => {
       const name = body.querySelector('#tst-name').value.trim();
       if (!name) { toast('Le nom est requis'); return; }
-      const levelId = body.querySelector('#tst-level').value;
-      if (!levelId) { toast('Sélectionnez un niveau'); return; }
       tester.name = name;
-      tester.levelId = levelId;
+      tester.levelId = body.querySelector('#tst-level').value || null;
       tester.divisionIds = Array.from(body.querySelectorAll('#tst-divisions input:checked')).map(i => i.value);
       tester.notes = body.querySelector('#tst-notes').value.trim();
       if (isNew) {
