@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administration · Catalogue de Tests</title>
+<link rel="stylesheet" href="assets/css/auth.css">
+</head>
+<body>
+<div class="admin-shell">
+  <div class="admin-header">
+    <div>
+      <h1>Administration</h1>
+      <div class="who" id="who"></div>
+    </div>
+    <div class="row-actions">
+      <a href="catalog.html" class="btn">Retour au catalogue</a>
+      <button class="btn btn-ghost" id="logout">Deconnexion</button>
+    </div>
+  </div>
+
+  <div id="msg"></div>
+
+  <div class="card">
+    <h2>Connexion GitHub</h2>
+    <div class="subtitle">Un Personal Access Token GitHub est necessaire pour ecrire data.json. Scope requis : <code>repo</code> (classic) ou <code>contents:write</code> (fine-grained) sur ce repo.</div>
+    <div class="inline-form">
+      <div class="form-row">
+        <label for="pat">Personal Access Token</label>
+        <input type="password" id="pat" placeholder="github_pat_..." autocomplete="off">
+      </div>
+      <div class="form-row" style="display:flex;gap:8px;">
+        <button class="btn" id="pat-test">Tester</button>
+        <button class="btn btn-primary" id="pat-save">Enregistrer</button>
+        <button class="btn btn-ghost" id="pat-clear">Effacer</button>
+      </div>
+    </div>
+    <div class="help" id="pat-status" style="margin-top:8px;"></div>
+  </div>
+
+  <div class="card">
+    <h2>Mon mot de passe</h2>
+    <div class="subtitle">Changez votre propre mot de passe.</div>
+    <div class="inline-form">
+      <div class="form-row">
+        <label for="me-old">Mot de passe actuel</label>
+        <input type="password" id="me-old" autocomplete="current-password">
+      </div>
+      <div class="form-row">
+        <label for="me-new">Nouveau mot de passe</label>
+        <input type="password" id="me-new" autocomplete="new-password">
+      </div>
+      <div class="form-row">
+        <button class="btn btn-primary" id="me-save">Mettre a jour</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Creer un utilisateur</h2>
+    <div class="subtitle">Le nouvel utilisateur recevra ce mot de passe par defaut. Il pourra le changer apres connexion.</div>
+    <div class="inline-form">
+      <div class="form-row">
+        <label for="new-u">Identifiant</label>
+        <input type="text" id="new-u" placeholder="prenom.nom">
+      </div>
+      <div class="form-row">
+        <label for="new-p">Mot de passe par defaut</label>
+        <input type="text" id="new-p" placeholder="changeme">
+      </div>
+      <div class="form-row">
+        <button class="btn btn-primary" id="new-save">Ajouter</button>
+      </div>
+    </div>
+    <div class="form-row" style="margin-top:10px;">
+      <label for="new-role">Role</label>
+      <select id="new-role" style="max-width:180px;">
+        <option value="user">Utilisateur</option>
+        <option value="admin">Administrateur</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Utilisateurs</h2>
+    <div class="subtitle">Liste des comptes. Reinitialisez un mot de passe ou supprimez un utilisateur.</div>
+    <table class="users" id="users-table">
+      <thead>
+        <tr>
+          <th>Identifiant</th>
+          <th>Role</th>
+          <th>Cree le</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="users-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script src="assets/js/config.js"></script>
+<script src="assets/js/crypto-utils.js"></script>
+<script src="assets/js/github-api.js"></script>
+<script src="assets/js/session.js"></script>
+<script>
+(async function () {
+  if (!QASession.requireAuth({ adminOnly: true })) return;
+  const sess = QASession.get();
+  document.getElementById('who').textContent = `Connecte en tant que ${sess.username} (${sess.role})`;
+  document.getElementById('logout').onclick = () => QASession.logout();
+
+  const msgEl = document.getElementById('msg');
+  function flash(text, kind, durationMs) {
+    msgEl.innerHTML = `<div class="alert alert-${kind}">${text}</div>`;
+    if (durationMs) setTimeout(() => { msgEl.innerHTML = ''; }, durationMs);
+  }
+
+  let cache = { data: null, sha: null };
+
+  async function reload() {
+    try {
+      const r = await QAGitHub.fetchData();
+      cache.data = r.data;
+      cache.sha = r.sha;
+      renderUsers();
+    } catch (e) {
+      flash('Erreur de chargement : ' + e.message, 'error');
+    }
+  }
+
+  function renderUsers() {
+    const tbody = document.getElementById('users-tbody');
+    const users = (cache.data && cache.data.users) || [];
+    if (users.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:20px;">Aucun utilisateur</td></tr>';
+      return;
+    }
+    tbody.innerHTML = users.map(u => `
+      <tr data-u="${escapeAttr(u.username)}">
+        <td><strong>${escapeHtml(u.username)}</strong>${u.username === sess.username ? ' <span class="badge user">vous</span>' : ''}</td>
+        <td><span class="badge ${u.role === 'admin' ? 'admin' : 'user'}">${u.role || 'user'}</span></td>
+        <td>${escapeHtml(u.createdAt || '—')}</td>
+        <td class="row-actions">
+          <button class="btn" data-action="reset">Reinitialiser MDP</button>
+          <button class="btn" data-action="role">${u.role === 'admin' ? 'Retirer admin' : 'Promouvoir admin'}</button>
+          <button class="btn btn-danger" data-action="delete" ${u.username === sess.username ? 'disabled title="Vous ne pouvez pas vous supprimer"' : ''}>Supprimer</button>
+        </td>
+      </tr>
+    `).join('');
+
+    tbody.querySelectorAll('button[data-action]').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const tr = btn.closest('tr');
+        const username = tr.getAttribute('data-u');
+        const action = btn.getAttribute('data-action');
+        if (action === 'reset') resetPassword(username);
+        else if (action === 'role') toggleRole(username);
+        else if (action === 'delete') deleteUser(username);
+      });
+    });
+  }
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  }
+  function escapeAttr(s) { return escapeHtml(s); }
+
+  async function commit(message) {
+    cache.data.updatedAt = new Date().toISOString();
+    cache.data.updatedBy = sess.username;
+    try {
+      const newSha = await QAGitHub.saveData(cache.data, cache.sha, message);
+      cache.sha = newSha;
+      return true;
+    } catch (e) {
+      if (e.message === 'CONFLICT') {
+        flash('Conflit : data.json a ete modifie. Rechargement...', 'warning');
+        await reload();
+      } else {
+        flash('Erreur ecriture GitHub : ' + e.message, 'error');
+      }
+      return false;
+    }
+  }
+
+  async function resetPassword(username) {
+    const newPwd = prompt(`Nouveau mot de passe pour "${username}" :`, QA_CONFIG.defaultUserPassword);
+    if (!newPwd) return;
+    const user = cache.data.users.find(u => u.username === username);
+    if (!user) return;
+    user.passwordHash = await QACrypto.hashPassword(username, newPwd);
+    user.mustChangePassword = username !== sess.username;
+    const ok = await commit(`Reset password for ${username}`);
+    if (ok) flash(`Mot de passe de ${username} reinitialise.`, 'success', 4000);
+  }
+
+  async function toggleRole(username) {
+    const user = cache.data.users.find(u => u.username === username);
+    if (!user) return;
+    if (user.username === sess.username && user.role === 'admin') {
+      const admins = cache.data.users.filter(u => u.role === 'admin');
+      if (admins.length <= 1) {
+        flash('Impossible : il faut au moins un admin.', 'error', 4000);
+        return;
+      }
+    }
+    user.role = user.role === 'admin' ? 'user' : 'admin';
+    const ok = await commit(`Change role of ${username} to ${user.role}`);
+    if (ok) {
+      flash(`${username} est maintenant ${user.role}.`, 'success', 4000);
+      renderUsers();
+    }
+  }
+
+  async function deleteUser(username) {
+    if (!confirm(`Supprimer definitivement l'utilisateur "${username}" ?`)) return;
+    if (username === sess.username) return;
+    const before = cache.data.users.length;
+    cache.data.users = cache.data.users.filter(u => u.username !== username);
+    if (cache.data.users.filter(u => u.role === 'admin').length === 0) {
+      flash('Impossible : il faut au moins un admin.', 'error', 4000);
+      await reload();
+      return;
+    }
+    if (cache.data.users.length === before) return;
+    const ok = await commit(`Delete user ${username}`);
+    if (ok) {
+      flash(`Utilisateur ${username} supprime.`, 'success', 4000);
+      renderUsers();
+    }
+  }
+
+  document.getElementById('new-save').onclick = async () => {
+    const username = document.getElementById('new-u').value.trim();
+    const pwd = document.getElementById('new-p').value || QA_CONFIG.defaultUserPassword;
+    const role = document.getElementById('new-role').value;
+    if (!username) { flash('Identifiant requis.', 'error', 3000); return; }
+    if (!/^[a-zA-Z0-9._-]{2,40}$/.test(username)) {
+      flash('Identifiant invalide (lettres, chiffres, . _ - , 2-40 car.).', 'error', 4000);
+      return;
+    }
+    if (cache.data.users.some(u => u.username.toLowerCase() === username.toLowerCase())) {
+      flash('Cet identifiant existe deja.', 'error', 3000);
+      return;
+    }
+    const hash = await QACrypto.hashPassword(username, pwd);
+    cache.data.users.push({
+      username,
+      role,
+      passwordHash: hash,
+      createdAt: new Date().toISOString().slice(0, 10),
+      mustChangePassword: true,
+    });
+    const ok = await commit(`Add user ${username}`);
+    if (ok) {
+      flash(`Utilisateur ${username} cree (mot de passe : ${pwd}).`, 'success', 6000);
+      document.getElementById('new-u').value = '';
+      document.getElementById('new-p').value = '';
+      renderUsers();
+    }
+  };
+
+  document.getElementById('me-save').onclick = async () => {
+    const oldP = document.getElementById('me-old').value;
+    const newP = document.getElementById('me-new').value;
+    if (!oldP || !newP) { flash('Renseignez les deux champs.', 'error', 3000); return; }
+    if (newP.length < 6) { flash('Mot de passe trop court (6+ caracteres).', 'error', 3000); return; }
+    const me = cache.data.users.find(u => u.username === sess.username);
+    if (!me) { flash('Compte introuvable.', 'error', 3000); return; }
+    const ok = await QACrypto.verifyPassword(me.username, oldP, me.passwordHash);
+    if (!ok) { flash('Mot de passe actuel incorrect.', 'error', 3000); return; }
+    me.passwordHash = await QACrypto.hashPassword(me.username, newP);
+    me.mustChangePassword = false;
+    const saved = await commit('Change own password');
+    if (saved) {
+      flash('Mot de passe mis a jour.', 'success', 4000);
+      document.getElementById('me-old').value = '';
+      document.getElementById('me-new').value = '';
+    }
+  };
+
+  /* ===== PAT GitHub ===== */
+  function refreshPatUi() {
+    const hasPat = !!QAGitHub.getPat();
+    document.getElementById('pat-status').textContent = hasPat
+      ? 'PAT enregistre dans ce navigateur.'
+      : 'Aucun PAT enregistre. Ecriture impossible.';
+    document.getElementById('pat').value = '';
+  }
+  document.getElementById('pat-test').onclick = async () => {
+    const val = document.getElementById('pat').value.trim() || QAGitHub.getPat();
+    if (!val) { flash('Entrez un PAT.', 'error', 3000); return; }
+    const r = await QAGitHub.checkPat(val);
+    if (!r.ok) { flash('PAT invalide : ' + r.reason, 'error', 4000); return; }
+    flash(`PAT OK · ${r.repo}${r.canWrite ? ' (ecriture)' : ' (lecture seule)'}`, r.canWrite ? 'success' : 'warning', 5000);
+  };
+  document.getElementById('pat-save').onclick = async () => {
+    const val = document.getElementById('pat').value.trim();
+    if (!val) { flash('Entrez un PAT.', 'error', 3000); return; }
+    const r = await QAGitHub.checkPat(val);
+    if (!r.ok || !r.canWrite) {
+      flash('PAT invalide ou sans ecriture.', 'error', 4000);
+      return;
+    }
+    QAGitHub.setPat(val);
+    refreshPatUi();
+    flash('PAT enregistre.', 'success', 3000);
+  };
+  document.getElementById('pat-clear').onclick = () => {
+    QAGitHub.setPat('');
+    refreshPatUi();
+    flash('PAT efface de ce navigateur.', 'info', 3000);
+  };
+
+  refreshPatUi();
+  await reload();
+})();
+</script>
+</body>
+</html>
