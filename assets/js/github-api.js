@@ -35,9 +35,11 @@
   /* Lit data.json. Essaye API authentifiee si PAT (pour repos prives), sinon raw public. */
   async function fetchData() {
     const pat = getPat();
+    const noCache = { cache: 'no-store' };
     try {
       if (pat) {
         const res = await fetch(apiUrl(), {
+          ...noCache,
           headers: { 'Authorization': `Bearer ${pat}`, 'Accept': 'application/vnd.github+json' }
         });
         if (res.ok) {
@@ -51,13 +53,16 @@
           throw new Error(`GitHub API ${res.status}`);
         }
       }
-      const res = await fetch(rawUrl());
+      const res = await fetch(rawUrl(), noCache);
       if (!res.ok) throw new Error(`GET raw ${res.status}`);
       const data = await res.json();
       // sha unknown from raw - fetch separately via API (unauthed, works for public repos)
       let sha = null;
       try {
-        const meta = await fetch(apiUrl());
+        const meta = await fetch(apiUrl(), {
+          ...noCache,
+          headers: { 'Accept': 'application/vnd.github+json' }
+        });
         if (meta.ok) sha = (await meta.json()).sha;
       } catch (e) { /* ignore */ }
       cacheSet(data, sha);
