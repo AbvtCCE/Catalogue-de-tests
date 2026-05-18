@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-18T13:02:26.147Z",
+  "updatedAt": "2026-05-18T13:02:31.838Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9615,7 +9615,7 @@
       {
         "id": "a6a99374-60ac-432e-bfff-2149d92ff1eb",
         "name": "Comptabilité",
-        "order": 1,
+        "order": 7,
         "divisionId": "d515b70b-2280-4de2-a86a-aa422891bf40"
       },
       {
@@ -9634,7 +9634,7 @@
         "id": "c9f6819c-2177-4eca-affd-37485d8dc5cb",
         "name": "Crédit management",
         "divisionId": "d515b70b-2280-4de2-a86a-aa422891bf40",
-        "order": 7
+        "order": 1
       }
     ],
     "testers": [
