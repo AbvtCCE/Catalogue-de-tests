@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-18T11:46:45.479Z",
+  "updatedAt": "2026-05-18T11:47:37.363Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -21,6 +21,13 @@
       "username": "test_fonctionnel",
       "role": "fonctionnel",
       "passwordHash": "b1f35d85922e425a6f6ec746a1fe9e163d67cf48d88a3034783ff986df10c1b0",
+      "createdAt": "2026-05-18",
+      "mustChangePassword": true
+    },
+    {
+      "username": "abcd",
+      "role": "fonctionnel",
+      "passwordHash": "64d0968551229206d90bfaba387123dcec6ca5f5989377d320b34da4c97ab6e8",
       "createdAt": "2026-05-18",
       "mustChangePassword": true
     }
