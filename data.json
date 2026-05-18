@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-18T11:47:42.519Z",
+  "updatedAt": "2026-05-18T11:51:19.087Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -28,36 +28,7 @@
   "state": {
     "projects": [],
     "environments": [],
-    "testCases": [
-      {
-        "id": "cd6c9428-029b-4f79-927d-1af3ccb7c9b9",
-        "title": "Exemple",
-        "environmentIds": [],
-        "isInterface": true,
-        "steps": [
-          {
-            "type": "step",
-            "action": "test",
-            "expected": "test",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": 4,
-        "ready": true,
-        "types": [
-          "fonctionnel",
-          "securite"
-        ],
-        "crud": "create",
-        "minLevelId": null,
-        "divisionIds": [],
-        "jiraTickets": [],
-        "sortOrder": 1
-      }
-    ],
+    "testCases": [],
     "testSuites": [],
     "testPlans": [],
     "anomalies": [],
