@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T13:17:55.524Z",
+  "updatedAt": "2026-05-21T13:21:23.281Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9710,6 +9710,21 @@
         "screenshots": [],
         "createdAt": "2026-05-21T13:16:09.388Z",
         "resolvedAt": "2026-05-21T13:17:53.016Z"
+      },
+      {
+        "id": "13c28f49-1fb4-4d0f-bfb6-c56c04a7745e",
+        "title": "Affichage consomation AutoEco",
+        "description": "Les graphiques de consommation pour AUTOECO ne s'affichent pas",
+        "type": "functional",
+        "severity": "major",
+        "state": "fixed",
+        "testCaseIds": [],
+        "workaround": "",
+        "solution": "nous avons changé le paramètre du mandant dans l'identifiant, qui s'appelle dorénavent PRe-Prod, suite à la migration de Belvis.",
+        "peopleInvolved": "Marc Dürrmeier;Matthias Arn",
+        "screenshots": [],
+        "createdAt": "2026-05-21T13:19:00.900Z",
+        "resolvedAt": "2026-05-21T13:21:20.481Z"
       }
     ],
     "testerLevels": [
