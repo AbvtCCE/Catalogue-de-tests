@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T09:10:20.824Z",
+  "updatedAt": "2026-05-21T12:15:01.158Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9745,6 +9745,15 @@
         "levelId": "a6a99374-60ac-432e-bfff-2149d92ff1eb",
         "divisionIds": [
           "d515b70b-2280-4de2-a86a-aa422891bf40"
+        ],
+        "notes": ""
+      },
+      {
+        "id": "a8074a83-522f-49dd-9614-2cb779917490",
+        "name": "Pierre-Alain Maillard",
+        "levelId": "080a3599-c0be-4076-9f37-b5e1c41acfde",
+        "divisionIds": [
+          "13ab2d73-f7e2-4e34-9807-9a41155da605"
         ],
         "notes": ""
       }
