@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T15:39:06.264Z",
+  "updatedAt": "2026-05-21T15:39:09.549Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -10149,42 +10149,6 @@
           }
         ],
         "sortOrder": 281
-      },
-      {
-        "id": "c5ca47e4-4127-4fd3-9061-5df5495b990f",
-        "title": "[Non testsable en QUAL]Contrôle des sans plans de paiement",
-        "environmentIds": [
-          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": false,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "",
-        "types": [
-          "acceptation"
-        ],
-        "crud": null,
-        "minLevelId": null,
-        "divisionIds": [
-          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
-        ],
-        "jiraTickets": [
-          {
-            "key": "CSTQ-203",
-            "summary": ""
-          }
-        ],
-        "sortOrder": 283
       },
       {
         "id": "00ab4000-6976-45b4-a14f-d5bef3101138",
