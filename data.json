@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T15:47:05.678Z",
+  "updatedAt": "2026-05-21T15:48:06.106Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -10534,6 +10534,55 @@
         ],
         "divisionIds": [
           "d515b70b-2280-4de2-a86a-aa422891bf40"
+        ]
+      },
+      {
+        "id": "01bb09db-4508-4430-8e6c-b13e89aef6b1",
+        "title": "TNR Celsius",
+        "items": [
+          {
+            "type": "case",
+            "id": "6685209f-dfb2-4447-b469-3f62b1913db0"
+          },
+          {
+            "type": "case",
+            "id": "b888cf7f-e6ef-465e-bae1-e0ed5ad9d899"
+          },
+          {
+            "type": "case",
+            "id": "08c0ed02-1cd8-4368-be7d-3487339376d0"
+          },
+          {
+            "type": "case",
+            "id": "7cb866f6-c053-4c3d-8b71-49a533573685"
+          },
+          {
+            "type": "case",
+            "id": "eb679479-8e6e-4148-abcf-ec417a208cdc"
+          },
+          {
+            "type": "case",
+            "id": "48531994-01e6-4d3e-8619-38b75b14d9ef"
+          },
+          {
+            "type": "case",
+            "id": "a16e4b10-60c0-436a-92ad-d4fcde9ab74c"
+          },
+          {
+            "type": "case",
+            "id": "17e3b4d8-42cd-424d-89d9-baae20a28fda"
+          },
+          {
+            "type": "case",
+            "id": "1452af6a-3a51-4aeb-8d62-91a390198794"
+          },
+          {
+            "type": "case",
+            "id": "99add5b5-1c70-489d-8372-c43bf263a41e"
+          }
+        ],
+        "divisionIds": [
+          "d6471abe-e8df-42df-b06c-18f091dbebfb"
         ]
       }
     ],
