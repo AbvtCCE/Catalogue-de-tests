@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T13:31:29.213Z",
+  "updatedAt": "2026-05-21T14:32:57.792Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9808,6 +9808,23 @@
         "screenshots": [],
         "createdAt": "2026-05-21T13:30:44.588Z",
         "resolvedAt": "2026-05-21T13:31:26.445Z"
+      },
+      {
+        "id": "9f647fa1-81e0-469b-ac4a-33ab2e658000",
+        "title": "Payerxx error",
+        "description": "Les périodes comptables n'étaient pas ouvertes",
+        "type": "data",
+        "severity": "critical",
+        "state": "fixed",
+        "testCaseIds": [
+          "dda660c4-0e8d-4baa-b098-ec93733efa70"
+        ],
+        "workaround": "",
+        "solution": "Ouvrir la période comptable.",
+        "peopleInvolved": "",
+        "screenshots": [],
+        "createdAt": "2026-05-21T14:32:05.676Z",
+        "resolvedAt": "2026-05-21T14:32:55.027Z"
       }
     ],
     "testerLevels": [
