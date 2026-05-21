@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T09:09:08.965Z",
+  "updatedAt": "2026-05-21T09:10:20.824Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9599,7 +9599,9 @@
         "type": "data",
         "severity": "trivial",
         "state": "fixed",
-        "testCaseIds": [],
+        "testCaseIds": [
+          "dc9c545f-e526-4398-8bf0-55ab92a81298"
+        ],
         "workaround": "",
         "solution": "Ajouter le préfixe au paramètrage de nommage des fichiers",
         "peopleInvolved": "Alexandre Riebel; Pierre-Alain Maillard",
