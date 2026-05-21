@@ -2460,6 +2460,64 @@ function folderOf(tc) {
   return { id: '__none', name: 'Sans environnement', kind: 'env' };
 }
 
+/* ===== Cooperative test linking =====
+   A case can be linked to one or more other cases (bidirectionally) so that
+   different groups can each maintain their own variant of « the same » test.
+   When linked cases appear in the same plan, they are deduplicated and the
+   surviving one is tagged as « Coopératif ». */
+function linkGroupOf(caseId) {
+  const group = new Set();
+  const queue = [caseId];
+  while (queue.length) {
+    const id = queue.shift();
+    if (group.has(id)) continue;
+    group.add(id);
+    const c = state.testCases.find(x => x.id === id);
+    if (c && Array.isArray(c.linkedCaseIds)) {
+      c.linkedCaseIds.forEach(lid => { if (!group.has(lid)) queue.push(lid); });
+    }
+  }
+  return group;
+}
+
+/* For a plan, compute which cases were deduplicated as cooperative.
+   Returns Map<keptCaseId, Set<otherLinkedIdsAlsoListed>>. */
+function planCooperativeMap(plan) {
+  const result = new Map();
+  const keptOf = new Map(); // caseId -> caseId actually kept in the plan
+  (plan.items || []).forEach(item => {
+    casesOfPlanItem(item).forEach(c => {
+      if (keptOf.has(c.id)) return;
+      const group = linkGroupOf(c.id);
+      let keptId = null;
+      group.forEach(id => { if (keptOf.has(id)) keptId = keptOf.get(id); });
+      if (keptId) {
+        keptOf.set(c.id, keptId);
+        if (!result.has(keptId)) result.set(keptId, new Set());
+        result.get(keptId).add(c.id);
+      } else {
+        keptOf.set(c.id, c.id);
+      }
+    });
+  });
+  return result;
+}
+
+/* ===== Anomaly counts ===== */
+function anomaliesForCase(caseId) {
+  return (state.anomalies || []).filter(a => (a.testCaseIds || []).includes(caseId));
+}
+function anomaliesForCaseIds(caseIds) {
+  const set = caseIds instanceof Set ? caseIds : new Set(caseIds);
+  return (state.anomalies || []).filter(a => (a.testCaseIds || []).some(id => set.has(id)));
+}
+function anomalyCountForCase(caseId) { return anomaliesForCase(caseId).length; }
+function anomalyCountForSuite(suiteId) {
+  const s = state.testSuites.find(x => x.id === suiteId);
+  if (!s) return 0;
+  return anomaliesForCaseIds(s.testCaseIds || []).length;
+}
+
 /* ===== Suite metadata =====
    Suites don't carry their own env/types/folder — everything is derived
    from the test cases they contain. Order is preserved (testCaseIds order).
@@ -2514,7 +2572,11 @@ function migratePlan(p) {
 */
 function collectPlanCases(plan, dedupe = true) {
   const cases = [];
-  const seen = new Set();
+  const seen = new Set(); // tracks all caseIds in already-listed link groups
+  const addCase = (c) => {
+    cases.push(c);
+    if (dedupe) linkGroupOf(c.id).forEach(id => seen.add(id));
+  };
   (plan.items || []).forEach(item => {
     if (item.type === 'suite') {
       const s = state.testSuites.find(x => x.id === item.id);
@@ -2522,12 +2584,12 @@ function collectPlanCases(plan, dedupe = true) {
       (s.testCaseIds || []).forEach(cid => {
         if (dedupe && seen.has(cid)) return;
         const c = state.testCases.find(x => x.id === cid);
-        if (c) { cases.push(c); seen.add(cid); }
+        if (c) addCase(c);
       });
     } else if (item.type === 'case') {
       if (dedupe && seen.has(item.id)) return;
       const c = state.testCases.find(x => x.id === item.id);
-      if (c) { cases.push(c); seen.add(item.id); }
+      if (c) addCase(c);
     }
   });
   return cases;
@@ -3184,6 +3246,7 @@ function renderTestCases(view) {
     confirmDialog('Supprimer ce cas de test ? Il sera retiré des suites et plans.', () => {
       const id = b.dataset.deleteTc;
       state.testCases = state.testCases.filter(c => c.id !== id);
+      state.testCases.forEach(c => { if (Array.isArray(c.linkedCaseIds)) c.linkedCaseIds = c.linkedCaseIds.filter(x => x !== id); });
       state.testSuites.forEach(s => s.testCaseIds = (s.testCaseIds || []).filter(x => x !== id));
       state.testPlans.forEach(p => p.testCaseIds = (p.testCaseIds || []).filter(x => x !== id));
       save();
@@ -3951,7 +4014,9 @@ function openTestCaseModal(id) {
     minLevelId: null,
     divisionIds: [],
     jiraTickets: [],
+    linkedCaseIds: [],
   };
+  if (!Array.isArray(tc.linkedCaseIds)) tc.linkedCaseIds = [];
 
   openModal(id ? 'Modifier le cas de test' : 'Nouveau cas de test', `
     <div class="form-group">
@@ -3998,6 +4063,36 @@ function openTestCaseModal(id) {
       <label class="field-label">Tickets Jira <span class="hint">tickets liés (user story, bug, change). L'URL est optionnelle.</span></label>
       <div class="jira-list" id="tc-jira-list"></div>
       <button type="button" class="btn btn-sm" id="tc-add-jira" style="margin-top:8px;align-self:flex-start;">${ICON.plus}<span>Ajouter un ticket</span></button>
+    </div>
+
+    <div class="form-group">
+      <label class="field-label">Cas liés <span class="hint">cas équivalents pour d'autres groupes — dédupliqués en plan, signalés « Coopératif »</span></label>
+      ${state.testCases.filter(c => c.id !== tc.id).length === 0
+        ? '<p style="font-size:12.5px;color:var(--text-muted);margin:0;">Aucun autre cas disponible pour lier.</p>'
+        : `<div class="picker-filter">
+            <input type="text" id="tc-linked-search" placeholder="Rechercher un cas à lier…">
+            <select id="tc-linked-only">
+              <option value="">Tous les cas</option>
+              <option value="linked">Uniquement liés</option>
+              <option value="unlinked">Non liés</option>
+            </select>
+            <button type="button" class="btn btn-sm" id="tc-linked-clear" title="Effacer">${ICON.close}</button>
+          </div>
+          <div class="picker" id="tc-linked" style="max-height:200px;">
+            ${state.testCases.filter(c => c.id !== tc.id).map(c => {
+              const f = folderOf(c);
+              const divs = (c.divisionIds || []).map(did => (state.businessDivisions || []).find(d => d.id === did)).filter(Boolean).map(d => d.name).join(', ');
+              const meta = [f.name, divs].filter(Boolean).join(' · ');
+              return `
+                <label class="picker-item" data-linked-id="${c.id}" data-title="${escapeHtml((c.title || '').toLowerCase())}">
+                  <input type="checkbox" value="${c.id}" ${(tc.linkedCaseIds || []).includes(c.id) ? 'checked' : ''}>
+                  <span>${escapeHtml(c.title || '(sans titre)')}</span>
+                  <span class="meta">${escapeHtml(meta)}</span>
+                </label>
+              `;
+            }).join('')}
+          </div>
+          <div class="picker-count" id="tc-linked-count"></div>`}
     </div>
 
     <div class="form-group">
@@ -4319,6 +4414,41 @@ function openTestCaseModal(id) {
       }, 0);
     };
 
+    // Linked cases picker
+    const linkedPicker = body.querySelector('#tc-linked');
+    if (linkedPicker) {
+      const lSearch = body.querySelector('#tc-linked-search');
+      const lOnly = body.querySelector('#tc-linked-only');
+      const lClear = body.querySelector('#tc-linked-clear');
+      const lCount = body.querySelector('#tc-linked-count');
+      const applyLinkedFilter = () => {
+        const term = (lSearch?.value || '').toLowerCase().trim();
+        const only = lOnly?.value || '';
+        let visible = 0;
+        linkedPicker.querySelectorAll('.picker-item').forEach(item => {
+          const title = item.dataset.title || '';
+          const checked = item.querySelector('input').checked;
+          let show = true;
+          if (term && !title.includes(term)) show = false;
+          if (only === 'linked' && !checked) show = false;
+          if (only === 'unlinked' && checked) show = false;
+          item.style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
+        const totalChecked = linkedPicker.querySelectorAll('input:checked').length;
+        if (lCount) lCount.innerHTML = `<span>${totalChecked} cas lié${totalChecked > 1 ? 's' : ''}</span><span>${visible} affiché${visible > 1 ? 's' : ''}</span>`;
+      };
+      if (lSearch) lSearch.addEventListener('input', applyLinkedFilter);
+      if (lOnly) lOnly.addEventListener('change', applyLinkedFilter);
+      if (lClear) lClear.onclick = () => {
+        if (lSearch) lSearch.value = '';
+        if (lOnly) lOnly.value = '';
+        applyLinkedFilter();
+      };
+      linkedPicker.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.addEventListener('change', applyLinkedFilter));
+      applyLinkedFilter();
+    }
+
     // Screenshots
     function renderShots() {
       const c = body.querySelector('#tc-shots');
@@ -4372,9 +4502,24 @@ function openTestCaseModal(id) {
           summary: (t.summary || '').trim()
         }))
         .filter(t => t.key || t.summary);
+      const linkedPickerEl = body.querySelector('#tc-linked');
+      tc.linkedCaseIds = linkedPickerEl
+        ? Array.from(linkedPickerEl.querySelectorAll('input:checked')).map(i => i.value).filter(v => v !== tc.id)
+        : (tc.linkedCaseIds || []).filter(v => v !== tc.id);
       tc.steps = tc.steps.filter(s => s.type === 'block' || (s.action || '').trim() || (s.expected || '').trim());
       tc.steps.forEach(s => { if (!s.type) s.type = 'step'; });
       if (tc.steps.length === 0) tc.steps = [{ action: '', expected: '' }];
+
+      // Sync reciprocal links: every linked case must list this case too,
+      // and any case previously linked but now unchecked must drop this id.
+      const newLinks = new Set(tc.linkedCaseIds || []);
+      state.testCases.forEach(other => {
+        if (other.id === tc.id) return;
+        if (!Array.isArray(other.linkedCaseIds)) other.linkedCaseIds = [];
+        const has = other.linkedCaseIds.includes(tc.id);
+        if (newLinks.has(other.id) && !has) other.linkedCaseIds.push(tc.id);
+        else if (!newLinks.has(other.id) && has) other.linkedCaseIds = other.linkedCaseIds.filter(x => x !== tc.id);
+      });
 
       const duplicate = body.querySelector('#tc-duplicate').checked;
       const maxOrder = state.testCases.reduce((m, c) => Math.max(m, c.sortOrder || 0), 0);
@@ -5096,24 +5241,39 @@ function openTestPlanModal(id) {
     const selectedList = body.querySelector('#plan-selected');
     const suitesPicker = body.querySelector('#plan-suites');
     const casesPicker = body.querySelector('#plan-cases');
+    const coopMap = planCooperativeMap({ ...plan, items });
 
     // Selected items in order
     if (items.length === 0) {
       selectedList.innerHTML = '<li class="ordered-empty">Aucun élément. Ajoutez des suites ou des cas ci-dessous, ils apparaîtront ici dans l\'ordre.</li>';
     } else {
       selectedList.innerHTML = items.map((item, i) => {
-        let label = '', kindBadge = '', metaText = '';
+        let label = '', kindBadge = '', metaText = '', bugCount = 0, coopBadge = '';
         if (item.type === 'suite') {
           const s = state.testSuites.find(x => x.id === item.id);
           label = s ? suiteDisplayTitle(s) : '(suite supprimée)';
           kindBadge = '<span class="badge badge-primary" style="font-size:9.5px;padding:1px 5px;">SUITE</span>';
           metaText = s ? `${s.testCaseIds.length} cas` : '';
+          if (s) bugCount = anomalyCountForSuite(s.id);
         } else {
           const c = state.testCases.find(x => x.id === item.id);
           label = c ? c.title : '(cas supprimé)';
           kindBadge = '<span class="badge" style="font-size:9.5px;padding:1px 5px;">CAS</span>';
           metaText = c ? folderOf(c).name : '';
+          if (c) {
+            bugCount = anomalyCountForCase(c.id);
+            if (coopMap.has(c.id) && coopMap.get(c.id).size > 0) {
+              const linkedTitles = Array.from(coopMap.get(c.id)).map(lid => {
+                const lc = state.testCases.find(x => x.id === lid);
+                return lc ? lc.title : lid;
+              });
+              coopBadge = `<span class="badge badge-accent" style="font-size:9.5px;padding:1px 5px;" title="${escapeHtml('Cas coopératif — équivalents fusionnés : ' + linkedTitles.join(', '))}">COOP</span>`;
+            }
+          }
         }
+        const bugBadge = bugCount > 0
+          ? `<span class="badge badge-danger" style="font-size:9.5px;padding:1px 5px;" title="${bugCount} anomalie${bugCount > 1 ? 's' : ''} liée${bugCount > 1 ? 's' : ''}">${ICON.bug} ${bugCount}</span>`
+          : '';
         const sum = summarizeItemData(item);
         const hasData = sum.tables > 0 || sum.valid > 0;
         let dataBtn = '';
@@ -5132,8 +5292,10 @@ function openTestPlanModal(id) {
             <span class="drag-handle" title="Glisser pour réordonner">⋮⋮</span>
             <span class="order-num">${i + 1}</span>
             ${kindBadge}
+            ${coopBadge}
             <span class="item-title" title="${escapeHtml(label)}">${escapeHtml(label)}</span>
             <span class="item-meta">${escapeHtml(metaText)}</span>
+            ${bugBadge}
             <div class="item-actions">
               ${dataBtn}
               <button data-move-up="${keyOf(item)}" ${i === 0 ? 'disabled' : ''} title="Monter">↑</button>
@@ -5164,13 +5326,17 @@ function openTestPlanModal(id) {
     } else if (availableSuites.length === 0) {
       suitesPicker.innerHTML = '<div class="picker-empty">Aucune suite ne correspond aux filtres.</div>';
     } else {
-      suitesPicker.innerHTML = availableSuites.map(s => `
-        <label class="picker-item">
-          <input type="checkbox" data-add-suite="${s.id}">
-          <span>${escapeHtml(suiteDisplayTitle(s))}</span>
-          <span class="meta">${s.testCaseIds.length} cas</span>
-        </label>
-      `).join('');
+      suitesPicker.innerHTML = availableSuites.map(s => {
+        const bugs = anomalyCountForSuite(s.id);
+        const bugMeta = bugs > 0 ? `<span class="badge badge-danger" style="font-size:10px;padding:1px 5px;" title="${bugs} anomalie${bugs > 1 ? 's' : ''} liée${bugs > 1 ? 's' : ''}">${ICON.bug} ${bugs}</span>` : '';
+        return `
+          <label class="picker-item">
+            <input type="checkbox" data-add-suite="${s.id}">
+            <span>${escapeHtml(suiteDisplayTitle(s))}</span>
+            <span class="meta">${s.testCaseIds.length} cas ${bugMeta}</span>
+          </label>
+        `;
+      }).join('');
     }
     const pfsCnt = body.querySelector('#plan-pfs-count');
     if (pfsCnt) {
@@ -5204,11 +5370,13 @@ function openTestPlanModal(id) {
     } else {
       casesPicker.innerHTML = availableCases.map(c => {
         const f = folderOf(c);
+        const bugs = anomalyCountForCase(c.id);
+        const bugMeta = bugs > 0 ? `<span class="badge badge-danger" style="font-size:10px;padding:1px 5px;" title="${bugs} anomalie${bugs > 1 ? 's' : ''} liée${bugs > 1 ? 's' : ''}">${ICON.bug} ${bugs}</span>` : '';
         return `
           <label class="picker-item">
             <input type="checkbox" data-add-case="${c.id}">
             <span>${escapeHtml(c.title)}</span>
-            <span class="meta">${escapeHtml(f.name)}${c.ready ? ' · prêt' : ''}</span>
+            <span class="meta">${escapeHtml(f.name)}${c.ready ? ' · prêt' : ''} ${bugMeta}</span>
           </label>
         `;
       }).join('');
@@ -9401,10 +9569,17 @@ function renderAnomalyCard(a) {
           <button class="btn-icon btn-ghost" data-delete-anomaly="${a.id}" title="Supprimer">${ICON.trash}</button>
         </div>
       </div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 10px;">
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 10px;align-items:center;">
         <span class="badge ${anomalyStateBadgeClass(a.state)}">${escapeHtml(anomalyStateLabel(a.state))}</span>
         <span class="badge ${anomalySeverityBadgeClass(a.severity)}">${escapeHtml(anomalySeverityLabel(a.severity))}</span>
         <span class="badge">${escapeHtml(anomalyTypeLabel(a.type))}</span>
+        ${(a.jiraTickets || []).filter(t => t.key).slice(0, 3).map(t => {
+          const tooltip = t.summary || t.key;
+          const url = jiraUrlFor(t.key);
+          if (url) return `<a class="jira-pill" href="${escapeHtml(url)}" target="_blank" rel="noopener" title="${escapeHtml(tooltip)}" onclick="event.stopPropagation()">${escapeHtml(t.key)}<span class="ext-icon">${ICON.externalLink}</span></a>`;
+          return `<span class="jira-pill" title="${escapeHtml(tooltip)}">${escapeHtml(t.key)}</span>`;
+        }).join('')}
+        ${(a.jiraTickets || []).filter(t => t.key).length > 3 ? `<span class="jira-pill" title="${escapeHtml((a.jiraTickets || []).filter(t => t.key).slice(3).map(t => t.key + (t.summary ? ' — ' + t.summary : '')).join('\n'))}">+${(a.jiraTickets || []).filter(t => t.key).length - 3}</span>` : ''}
       </div>
       ${descPreview ? `
         <p style="font-size:12.5px;color:var(--text-soft);margin:0 0 10px;line-height:1.5;">
@@ -9447,10 +9622,12 @@ function openAnomalyModal(id) {
         solution: '',
         peopleInvolved: '',
         screenshots: [],
+        jiraTickets: [],
         createdAt: new Date().toISOString(),
         resolvedAt: null,
       }
     : JSON.parse(JSON.stringify(state.anomalies.find(a => a.id === id)));
+  if (!Array.isArray(anomaly.jiraTickets)) anomaly.jiraTickets = [];
 
   // Group test cases by folder for the picker
   const grouped = {};
@@ -9544,7 +9721,13 @@ function openAnomalyModal(id) {
     </div>
 
     <div class="form-group">
-      <label class="field-label">Captures d'écran</label>
+      <label class="field-label">Tickets Jira <span class="hint">tickets de suivi (bug, change). L'URL est dérivée du paramètre Jira global.</span></label>
+      <div class="jira-list" id="an-jira-list"></div>
+      <button type="button" class="btn btn-sm" id="an-add-jira" style="margin-top:8px;align-self:flex-start;">${ICON.plus}<span>Ajouter un ticket</span></button>
+    </div>
+
+    <div class="form-group">
+      <label class="field-label">Captures d'écran <span class="hint">cliquer sur une vignette pour agrandir</span></label>
       <div id="an-shots-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-bottom:10px;"></div>
       <input type="file" id="an-shot-input" accept="image/*" multiple style="display:none;">
       <button type="button" class="btn" id="an-add-shot">${ICON.image}<span>Ajouter une capture</span></button>
@@ -9568,16 +9751,60 @@ function openAnomalyModal(id) {
       }
       grid.innerHTML = anomaly.screenshots.map((s, i) => `
         <div style="position:relative;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;background:var(--surface-soft);">
-          <img src="${s.data}" alt="" style="width:100%;height:100px;object-fit:cover;display:block;">
+          <img src="${s.data}" alt="" data-shot-view="${i}" title="Cliquer pour agrandir" style="width:100%;height:100px;object-fit:cover;display:block;cursor:zoom-in;">
           <button type="button" data-remove-shot="${i}" title="Retirer" style="position:absolute;top:4px;right:4px;width:24px;height:24px;border-radius:50%;background:rgba(31,41,55,0.7);color:white;border:none;display:grid;place-items:center;cursor:pointer;font-size:14px;line-height:1;">×</button>
         </div>
       `).join('');
-      grid.querySelectorAll('[data-remove-shot]').forEach(b => b.onclick = () => {
+      grid.querySelectorAll('[data-shot-view]').forEach(img => img.onclick = () => openImageViewer(anomaly.screenshots[+img.dataset.shotView].data));
+      grid.querySelectorAll('[data-remove-shot]').forEach(b => b.onclick = (e) => {
+        e.stopPropagation();
         anomaly.screenshots.splice(+b.dataset.removeShot, 1);
         renderShots();
       });
     }
     renderShots();
+
+    // Jira tickets editor (reuses .jira-list / .jira-row styles)
+    function renderJira() {
+      const c = body.querySelector('#an-jira-list');
+      const total = anomaly.jiraTickets.length;
+      if (total === 0) {
+        c.innerHTML = '<div style="font-size:12.5px;color:var(--text-muted);font-style:italic;padding:6px 0;">Aucun ticket lié. Cliquez sur « Ajouter un ticket » pour en lier un.</div>';
+        return;
+      }
+      c.innerHTML = anomaly.jiraTickets.map((t, i) => `
+        <div class="jira-row">
+          <div class="jira-num">${i + 1}</div>
+          <input type="text" class="jira-key" data-an-jira-key="${i}" value="${escapeHtml(t.key || '')}" placeholder="ABC-1234">
+          <input type="text" data-an-jira-summary="${i}" value="${escapeHtml(t.summary || '')}" placeholder="Description courte">
+          <div class="jira-actions">
+            <button type="button" class="btn-icon btn-ghost" data-an-jira-up="${i}" ${i === 0 ? 'disabled' : ''} title="Monter">↑</button>
+            <button type="button" class="btn-icon btn-ghost" data-an-jira-down="${i}" ${i === total - 1 ? 'disabled' : ''} title="Descendre">↓</button>
+            <button type="button" class="btn-icon btn-ghost" data-an-jira-remove="${i}" title="Retirer">${ICON.close}</button>
+          </div>
+        </div>
+      `).join('');
+      c.querySelectorAll('[data-an-jira-key]').forEach(el => el.addEventListener('input', e => { anomaly.jiraTickets[+el.dataset.anJiraKey].key = e.target.value; }));
+      c.querySelectorAll('[data-an-jira-summary]').forEach(el => el.addEventListener('input', e => { anomaly.jiraTickets[+el.dataset.anJiraSummary].summary = e.target.value; }));
+      c.querySelectorAll('[data-an-jira-up]').forEach(b => b.onclick = () => {
+        const i = +b.dataset.anJiraUp;
+        if (i > 0) { [anomaly.jiraTickets[i - 1], anomaly.jiraTickets[i]] = [anomaly.jiraTickets[i], anomaly.jiraTickets[i - 1]]; renderJira(); }
+      });
+      c.querySelectorAll('[data-an-jira-down]').forEach(b => b.onclick = () => {
+        const i = +b.dataset.anJiraDown;
+        if (i < anomaly.jiraTickets.length - 1) { [anomaly.jiraTickets[i + 1], anomaly.jiraTickets[i]] = [anomaly.jiraTickets[i], anomaly.jiraTickets[i + 1]]; renderJira(); }
+      });
+      c.querySelectorAll('[data-an-jira-remove]').forEach(b => b.onclick = () => { anomaly.jiraTickets.splice(+b.dataset.anJiraRemove, 1); renderJira(); });
+    }
+    renderJira();
+    body.querySelector('#an-add-jira').onclick = () => {
+      anomaly.jiraTickets.push({ key: '', summary: '' });
+      renderJira();
+      setTimeout(() => {
+        const rows = body.querySelectorAll('[data-an-jira-key]');
+        if (rows.length > 0) rows[rows.length - 1].focus();
+      }, 0);
+    };
 
     // Wire test case picker filters
     const anCasesPicker = body.querySelector('#an-cases');
@@ -9665,6 +9892,9 @@ function openAnomalyModal(id) {
       anomaly.workaround = body.querySelector('#an-workaround').value.trim();
       anomaly.solution = body.querySelector('#an-solution').value.trim();
       anomaly.peopleInvolved = body.querySelector('#an-people').value.trim();
+      anomaly.jiraTickets = (anomaly.jiraTickets || [])
+        .map(t => ({ key: (t.key || '').trim().toUpperCase(), summary: (t.summary || '').trim() }))
+        .filter(t => t.key || t.summary);
 
       // Auto manage resolvedAt
       if (!willBeOpen && !anomaly.resolvedAt) {
