@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T15:43:47.809Z",
+  "updatedAt": "2026-05-21T15:46:17.683Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -10417,6 +10417,91 @@
           "9465d9fa-a88c-4893-80e0-c83134d1e9ea"
         ],
         "testCaseIds": []
+      },
+      {
+        "id": "4a739303-c7f2-4c7c-8d84-38a89d8e3ccb",
+        "title": "TNR Billing",
+        "items": [
+          {
+            "type": "case",
+            "id": "1362a0c7-f987-40af-b661-7bf6a702eb62"
+          },
+          {
+            "type": "case",
+            "id": "c66a771e-9d07-4515-83e4-6eaa0037e22b"
+          },
+          {
+            "type": "case",
+            "id": "9515a5f4-5d1d-4eab-a976-74b0f1a018a9"
+          },
+          {
+            "type": "case",
+            "id": "2143f187-4251-4f36-8dc4-89725554f960"
+          },
+          {
+            "type": "case",
+            "id": "15800fd0-bc65-41d1-b87d-1322a5fec2b3"
+          },
+          {
+            "type": "case",
+            "id": "d0acea54-5b23-40f7-81d0-2629627732a1"
+          },
+          {
+            "type": "case",
+            "id": "80daf2aa-6306-43e6-9849-73326f51dfa1"
+          },
+          {
+            "type": "case",
+            "id": "f5c83549-e182-484c-8e68-5bd367d91a56"
+          },
+          {
+            "type": "case",
+            "id": "8e9dc5eb-3212-4f10-a1bd-f0cfab0d4e35"
+          },
+          {
+            "type": "case",
+            "id": "53f446d1-da28-4b91-932f-afc5025a1a0e"
+          },
+          {
+            "type": "case",
+            "id": "d9457bbc-e28d-44d9-896f-dbc1add53707"
+          },
+          {
+            "type": "case",
+            "id": "f5f93f5a-ece9-48ad-8250-34fe18290567"
+          },
+          {
+            "type": "case",
+            "id": "0fbb6474-407a-438c-a6d5-913b402f5dbb"
+          },
+          {
+            "type": "case",
+            "id": "83b9ebde-c66e-46a8-b6a4-b3128d17c923"
+          },
+          {
+            "type": "case",
+            "id": "7f087482-157e-45d1-aa72-bae30811e9ab"
+          },
+          {
+            "type": "case",
+            "id": "a551f57b-519a-4269-a30f-018bf9a977de"
+          },
+          {
+            "type": "case",
+            "id": "7742f4cd-a2b6-4313-98c9-7dbdc9fe85a6"
+          },
+          {
+            "type": "case",
+            "id": "0f28b269-9878-4e60-9b8c-4c03dc2870cd"
+          },
+          {
+            "type": "case",
+            "id": "00ab4000-6976-45b4-a14f-d5bef3101138"
+          }
+        ],
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ]
       }
     ],
     "anomalies": [
