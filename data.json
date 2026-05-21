@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T13:24:45.515Z",
+  "updatedAt": "2026-05-21T13:26:22.875Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9742,6 +9742,23 @@
         "screenshots": [],
         "createdAt": "2026-05-21T13:23:21.097Z",
         "resolvedAt": "2026-05-21T13:24:42.705Z"
+      },
+      {
+        "id": "1eb50c2b-d3d6-4cd9-a084-ddccaefd847e",
+        "title": "Changement de langues qui ne fonctionne pas",
+        "description": "Changer la langue dans Ivy ne fonctionne pas, reste la même langue.",
+        "type": "functional",
+        "severity": "major",
+        "state": "fixed",
+        "testCaseIds": [
+          "3f0a1025-3635-4a5b-838d-8a2088e2b30b"
+        ],
+        "workaround": "",
+        "solution": "",
+        "peopleInvolved": "",
+        "screenshots": [],
+        "createdAt": "2026-05-21T13:25:39.345Z",
+        "resolvedAt": "2026-05-21T13:26:20.085Z"
       }
     ],
     "testerLevels": [
