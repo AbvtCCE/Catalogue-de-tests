@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T14:47:34.395Z",
+  "updatedAt": "2026-05-21T15:38:37.196Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9357,6 +9357,906 @@
         ],
         "jiraTickets": [],
         "sortOrder": 259
+      },
+      {
+        "id": "c66a771e-9d07-4515-83e4-6eaa0037e22b",
+        "title": "Téléchargement fichier pour contrôle",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-253",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 260
+      },
+      {
+        "id": "e214a6ba-9246-4cb1-83dc-8d02c0d8a16b",
+        "title": "Emménagement/Déménagement",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-181",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 261
+      },
+      {
+        "id": "9515a5f4-5d1d-4eab-a976-74b0f1a018a9",
+        "title": "Création ordre relevé",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-182",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 262
+      },
+      {
+        "id": "2143f187-4251-4f36-8dc4-89725554f960",
+        "title": "Import des index/consommation",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-183",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 263
+      },
+      {
+        "id": "15800fd0-bc65-41d1-b87d-1322a5fec2b3",
+        "title": "Contrôle import index",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-184",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 264
+      },
+      {
+        "id": "d0acea54-5b23-40f7-81d0-2629627732a1",
+        "title": "Validation des index/consommation",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-185",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 265
+      },
+      {
+        "id": "80daf2aa-6306-43e6-9849-73326f51dfa1",
+        "title": "Import des prix",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-186",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 266
+      },
+      {
+        "id": "f5c83549-e182-484c-8e68-5bd367d91a56",
+        "title": "Vérification volumes facturable/non facturable",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-187",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 267
+      },
+      {
+        "id": "6ccb18ff-d6b0-447e-8421-de8b133b0db9",
+        "title": "Création des calculs",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-188",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 268
+      },
+      {
+        "id": "8e9dc5eb-3212-4f10-a1bd-f0cfab0d4e35",
+        "title": "Création des factures",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-189",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 269
+      },
+      {
+        "id": "0d1607c1-622a-4856-ad18-49dcb1f33f6e",
+        "title": "(bug affichage à la fin sinon OK)Libération des calculs/factures",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-190",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 270
+      },
+      {
+        "id": "53f446d1-da28-4b91-932f-afc5025a1a0e",
+        "title": "Contrôles nombre facture/montant/dates",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-191",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 271
+      },
+      {
+        "id": "d9457bbc-e28d-44d9-896f-dbc1add53707",
+        "title": "Check Facturation",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-192",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 272
+      },
+      {
+        "id": "f5f93f5a-ece9-48ad-8250-34fe18290567",
+        "title": "Liste des factures à imprimer",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-193",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 273
+      },
+      {
+        "id": "0fbb6474-407a-438c-a6d5-913b402f5dbb",
+        "title": "Création spool d'impression",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-194",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 274
+      },
+      {
+        "id": "83b9ebde-c66e-46a8-b6a4-b3128d17c923",
+        "title": "Envoi du Spool",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-195",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 275
+      },
+      {
+        "id": "7f087482-157e-45d1-aa72-bae30811e9ab",
+        "title": "Contrôle OMS",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-196",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 276
+      },
+      {
+        "id": "a551f57b-519a-4269-a30f-018bf9a977de",
+        "title": "Contrôle des envois PDF",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-197",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 277
+      },
+      {
+        "id": "133d0f89-4e0b-4c35-b76f-efc3367c01c0",
+        "title": "Envoi manuel en PDF",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-198",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 278
+      },
+      {
+        "id": "c830c5f7-ea39-46a6-ac1c-c0b8dc6510b2",
+        "title": "Contrôle envoi manuel PDF",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-199",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 279
+      },
+      {
+        "id": "7742f4cd-a2b6-4313-98c9-7dbdc9fe85a6",
+        "title": "Envoi des facture EBPP",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-200",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 280
+      },
+      {
+        "id": "0f28b269-9878-4e60-9b8c-4c03dc2870cd",
+        "title": "Traitement des erreurs",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-201",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 281
+      },
+      {
+        "id": "539b6f1f-2f13-4ac7-9e64-0ff0796677bf",
+        "title": "[Obsolète]Enregistrement clients EBPP",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-202",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 282
+      },
+      {
+        "id": "c5ca47e4-4127-4fd3-9061-5df5495b990f",
+        "title": "[Non testsable en QUAL]Contrôle des sans plans de paiement",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-203",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 283
+      },
+      {
+        "id": "00ab4000-6976-45b4-a14f-d5bef3101138",
+        "title": "Contrôle Plans de paiement négatif",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "types": [
+          "acceptation"
+        ],
+        "crud": null,
+        "minLevelId": null,
+        "divisionIds": [
+          "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-204",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 284
       }
     ],
     "testSuites": [
