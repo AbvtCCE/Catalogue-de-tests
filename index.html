@@ -2600,7 +2600,7 @@ function closeModal() {
   tooltip.hide();
 }
 document.getElementById('modal-backdrop').addEventListener('click', (e) => {
-  if (e.target.dataset.closeModal !== undefined || e.target.id === 'modal-backdrop' || e.target.closest('[data-close-modal]')) closeModal();
+  if (e.target.dataset.closeModal !== undefined || e.target.closest('[data-close-modal]')) closeModal();
 });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeModal(); closeImageViewer(); } });
 
