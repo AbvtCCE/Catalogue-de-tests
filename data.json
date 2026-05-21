@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T14:32:57.792Z",
+  "updatedAt": "2026-05-21T14:34:54.902Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9825,6 +9825,23 @@
         "screenshots": [],
         "createdAt": "2026-05-21T14:32:05.676Z",
         "resolvedAt": "2026-05-21T14:32:55.027Z"
+      },
+      {
+        "id": "bbeae8bb-df05-4928-b820-5999c18c3081",
+        "title": "IS-U Caractéristique détermination du compte pour contrats lors de l'emménagement",
+        "description": "Lors d’un emménagement dans IS-U le « CaractDétermCpt » est par défaut repli avec l’entrée 11, qui n’existe pas.",
+        "type": "usability",
+        "severity": "minor",
+        "state": "fixed",
+        "testCaseIds": [
+          "198415a8-cbf0-4d3d-95ac-6253e99700c7"
+        ],
+        "workaround": "",
+        "solution": "Valeur par défaut changée",
+        "peopleInvolved": "Alexandre Riebel;",
+        "screenshots": [],
+        "createdAt": "2026-05-21T14:33:59.079Z",
+        "resolvedAt": "2026-05-21T14:34:52.290Z"
       }
     ],
     "testerLevels": [
