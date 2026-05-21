@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T12:54:11.253Z",
+  "updatedAt": "2026-05-21T13:17:55.524Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9693,6 +9693,23 @@
         "screenshots": [],
         "createdAt": "2026-05-21T12:53:07.333Z",
         "resolvedAt": "2026-05-21T12:54:08.374Z"
+      },
+      {
+        "id": "2cd05e69-b320-4f42-be20-316503e9c4f8",
+        "title": "Inscription impossible dans le portail",
+        "description": "L'inscription au portail ne fonctionne pas par facture.\n\nThe error in the registration API was introduced by ATC corrections",
+        "type": "functional",
+        "severity": "critical",
+        "state": "fixed",
+        "testCaseIds": [
+          "089a7796-e4b4-44d7-b39d-d592c112bd22"
+        ],
+        "workaround": "",
+        "solution": "",
+        "peopleInvolved": "Alexandre Riebel; Marc Dürrmeier;Matthias Arn",
+        "screenshots": [],
+        "createdAt": "2026-05-21T13:16:09.388Z",
+        "resolvedAt": "2026-05-21T13:17:53.016Z"
       }
     ],
     "testerLevels": [
