@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T14:38:08.752Z",
+  "updatedAt": "2026-05-21T14:47:34.395Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9859,6 +9859,23 @@
         "screenshots": [],
         "createdAt": "2026-05-21T14:37:07.188Z",
         "resolvedAt": "2026-05-21T14:38:06.154Z"
+      },
+      {
+        "id": "d37d2ac7-751f-4b2b-8ca6-bea81da9a2f4",
+        "title": "Suivi de sondage DEM : absence d'un programme",
+        "description": "Nous constatons lors des tests de suivis des sondage, l’absence d’un programme dans la transaction SA38 : Z_CT_LISTE_ECHANTILLON_METAS_2",
+        "type": "functional",
+        "severity": "minor",
+        "state": "fixed",
+        "testCaseIds": [
+          "b888cf7f-e6ef-465e-bae1-e0ed5ad9d899"
+        ],
+        "workaround": "Autre ticket ouvert ? Besoin 2026",
+        "solution": "",
+        "peopleInvolved": "Houda Laidouni",
+        "screenshots": [],
+        "createdAt": "2026-05-21T14:46:38.117Z",
+        "resolvedAt": "2026-05-21T14:47:31.722Z"
       }
     ],
     "testerLevels": [
