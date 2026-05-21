@@ -1618,6 +1618,30 @@
   .picker-item:hover { background: var(--surface-soft); }
   .picker-item input { margin: 0; }
   .picker-item .meta { margin-left: auto; color: var(--text-muted); font-size: 11.5px; }
+  .picker-folder-header { padding: 6px 10px; font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; background: var(--surface-soft); border-bottom: 1px solid var(--border); }
+
+  .anomaly-case-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text-soft);
+    font: inherit;
+    font-size: 11.5px;
+    cursor: pointer;
+    max-width: 100%;
+    transition: background 0.12s, border-color 0.12s, color 0.12s;
+  }
+  .anomaly-case-chip:hover {
+    background: var(--surface-soft);
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+  .anomaly-case-chip svg { width: 12px; height: 12px; flex-shrink: 0; }
+  .anomaly-case-chip span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px; }
 
   /* ===== Responsive ===== */
   @media (max-width: 900px) {
@@ -4824,6 +4848,7 @@ function renderTestPlans(view) {
         <div class="subtitle">Composez et ordonnez des plans à partir de suites et/ou cas de tests. Catégorisation dérivée du contenu.</div>
       </div>
       <div class="actions">
+        <button class="btn" id="export-plan-csv" ${plans.length === 0 ? 'disabled' : ''}>${ICON.export}<span>Export CSV</span></button>
         <button class="btn" id="export-plan" ${plans.length === 0 ? 'disabled' : ''}>${ICON.print}<span>Spec imprimable</span></button>
         <button class="btn btn-primary" id="add-plan" data-perm="testplans:create">${ICON.plus}<span>Nouveau plan</span></button>
       </div>
@@ -4859,6 +4884,7 @@ function renderTestPlans(view) {
                   </div>
                   <div style="display:flex;gap:2px;flex-shrink:0;">
                     <button class="btn-icon btn-ghost" data-checklist-plan="${plan.id}" title="Générer une checklist testeur">${ICON.checklist}</button>
+                    <button class="btn-icon btn-ghost" data-csv-plan="${plan.id}" title="Exporter en CSV (Jira / Excel)">${ICON.export}</button>
                     <button class="btn-icon btn-ghost" data-print-plan="${plan.id}" title="Spec imprimable">${ICON.print}</button>
                     <button class="btn-icon btn-ghost" data-edit-plan="${plan.id}" title="Modifier">${ICON.edit}</button>
                     <button class="btn-icon btn-ghost" data-delete-plan="${plan.id}" title="Supprimer">${ICON.trash}</button>
@@ -4911,9 +4937,11 @@ function renderTestPlans(view) {
 
   document.getElementById('add-plan').onclick = () => openTestPlanModal();
   if (plans.length > 0) document.getElementById('export-plan').onclick = () => exportSpecChooser();
+  if (plans.length > 0) document.getElementById('export-plan-csv').onclick = () => exportPlanCsvChooser();
   view.querySelectorAll('[data-checklist-plan]').forEach(b => b.onclick = () => openChecklistModal('plan', b.dataset.checklistPlan));
   view.querySelectorAll('[data-edit-plan]').forEach(b => b.onclick = () => openTestPlanModal(b.dataset.editPlan));
   view.querySelectorAll('[data-print-plan]').forEach(b => b.onclick = () => exportSpec(b.dataset.printPlan));
+  view.querySelectorAll('[data-csv-plan]').forEach(b => b.onclick = () => exportPlanCsv(b.dataset.csvPlan));
   view.querySelectorAll('[data-delete-plan]').forEach(b => b.onclick = () => {
     confirmDialog('Supprimer ce plan ?', () => {
       const id = b.dataset.deletePlan;
@@ -5722,6 +5750,129 @@ ${sections.map(sec => `
   window.open(url, '_blank');
   setTimeout(() => URL.revokeObjectURL(url), 60000);
   toast('Spec ouverte dans un nouvel onglet');
+}
+
+/* =====================================================================
+   CSV EXPORT — plans de tests (pour import Jira ou tableur)
+   - séparateur ; · UTF-8 BOM · RFC 4180 (champs avec ; " ou \n → entre guillemets)
+   - une ligne par cas, étapes regroupées dans une seule cellule multi-lignes
+   ===================================================================== */
+function exportPlanCsv(planId) {
+  const plan = migratePlan(state.testPlans.find(p => p.id === planId));
+  if (!plan) { toast('Plan introuvable'); return; }
+
+  const SEP = ';';
+  const csvEscape = (v) => {
+    const s = v == null ? '' : String(v);
+    if (s.includes(SEP) || s.includes('"') || s.includes('\n') || s.includes('\r')) {
+      return '"' + s.replace(/"/g, '""') + '"';
+    }
+    return s;
+  };
+  const yesNo = (b) => b ? 'oui' : 'non';
+  const joinPipe = (arr) => arr.filter(Boolean).join(' | ');
+  const envNames = (ids) => joinPipe((ids || []).map(id => (state.environments.find(e => e.id === id) || {}).title));
+  const typeLabels = (ids) => joinPipe((ids || []).map(id => (TEST_TYPES.find(t => t.id === id) || {}).label || id));
+  const divisionNames = (ids) => joinPipe((ids || []).map(id => ((state.businessDivisions || []).find(d => d.id === id) || {}).name));
+  const levelName = (id) => ((state.testerLevels || []).find(l => l.id === id) || {}).name || '';
+  const crudLabel = (id) => {
+    if (!id) return '';
+    const op = CRUD_OPS.find(o => o.id === id);
+    return op ? `${op.short} — ${op.label}` : id;
+  };
+  const stepsText = (tc) => {
+    const steps = expandSteps(tc.steps || []).filter(s => (s.action || '').trim() || (s.expected || '').trim());
+    return steps.map((s, i) => {
+      const action = (s.action || '').trim();
+      const expected = (s.expected || '').trim();
+      let line = `${i + 1}. ${action || '(action vide)'}`;
+      if (expected) line += `\n   → ${expected}`;
+      return line;
+    }).join('\n');
+  };
+  const jiraKeys = (tc) => joinPipe((tc.jiraTickets || []).map(t => t.key).filter(Boolean));
+
+  const headers = [
+    'Plan', 'Ordre', "Type d'élément", 'Suite', 'Titre',
+    'Étapes', 'Dossier', 'Environnements', 'Types', 'CRUD',
+    'Prêt', 'Automatisé', 'À automatiser', 'Interface',
+    'Temps estimé (min)', 'Niveau requis', 'Divisions métier', 'Tickets Jira'
+  ];
+  const rows = [headers.map(csvEscape).join(SEP)];
+
+  const pushCase = (c, order, kind, suiteName) => {
+    rows.push([
+      plan.title,
+      String(order),
+      kind,
+      suiteName || '',
+      c.title || '',
+      stepsText(c),
+      folderOf(c).name,
+      envNames(c.environmentIds),
+      typeLabels(c.types),
+      crudLabel(c.crud),
+      yesNo(c.ready),
+      yesNo(c.automated),
+      yesNo(c.toAutomate),
+      yesNo(c.isInterface),
+      c.estimatedTime || '',
+      levelName(c.minLevelId),
+      divisionNames(c.divisionIds),
+      jiraKeys(c),
+    ].map(csvEscape).join(SEP));
+  };
+
+  let order = 0;
+  (plan.items || []).forEach(item => {
+    if (item.type === 'suite') {
+      const s = state.testSuites.find(x => x.id === item.id);
+      if (!s) return;
+      const suiteName = suiteDisplayTitle(s);
+      (s.testCaseIds || [])
+        .map(cid => state.testCases.find(c => c.id === cid))
+        .filter(Boolean)
+        .forEach(c => { order++; pushCase(c, order, 'Suite', suiteName); });
+    } else if (item.type === 'case') {
+      const c = state.testCases.find(x => x.id === item.id);
+      if (!c) return;
+      order++;
+      pushCase(c, order, 'Cas individuel', '');
+    }
+  });
+
+  if (rows.length === 1) { toast('Plan vide — rien à exporter'); return; }
+
+  const csv = '﻿' + rows.join('\r\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const slug = (plan.title || 'plan').toLowerCase()
+    .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '');
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `plan-${slug || 'export'}-${today()}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('CSV téléchargé');
+}
+
+function exportPlanCsvChooser() {
+  if (state.testPlans.length === 0) { toast('Créez d\'abord un plan'); return; }
+  openModal('Exporter un plan en CSV', `
+    <p style="margin:0 0 12px;font-size:13px;color:var(--text-soft);">
+      Une ligne par cas de test, avec les étapes regroupées dans une seule colonne (multi-lignes). Séparateur <code>;</code>, UTF-8 — prêt pour import Jira ou Excel.
+    </p>
+    <div class="picker">
+      ${state.testPlans.map(p => `
+        <div class="picker-item" data-csv-plan="${p.id}" style="cursor:pointer;">
+          <span>${escapeHtml(p.title)}</span>
+        </div>
+      `).join('')}
+    </div>
+  `, `<button class="btn" data-close-modal>Annuler</button>`, () => {
+    document.querySelectorAll('[data-csv-plan]').forEach(el => el.onclick = () => { closeModal(); exportPlanCsv(el.dataset.csvPlan); });
+  });
 }
 
 /* =====================================================================
@@ -9218,6 +9369,10 @@ function renderAnomalies(view) {
 
   document.getElementById('add-anomaly').onclick = () => openAnomalyModal();
   view.querySelectorAll('[data-edit-anomaly]').forEach(b => b.onclick = () => openAnomalyModal(b.dataset.editAnomaly));
+  view.querySelectorAll('[data-open-case]').forEach(b => b.onclick = (e) => {
+    e.stopPropagation();
+    openTestCaseModal(b.dataset.openCase);
+  });
   view.querySelectorAll('[data-delete-anomaly]').forEach(b => b.onclick = () => {
     confirmDialog('Supprimer cette anomalie ?', () => {
       state.anomalies = state.anomalies.filter(a => a.id !== b.dataset.deleteAnomaly);
@@ -9259,11 +9414,20 @@ function renderAnomalyCard(a) {
       <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--text-muted);padding-top:10px;border-top:1px solid var(--border);align-items:center;">
         ${orphan
           ? `<span class="badge badge-danger" style="font-size:10.5px;padding:1px 6px;">⚠ Sans cas lié</span>`
-          : `<span style="display:inline-flex;align-items:center;gap:4px;">${ICON.link}${linkedCases.length} cas lié${linkedCases.length > 1 ? 's' : ''}</span>`}
+          : `<span style="display:inline-flex;align-items:center;gap:4px;flex-shrink:0;">${ICON.link}${linkedCases.length} cas lié${linkedCases.length > 1 ? 's' : ''}</span>`}
         ${(a.screenshots || []).length > 0 ? `<span>${(a.screenshots || []).length} capture${(a.screenshots || []).length > 1 ? 's' : ''}</span>` : ''}
         ${a.peopleInvolved ? `<span title="${escapeHtml(a.peopleInvolved)}">${escapeHtml(a.peopleInvolved.length > 30 ? a.peopleInvolved.slice(0, 30) + '…' : a.peopleInvolved)}</span>` : ''}
         ${a.createdAt ? `<span style="margin-left:auto;">${escapeHtml((a.createdAt || '').slice(0, 10))}</span>` : ''}
       </div>
+      ${linkedCases.length > 0 ? `
+        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:8px;">
+          ${linkedCases.map(c => `
+            <button type="button" class="anomaly-case-chip" data-open-case="${c.id}" title="Ouvrir le cas « ${escapeHtml(c.title)} »">
+              ${ICON.case}<span>${escapeHtml(c.title)}</span>
+            </button>
+          `).join('')}
+        </div>
+      ` : ''}
     </div>
   `;
 }
@@ -9333,20 +9497,34 @@ function openAnomalyModal(id) {
       <label class="field-label">Cas de tests liés <span class="hint">la liaison est requise pour la traçabilité</span></label>
       ${state.testCases.length === 0 ?
         '<p style="font-size:12.5px;color:var(--text-muted);">Aucun cas de test disponible. Créez-en d’abord dans l’onglet « Cas de tests ».</p>' :
-        `<div class="picker" id="an-cases" style="max-height:220px;">
+        `<div class="picker-filter">
+          <input type="text" id="an-cases-search" placeholder="Rechercher un cas de test…">
+          <select id="an-cases-folder">
+            <option value="">Tous les dossiers</option>
+            ${groupedSorted.map(g => `<option value="${g.folder.id}">${escapeHtml(g.folder.name)}</option>`).join('')}
+          </select>
+          <select id="an-cases-only">
+            <option value="">Tous les cas</option>
+            <option value="linked">Uniquement liés</option>
+            <option value="unlinked">Non liés</option>
+          </select>
+          <button type="button" class="btn btn-sm" id="an-cases-clear" title="Effacer les filtres">${ICON.close}</button>
+        </div>
+        <div class="picker" id="an-cases" style="max-height:220px;">
           ${groupedSorted.map(g => `
-            <div style="padding:6px 10px;font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;background:var(--surface-soft);border-bottom:1px solid var(--border);">
+            <div class="picker-folder-header" data-folder-group="${g.folder.id}">
               ${escapeHtml(g.folder.name)}
             </div>
             ${g.cases.map(c => `
-              <label class="picker-item">
+              <label class="picker-item" data-case-id="${c.id}" data-folder-id="${g.folder.id}" data-title="${escapeHtml((c.title || '').toLowerCase())}">
                 <input type="checkbox" value="${c.id}" ${(anomaly.testCaseIds || []).includes(c.id) ? 'checked' : ''}>
                 <span>${escapeHtml(c.title)}</span>
                 <span class="meta">${c.ready ? 'prêt' : 'brouillon'}</span>
               </label>
             `).join('')}
           `).join('')}
-        </div>`}
+        </div>
+        <div class="picker-count" id="an-cases-count"></div>`}
     </div>
 
     <div class="form-row">
@@ -9400,6 +9578,57 @@ function openAnomalyModal(id) {
       });
     }
     renderShots();
+
+    // Wire test case picker filters
+    const anCasesPicker = body.querySelector('#an-cases');
+    if (anCasesPicker) {
+      const anSearch = body.querySelector('#an-cases-search');
+      const anFolderSel = body.querySelector('#an-cases-folder');
+      const anOnlySel = body.querySelector('#an-cases-only');
+      const anClear = body.querySelector('#an-cases-clear');
+      const anCount = body.querySelector('#an-cases-count');
+
+      const applyAnCasesFilter = () => {
+        const term = (anSearch?.value || '').toLowerCase().trim();
+        const folderId = anFolderSel?.value || '';
+        const only = anOnlySel?.value || '';
+        const visibleByFolder = {};
+        anCasesPicker.querySelectorAll('.picker-item').forEach(item => {
+          const fid = item.dataset.folderId;
+          const title = item.dataset.title || '';
+          const checked = item.querySelector('input').checked;
+          let show = true;
+          if (term && !title.includes(term)) show = false;
+          if (folderId && fid !== folderId) show = false;
+          if (only === 'linked' && !checked) show = false;
+          if (only === 'unlinked' && checked) show = false;
+          item.style.display = show ? '' : 'none';
+          if (show) visibleByFolder[fid] = (visibleByFolder[fid] || 0) + 1;
+        });
+        anCasesPicker.querySelectorAll('[data-folder-group]').forEach(h => {
+          h.style.display = visibleByFolder[h.dataset.folderGroup] > 0 ? '' : 'none';
+        });
+        const totalVisible = Object.values(visibleByFolder).reduce((a, b) => a + b, 0);
+        const totalChecked = anCasesPicker.querySelectorAll('input:checked').length;
+        if (anCount) {
+          anCount.innerHTML = `<span>${totalChecked} cas lié${totalChecked > 1 ? 's' : ''}</span><span>${totalVisible} affiché${totalVisible > 1 ? 's' : ''}</span>`;
+        }
+      };
+
+      if (anSearch) anSearch.addEventListener('input', applyAnCasesFilter);
+      if (anFolderSel) anFolderSel.addEventListener('change', applyAnCasesFilter);
+      if (anOnlySel) anOnlySel.addEventListener('change', applyAnCasesFilter);
+      if (anClear) anClear.onclick = () => {
+        if (anSearch) anSearch.value = '';
+        if (anFolderSel) anFolderSel.value = '';
+        if (anOnlySel) anOnlySel.value = '';
+        applyAnCasesFilter();
+      };
+      anCasesPicker.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', applyAnCasesFilter);
+      });
+      applyAnCasesFilter();
+    }
 
     body.querySelector('#an-add-shot').onclick = () => body.querySelector('#an-shot-input').click();
     body.querySelector('#an-shot-input').onchange = async (e) => {
