@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T12:20:35.932Z",
+  "updatedAt": "2026-05-21T12:25:39.766Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9643,6 +9643,21 @@
         "screenshots": [],
         "createdAt": "2026-05-21T12:19:33.802Z",
         "resolvedAt": "2026-05-21T12:20:33.196Z"
+      },
+      {
+        "id": "c961c136-4dd8-4d39-8d61-ad9ebc4e4b08",
+        "title": "Post-Processing s'arrête à l'étape installation technique du compteur",
+        "description": "Nous constatons que le post-processing s'arrête à l'étape d’installation technique du compteur smart.",
+        "type": "functional",
+        "severity": "major",
+        "state": "fixed",
+        "testCaseIds": [],
+        "workaround": "",
+        "solution": "Il faut que la valeur xxx- value_neutral = xxxx-value_neutral_long.\n\n \n\nCeci pour toutes les lignes de codes en ammont du MF : BAPI_OBJCL_CHANGE, qui ont ces ligne\n\n \n\n \n\n \n\nlt_allocvalueschar[ charact = 'Z_S_NETZ' ]-value_neutral = ls_parameter_set-parameter_value.\n\n \n\nlt_allocvalueschar[ charact = 'Z_S_NETZ' ]-value_neutral = lt_ lt_allocvalueschar[ charact = 'Z_S_NETZ' ]-value_neutral_long.",
+        "peopleInvolved": "José-Antonio Moreno, Houda Laidouni",
+        "screenshots": [],
+        "createdAt": "2026-05-21T12:21:33.001Z",
+        "resolvedAt": "2026-05-21T12:25:36.949Z"
       }
     ],
     "testerLevels": [
