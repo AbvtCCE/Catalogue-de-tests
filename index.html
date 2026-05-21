@@ -1618,6 +1618,30 @@
   .picker-item:hover { background: var(--surface-soft); }
   .picker-item input { margin: 0; }
   .picker-item .meta { margin-left: auto; color: var(--text-muted); font-size: 11.5px; }
+  .picker-folder-header { padding: 6px 10px; font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; background: var(--surface-soft); border-bottom: 1px solid var(--border); }
+
+  .anomaly-case-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 8px;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text-soft);
+    font: inherit;
+    font-size: 11.5px;
+    cursor: pointer;
+    max-width: 100%;
+    transition: background 0.12s, border-color 0.12s, color 0.12s;
+  }
+  .anomaly-case-chip:hover {
+    background: var(--surface-soft);
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+  .anomaly-case-chip svg { width: 12px; height: 12px; flex-shrink: 0; }
+  .anomaly-case-chip span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px; }
 
   /* ===== Responsive ===== */
   @media (max-width: 900px) {
@@ -9218,6 +9242,10 @@ function renderAnomalies(view) {
 
   document.getElementById('add-anomaly').onclick = () => openAnomalyModal();
   view.querySelectorAll('[data-edit-anomaly]').forEach(b => b.onclick = () => openAnomalyModal(b.dataset.editAnomaly));
+  view.querySelectorAll('[data-open-case]').forEach(b => b.onclick = (e) => {
+    e.stopPropagation();
+    openTestCaseModal(b.dataset.openCase);
+  });
   view.querySelectorAll('[data-delete-anomaly]').forEach(b => b.onclick = () => {
     confirmDialog('Supprimer cette anomalie ?', () => {
       state.anomalies = state.anomalies.filter(a => a.id !== b.dataset.deleteAnomaly);
@@ -9259,11 +9287,20 @@ function renderAnomalyCard(a) {
       <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--text-muted);padding-top:10px;border-top:1px solid var(--border);align-items:center;">
         ${orphan
           ? `<span class="badge badge-danger" style="font-size:10.5px;padding:1px 6px;">⚠ Sans cas lié</span>`
-          : `<span style="display:inline-flex;align-items:center;gap:4px;">${ICON.link}${linkedCases.length} cas lié${linkedCases.length > 1 ? 's' : ''}</span>`}
+          : `<span style="display:inline-flex;align-items:center;gap:4px;flex-shrink:0;">${ICON.link}${linkedCases.length} cas lié${linkedCases.length > 1 ? 's' : ''}</span>`}
         ${(a.screenshots || []).length > 0 ? `<span>${(a.screenshots || []).length} capture${(a.screenshots || []).length > 1 ? 's' : ''}</span>` : ''}
         ${a.peopleInvolved ? `<span title="${escapeHtml(a.peopleInvolved)}">${escapeHtml(a.peopleInvolved.length > 30 ? a.peopleInvolved.slice(0, 30) + '…' : a.peopleInvolved)}</span>` : ''}
         ${a.createdAt ? `<span style="margin-left:auto;">${escapeHtml((a.createdAt || '').slice(0, 10))}</span>` : ''}
       </div>
+      ${linkedCases.length > 0 ? `
+        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:8px;">
+          ${linkedCases.map(c => `
+            <button type="button" class="anomaly-case-chip" data-open-case="${c.id}" title="Ouvrir le cas « ${escapeHtml(c.title)} »">
+              ${ICON.case}<span>${escapeHtml(c.title)}</span>
+            </button>
+          `).join('')}
+        </div>
+      ` : ''}
     </div>
   `;
 }
@@ -9333,20 +9370,34 @@ function openAnomalyModal(id) {
       <label class="field-label">Cas de tests liés <span class="hint">la liaison est requise pour la traçabilité</span></label>
       ${state.testCases.length === 0 ?
         '<p style="font-size:12.5px;color:var(--text-muted);">Aucun cas de test disponible. Créez-en d’abord dans l’onglet « Cas de tests ».</p>' :
-        `<div class="picker" id="an-cases" style="max-height:220px;">
+        `<div class="picker-filter">
+          <input type="text" id="an-cases-search" placeholder="Rechercher un cas de test…">
+          <select id="an-cases-folder">
+            <option value="">Tous les dossiers</option>
+            ${groupedSorted.map(g => `<option value="${g.folder.id}">${escapeHtml(g.folder.name)}</option>`).join('')}
+          </select>
+          <select id="an-cases-only">
+            <option value="">Tous les cas</option>
+            <option value="linked">Uniquement liés</option>
+            <option value="unlinked">Non liés</option>
+          </select>
+          <button type="button" class="btn btn-sm" id="an-cases-clear" title="Effacer les filtres">${ICON.close}</button>
+        </div>
+        <div class="picker" id="an-cases" style="max-height:220px;">
           ${groupedSorted.map(g => `
-            <div style="padding:6px 10px;font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.04em;background:var(--surface-soft);border-bottom:1px solid var(--border);">
+            <div class="picker-folder-header" data-folder-group="${g.folder.id}">
               ${escapeHtml(g.folder.name)}
             </div>
             ${g.cases.map(c => `
-              <label class="picker-item">
+              <label class="picker-item" data-case-id="${c.id}" data-folder-id="${g.folder.id}" data-title="${escapeHtml((c.title || '').toLowerCase())}">
                 <input type="checkbox" value="${c.id}" ${(anomaly.testCaseIds || []).includes(c.id) ? 'checked' : ''}>
                 <span>${escapeHtml(c.title)}</span>
                 <span class="meta">${c.ready ? 'prêt' : 'brouillon'}</span>
               </label>
             `).join('')}
           `).join('')}
-        </div>`}
+        </div>
+        <div class="picker-count" id="an-cases-count"></div>`}
     </div>
 
     <div class="form-row">
@@ -9400,6 +9451,57 @@ function openAnomalyModal(id) {
       });
     }
     renderShots();
+
+    // Wire test case picker filters
+    const anCasesPicker = body.querySelector('#an-cases');
+    if (anCasesPicker) {
+      const anSearch = body.querySelector('#an-cases-search');
+      const anFolderSel = body.querySelector('#an-cases-folder');
+      const anOnlySel = body.querySelector('#an-cases-only');
+      const anClear = body.querySelector('#an-cases-clear');
+      const anCount = body.querySelector('#an-cases-count');
+
+      const applyAnCasesFilter = () => {
+        const term = (anSearch?.value || '').toLowerCase().trim();
+        const folderId = anFolderSel?.value || '';
+        const only = anOnlySel?.value || '';
+        const visibleByFolder = {};
+        anCasesPicker.querySelectorAll('.picker-item').forEach(item => {
+          const fid = item.dataset.folderId;
+          const title = item.dataset.title || '';
+          const checked = item.querySelector('input').checked;
+          let show = true;
+          if (term && !title.includes(term)) show = false;
+          if (folderId && fid !== folderId) show = false;
+          if (only === 'linked' && !checked) show = false;
+          if (only === 'unlinked' && checked) show = false;
+          item.style.display = show ? '' : 'none';
+          if (show) visibleByFolder[fid] = (visibleByFolder[fid] || 0) + 1;
+        });
+        anCasesPicker.querySelectorAll('[data-folder-group]').forEach(h => {
+          h.style.display = visibleByFolder[h.dataset.folderGroup] > 0 ? '' : 'none';
+        });
+        const totalVisible = Object.values(visibleByFolder).reduce((a, b) => a + b, 0);
+        const totalChecked = anCasesPicker.querySelectorAll('input:checked').length;
+        if (anCount) {
+          anCount.innerHTML = `<span>${totalChecked} cas lié${totalChecked > 1 ? 's' : ''}</span><span>${totalVisible} affiché${totalVisible > 1 ? 's' : ''}</span>`;
+        }
+      };
+
+      if (anSearch) anSearch.addEventListener('input', applyAnCasesFilter);
+      if (anFolderSel) anFolderSel.addEventListener('change', applyAnCasesFilter);
+      if (anOnlySel) anOnlySel.addEventListener('change', applyAnCasesFilter);
+      if (anClear) anClear.onclick = () => {
+        if (anSearch) anSearch.value = '';
+        if (anFolderSel) anFolderSel.value = '';
+        if (anOnlySel) anOnlySel.value = '';
+        applyAnCasesFilter();
+      };
+      anCasesPicker.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', applyAnCasesFilter);
+      });
+      applyAnCasesFilter();
+    }
 
     body.querySelector('#an-add-shot').onclick = () => body.querySelector('#an-shot-input').click();
     body.querySelector('#an-shot-input').onchange = async (e) => {
