@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T15:48:06.106Z",
+  "updatedAt": "2026-05-21T15:51:57.949Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -10583,6 +10583,95 @@
         ],
         "divisionIds": [
           "d6471abe-e8df-42df-b06c-18f091dbebfb"
+        ]
+      },
+      {
+        "id": "68b04798-577a-4b07-8ef5-9294eca9f76e",
+        "title": "TNR DEM",
+        "items": [
+          {
+            "type": "case",
+            "id": "d7b7d3c6-4e67-4906-b65b-83690c77c34e"
+          },
+          {
+            "type": "case",
+            "id": "572c5ae1-bfaf-4e85-84a2-3bc231f76a33"
+          },
+          {
+            "type": "case",
+            "id": "4d4c94b8-8b08-4df9-b3dc-476416cc6cd8"
+          },
+          {
+            "type": "case",
+            "id": "4a2d2f62-e937-4d13-ac03-bb0d49b5f98b"
+          },
+          {
+            "type": "case",
+            "id": "3eae9fb2-ee12-45be-9292-f12365344ba8"
+          },
+          {
+            "type": "case",
+            "id": "9a08bdd8-cb7b-4710-941b-1d05326243fc"
+          },
+          {
+            "type": "case",
+            "id": "2c939cbc-ae98-44e7-a852-1559dbcd0080"
+          },
+          {
+            "type": "case",
+            "id": "cf184dce-92be-41ee-989a-139bbc526698"
+          },
+          {
+            "type": "case",
+            "id": "98c95acc-cde7-464e-ada1-505ec0de04fd"
+          },
+          {
+            "type": "case",
+            "id": "ead671eb-3eb1-46b9-993c-fe794ff0a3f6"
+          },
+          {
+            "type": "case",
+            "id": "b4e74fe9-cc3a-4d98-89c9-c0950163424b"
+          },
+          {
+            "type": "case",
+            "id": "2e874899-760e-4f35-a363-82414de63039"
+          },
+          {
+            "type": "case",
+            "id": "4d84e085-1df1-488b-a622-084286851757"
+          },
+          {
+            "type": "case",
+            "id": "7c1ca7fa-c574-4049-9e44-514270426771"
+          },
+          {
+            "type": "case",
+            "id": "601e1302-465b-42c5-bfcb-beca5849c918"
+          },
+          {
+            "type": "case",
+            "id": "96a2f0c5-9ce3-47ec-9529-f4c1fa31d983"
+          },
+          {
+            "type": "case",
+            "id": "d4c8af7f-06d2-496d-aecf-750d652d5033"
+          },
+          {
+            "type": "case",
+            "id": "1489377b-56b3-47be-be14-fff15b93b214"
+          },
+          {
+            "type": "case",
+            "id": "de0199a0-2292-4b45-902f-6f0319cea4d4"
+          },
+          {
+            "type": "case",
+            "id": "007e2bb4-c6fe-4f15-9d26-92aca874d116"
+          }
+        ],
+        "divisionIds": [
+          "13ab2d73-f7e2-4e34-9807-9a41155da605"
         ]
       }
     ],
