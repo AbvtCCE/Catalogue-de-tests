@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T12:52:11.728Z",
+  "updatedAt": "2026-05-21T12:54:11.253Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9675,6 +9675,24 @@
         "screenshots": [],
         "createdAt": "2026-05-21T12:51:03.914Z",
         "resolvedAt": "2026-05-21T12:52:09.169Z"
+      },
+      {
+        "id": "cd104cd3-1923-4fae-bf2d-34da3d0d9ad8",
+        "title": "Portail Admin not working",
+        "description": "Message d'erreur au lancement sur l'admin portail",
+        "type": "functional",
+        "severity": "major",
+        "state": "fixed",
+        "testCaseIds": [
+          "e55fea9a-4ef7-462a-9342-19d6a08d89ec",
+          "2821e373-039e-4730-a5d7-45b67c05105e"
+        ],
+        "workaround": "",
+        "solution": "Admin-Tool is working now. A Role-Setting was not correctly assigned after import of the realm in Keycloak, thats why the request was rejected with a HTTP 403 on keycloak\n\nIssue is solved for all 3 stages, DEV, QUA, PRD (pre-prod)",
+        "peopleInvolved": "Matthias Arn;Marc Dürrmeier",
+        "screenshots": [],
+        "createdAt": "2026-05-21T12:53:07.333Z",
+        "resolvedAt": "2026-05-21T12:54:08.374Z"
       }
     ],
     "testerLevels": [
