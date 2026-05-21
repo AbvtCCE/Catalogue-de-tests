@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T15:40:47.045Z",
+  "updatedAt": "2026-05-21T15:43:47.809Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -10183,6 +10183,41 @@
           }
         ],
         "sortOrder": 284
+      },
+      {
+        "id": "d8d36414-5b44-4632-8994-70bb388c3aa7",
+        "title": "Fermeture des clés, Batch Run et remonté dans Dynamic automatique",
+        "environmentIds": [
+          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "action": "",
+            "expected": ""
+          }
+        ],
+        "screenshots": [],
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "",
+        "ready": false,
+        "types": [
+          "fonctionnel",
+          "acceptation"
+        ],
+        "crud": "update",
+        "minLevelId": "a6a99374-60ac-432e-bfff-2149d92ff1eb",
+        "divisionIds": [
+          "d515b70b-2280-4de2-a86a-aa422891bf40"
+        ],
+        "jiraTickets": [
+          {
+            "key": "CSTQ-365",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 285
       }
     ],
     "testSuites": [
