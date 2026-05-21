@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T15:39:09.549Z",
+  "updatedAt": "2026-05-21T15:40:47.045Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9367,10 +9367,8 @@
         "isInterface": false,
         "steps": [
           {
-            "type": "step",
             "action": "",
-            "expected": "",
-            "requiresScreenshot": false
+            "expected": ""
           }
         ],
         "screenshots": [],
@@ -9381,7 +9379,7 @@
         "types": [
           "acceptation"
         ],
-        "crud": null,
+        "crud": "read",
         "minLevelId": null,
         "divisionIds": [
           "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
