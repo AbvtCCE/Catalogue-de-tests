@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T13:21:23.281Z",
+  "updatedAt": "2026-05-21T13:24:45.515Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9725,6 +9725,23 @@
         "screenshots": [],
         "createdAt": "2026-05-21T13:19:00.900Z",
         "resolvedAt": "2026-05-21T13:21:20.481Z"
+      },
+      {
+        "id": "caa00492-cafa-49d7-9d16-00e45d3960d9",
+        "title": "Error by BP request",
+        "description": "After login, an error is shown",
+        "type": "functional",
+        "severity": "major",
+        "state": "fixed",
+        "testCaseIds": [
+          "4a34ed59-2261-4792-a894-8063435558f1"
+        ],
+        "workaround": "",
+        "solution": "",
+        "peopleInvolved": "Alexandre Reibel; Marc Dürrmeier",
+        "screenshots": [],
+        "createdAt": "2026-05-21T13:23:21.097Z",
+        "resolvedAt": "2026-05-21T13:24:42.705Z"
       }
     ],
     "testerLevels": [
