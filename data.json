@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T08:52:59.883Z",
+  "updatedAt": "2026-05-21T09:09:08.965Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -7190,12 +7190,12 @@
         "environmentIds": [
           "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
         ],
-        "isInterface": false,
+        "isInterface": true,
         "steps": [
           {
             "type": "step",
-            "action": "",
-            "expected": "",
+            "action": "Utilisation de la transaction ZEM_EXPORT avec variante Z2 Full Batch",
+            "expected": "fichier sur le serveur FTP au format csv",
             "requiresScreenshot": false
           }
         ],
@@ -7207,8 +7207,8 @@
         "types": [
           "acceptation"
         ],
-        "crud": null,
-        "minLevelId": null,
+        "crud": "read",
+        "minLevelId": "080a3599-c0be-4076-9f37-b5e1c41acfde",
         "divisionIds": [
           "13ab2d73-f7e2-4e34-9807-9a41155da605"
         ],
