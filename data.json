@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T15:51:57.949Z",
+  "updatedAt": "2026-05-21T16:18:36.116Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9368,7 +9368,8 @@
         "steps": [
           {
             "action": "",
-            "expected": ""
+            "expected": "",
+            "type": "step"
           }
         ],
         "screenshots": [],
@@ -10194,7 +10195,8 @@
         "steps": [
           {
             "action": "",
-            "expected": ""
+            "expected": "",
+            "type": "step"
           }
         ],
         "screenshots": [],
@@ -10530,6 +10532,18 @@
           {
             "type": "case",
             "id": "d8d36414-5b44-4632-8994-70bb388c3aa7"
+          },
+          {
+            "type": "case",
+            "id": "572c5ae1-bfaf-4e85-84a2-3bc231f76a33"
+          },
+          {
+            "type": "case",
+            "id": "f8f12d10-9d7f-423f-8f74-35a61785e6a6"
+          },
+          {
+            "type": "case",
+            "id": "96049256-1a9e-4189-9504-333d79303629"
           }
         ],
         "divisionIds": [
