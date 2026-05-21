@@ -2600,7 +2600,7 @@ function closeModal() {
   tooltip.hide();
 }
 document.getElementById('modal-backdrop').addEventListener('click', (e) => {
-  if (e.target.dataset.closeModal !== undefined || e.target.id === 'modal-backdrop' || e.target.closest('[data-close-modal]')) closeModal();
+  if (e.target.dataset.closeModal !== undefined || e.target.closest('[data-close-modal]')) closeModal();
 });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeModal(); closeImageViewer(); } });
 
@@ -3160,8 +3160,8 @@ function renderTestCases(view) {
     confirmDialog('Supprimer ce cas de test ? Il sera retiré des suites et plans.', () => {
       const id = b.dataset.deleteTc;
       state.testCases = state.testCases.filter(c => c.id !== id);
-      state.testSuites.forEach(s => s.testCaseIds = s.testCaseIds.filter(x => x !== id));
-      state.testPlans.forEach(p => p.testCaseIds = p.testCaseIds.filter(x => x !== id));
+      state.testSuites.forEach(s => s.testCaseIds = (s.testCaseIds || []).filter(x => x !== id));
+      state.testPlans.forEach(p => p.testCaseIds = (p.testCaseIds || []).filter(x => x !== id));
       save();
       renderTestCases(view);
       toast('Cas supprimé');
