@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T12:19:14.043Z",
+  "updatedAt": "2026-05-21T12:20:35.932Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9628,6 +9628,21 @@
         ],
         "createdAt": "2026-05-21T12:16:22.333Z",
         "resolvedAt": "2026-05-21T12:18:28.117Z"
+      },
+      {
+        "id": "d6ebc2b7-fdfb-4a18-bea3-ae3be98d60ab",
+        "title": "EL01 - 30090 - Date de relevé planifiée - Debut/fin de mois",
+        "description": "Pour l’UR 30090, lors de la création des doc de relevés 01, la planification propose les dates de début et de fin de mois, alors qu’il ne devrait proposer que les dates de fin",
+        "type": "functional",
+        "severity": "minor",
+        "state": "fixed",
+        "testCaseIds": [],
+        "workaround": "",
+        "solution": "",
+        "peopleInvolved": "Sébastien Bourg; Anton Meta",
+        "screenshots": [],
+        "createdAt": "2026-05-21T12:19:33.802Z",
+        "resolvedAt": "2026-05-21T12:20:33.196Z"
       }
     ],
     "testerLevels": [
