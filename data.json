@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T13:26:22.875Z",
+  "updatedAt": "2026-05-21T13:28:55.630Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9759,6 +9759,21 @@
         "screenshots": [],
         "createdAt": "2026-05-21T13:25:39.345Z",
         "resolvedAt": "2026-05-21T13:26:20.085Z"
+      },
+      {
+        "id": "717151f6-acb6-4ae9-9932-475ee582a6e4",
+        "title": "afficher le PDF archive des factures depuis le ZCIC0 sur S/4",
+        "description": "On n’arrive plus à afficher le PDF archive des factures depuis le ZCIC0.",
+        "type": "functional",
+        "severity": "critical",
+        "state": "fixed",
+        "testCaseIds": [],
+        "workaround": "",
+        "solution": "Corrigé coté Dina",
+        "peopleInvolved": "Nadia Wicki;Sébastien Bourg",
+        "screenshots": [],
+        "createdAt": "2026-05-21T13:27:15.135Z",
+        "resolvedAt": "2026-05-21T13:28:52.912Z"
       }
     ],
     "testerLevels": [
