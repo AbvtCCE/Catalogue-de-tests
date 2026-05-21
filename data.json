@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-05-21T12:25:39.766Z",
+  "updatedAt": "2026-05-21T12:52:11.728Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -9658,6 +9658,23 @@
         "screenshots": [],
         "createdAt": "2026-05-21T12:21:33.001Z",
         "resolvedAt": "2026-05-21T12:25:36.949Z"
+      },
+      {
+        "id": "d0a3e9b7-c184-42a1-a581-3ea69b685d51",
+        "title": "Nouveau raccordement : LRN généré par SAP existant dans le MDMS empêche l'installation du compteur",
+        "description": "Nous constatons que lors d’un nouvelle pose d’un compteur smart, les messages MDUS 1.24 et 3.19 tombent en erreur car 1 LRN généré par SAP est existant dans le MDMS.",
+        "type": "functional",
+        "severity": "major",
+        "state": "fixed",
+        "testCaseIds": [
+          "572c5ae1-bfaf-4e85-84a2-3bc231f76a33"
+        ],
+        "workaround": "",
+        "solution": "",
+        "peopleInvolved": "Sébastien Bourg;Houda Laidouni.",
+        "screenshots": [],
+        "createdAt": "2026-05-21T12:51:03.914Z",
+        "resolvedAt": "2026-05-21T12:52:09.169Z"
       }
     ],
     "testerLevels": [
