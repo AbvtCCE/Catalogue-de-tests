@@ -6,9 +6,9 @@
     {
       "username": "abvt",
       "role": "admin",
-      "passwordHash": "dd5d145feb30893db03eddb895535d54a9108d9d1d2127a7dca0fefab87005d5",
+      "passwordHash": "a3373d3eb32f4e49b8387acb0470fabfbef341661be2cce8f99b2e628756dec6",
       "createdAt": "2026-05-18",
-      "mustChangePassword": false
+      "mustChangePassword": true
     },
     {
       "username": "test_utilisateur",
