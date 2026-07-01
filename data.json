@@ -1,14 +1,14 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-01T08:13:38.539Z",
+  "updatedAt": "2026-07-01T08:32:19.369Z",
   "updatedBy": "abvt",
   "users": [
     {
       "username": "abvt",
       "role": "admin",
-      "passwordHash": "a3373d3eb32f4e49b8387acb0470fabfbef341661be2cce8f99b2e628756dec6",
+      "passwordHash": "454735da5867f915529ee45e92b450e94333e778a3d8256ff41b5dbf68c207b7",
       "createdAt": "2026-05-18",
-      "mustChangePassword": true
+      "mustChangePassword": false
     },
     {
       "username": "test_utilisateur",
