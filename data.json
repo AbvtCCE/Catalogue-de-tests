@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-09T11:25:57.664Z",
+  "updatedAt": "2026-07-09T11:26:07.668Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -2838,42 +2838,6 @@
           }
         ],
         "sortOrder": 73,
-        "linkedCaseIds": []
-      },
-      {
-        "id": "a0444768-33ec-4057-a9da-d664fee29200",
-        "title": "Créer un partenaire — ISU-QUAL",
-        "environmentIds": [
-          "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "action": "",
-            "expected": "",
-            "type": "step"
-          }
-        ],
-        "screenshots": [],
-        "automated": false,
-        "estimatedTime": "",
-        "ready": false,
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "create",
-        "minLevelId": "4b0b7498-8b22-493f-97bf-5a771a1fc7c5",
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752"
-        ],
-        "toAutomate": false,
-        "jiraTickets": [
-          {
-            "key": "CSTQ-164",
-            "summary": ""
-          }
-        ],
-        "sortOrder": 82,
         "linkedCaseIds": []
       },
       {
@@ -10871,7 +10835,8 @@
         ],
         "divisionIds": [
           "6ae217ab-a265-4bcc-9ed6-a2b002d87de1"
-        ]
+        ],
+        "testCaseIds": []
       },
       {
         "id": "60282254-4ae1-4a64-a3af-9fea029a80a7",
@@ -10916,7 +10881,8 @@
         ],
         "divisionIds": [
           "d515b70b-2280-4de2-a86a-aa422891bf40"
-        ]
+        ],
+        "testCaseIds": []
       },
       {
         "id": "01bb09db-4508-4430-8e6c-b13e89aef6b1",
@@ -10965,7 +10931,8 @@
         ],
         "divisionIds": [
           "d6471abe-e8df-42df-b06c-18f091dbebfb"
-        ]
+        ],
+        "testCaseIds": []
       },
       {
         "id": "68b04798-577a-4b07-8ef5-9294eca9f76e",
@@ -11054,7 +11021,8 @@
         ],
         "divisionIds": [
           "13ab2d73-f7e2-4e34-9807-9a41155da605"
-        ]
+        ],
+        "testCaseIds": []
       },
       {
         "id": "aa111c17-c6f8-4bcd-881b-c0cdf7c2da05",
@@ -11135,7 +11103,8 @@
         ],
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
-        ]
+        ],
+        "testCaseIds": []
       }
     ],
     "anomalies": [
