@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-09T09:48:28.899Z",
+  "updatedAt": "2026-07-09T11:24:30.769Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -1928,16 +1928,45 @@
       },
       {
         "id": "257d15c0-22c7-4c77-93c4-5ede6e7af2be",
-        "title": "Création partenaire commercial",
+        "title": "Création partenaire",
         "environmentIds": [
           "db216a60-62c6-4ea3-972d-d20a55fc1ac6"
         ],
         "isInterface": false,
         "steps": [
           {
-            "action": "",
-            "expected": "",
-            "type": "step"
+            "type": "block",
+            "blockId": "5341feba-bf15-4fd4-8f60-dac454d2813c"
+          },
+          {
+            "type": "step",
+            "action": "Lancer la fonction BP",
+            "expected": "Affichage de la fonction BP",
+            "requiresScreenshot": false
+          },
+          {
+            "type": "step",
+            "action": "Cliquer sur Créer Personne (f5)",
+            "expected": "le formulaire s'affiche",
+            "requiresScreenshot": false
+          },
+          {
+            "type": "step",
+            "action": "Remplir le nom",
+            "expected": "Saisir un nom",
+            "requiresScreenshot": false
+          },
+          {
+            "type": "step",
+            "action": "Enregister",
+            "expected": "Le partenaire et un numéro lui est attribué",
+            "requiresScreenshot": true
+          },
+          {
+            "type": "step",
+            "action": "Recherche du Partenaire par BP",
+            "expected": "Le partenaire nouvellement créer est trouvable",
+            "requiresScreenshot": true
           }
         ],
         "screenshots": [],
@@ -1952,10 +1981,10 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
-            "key": "CSTQ-157",
+            "key": "CSTQ-164",
             "summary": ""
           }
         ],
