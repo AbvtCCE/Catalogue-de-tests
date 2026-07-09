@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-09T11:24:30.769Z",
+  "updatedAt": "2026-07-09T11:25:29.371Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -225,7 +225,7 @@
         "screenshots": [],
         "automated": false,
         "estimatedTime": "",
-        "ready": false,
+        "ready": true,
         "types": [
           "fonctionnel",
           "smoke"
@@ -235,7 +235,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 10,
         "linkedCaseIds": []
