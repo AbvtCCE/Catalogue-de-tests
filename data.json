@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-22T07:39:39.660Z",
+  "updatedAt": "2026-07-22T07:40:26.290Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -10584,6 +10584,38 @@
         "jiraTickets": [],
         "linkedCaseIds": [],
         "sortOrder": 286
+      },
+      {
+        "id": "88865d09-df6f-4549-a043-29c15d5abd7f",
+        "title": "Les factures s'affichent",
+        "environmentIds": [
+          "0cfa759c-e1bf-4a0f-ad95-336ff0e70127"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "block",
+            "blockId": "50e116fa-bf43-43f8-9254-1f3f172c2543"
+          }
+        ],
+        "screenshots": [],
+        "automated": false,
+        "toAutomate": true,
+        "estimatedTime": 1,
+        "ready": true,
+        "types": [
+          "fonctionnel",
+          "regression",
+          "smoke"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "180f9b83-d46a-42de-a79c-c37077fa5495"
+        ],
+        "jiraTickets": [],
+        "linkedCaseIds": [],
+        "sortOrder": 287
       }
     ],
     "testSuites": [
