@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-09T11:26:07.668Z",
+  "updatedAt": "2026-07-22T07:39:39.660Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -10552,6 +10552,38 @@
         ],
         "sortOrder": 285,
         "linkedCaseIds": []
+      },
+      {
+        "id": "176a35d5-0b05-4b3e-a1e9-64c720570041",
+        "title": "Voir les consommations",
+        "environmentIds": [
+          "0cfa759c-e1bf-4a0f-ad95-336ff0e70127"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "block",
+            "blockId": "50e116fa-bf43-43f8-9254-1f3f172c2543"
+          }
+        ],
+        "screenshots": [],
+        "automated": false,
+        "toAutomate": true,
+        "estimatedTime": 1,
+        "ready": true,
+        "types": [
+          "fonctionnel",
+          "regression",
+          "smoke"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "180f9b83-d46a-42de-a79c-c37077fa5495"
+        ],
+        "jiraTickets": [],
+        "linkedCaseIds": [],
+        "sortOrder": 286
       }
     ],
     "testSuites": [
