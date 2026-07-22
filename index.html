@@ -1983,6 +1983,18 @@ async function dbSet(key, val) {
     tx.onerror = () => reject(tx.error);
   });
 }
+/* Ecrit plusieurs cles dans UNE seule transaction (atomique). Evite qu'un crash
+   entre deux ecritures laisse un etat incoherent (ex: nouveau state + dirty=false). */
+async function dbSetMany(obj) {
+  const db = await getDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE, 'readwrite');
+    const os = tx.objectStore(STORE);
+    for (const k in obj) os.put(obj[k], k);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
 async function dbDelete(key) {
   const db = await getDB();
   return new Promise((resolve, reject) => {
@@ -2088,6 +2100,8 @@ async function reconnectFile() {
 let _githubSha = null;        // sha du data.json distant (pour eviter conflits)
 let _githubSyncTimer = null;  // debounce ecriture
 let _githubSyncBusy = false;
+let _dirty = false;           // changements locaux non confirmes sur GitHub (persiste en IndexedDB)
+let _dirtyGen = 0;            // incremente a chaque save(); permet de ne pas effacer le drapeau si une edition arrive pendant un push
 
 function setSyncIndicator(state, text) {
   const el = document.getElementById('sync-indicator');
@@ -2100,10 +2114,14 @@ function setSyncIndicator(state, text) {
 async function pushToGitHub() {
   if (_githubSyncBusy) { scheduleGithubSync(); return; }
   if (!window.QAGitHub || !QAGitHub.getPat()) {
-    setSyncIndicator('warn', 'Mode local · PAT requis (Admin)');
+    setSyncIndicator('err', 'Non synchronisé · PAT requis (Administration)');
     return;
   }
   _githubSyncBusy = true;
+  // Generation au moment ou l'on fige l'etat a pousser. Si une edition arrive pendant
+  // l'aller-retour reseau, _dirtyGen change et on NE videra PAS le drapeau (sinon la
+  // nouvelle edition, ecrite avec dirty=false, serait ecrasee par le distant au reload).
+  const gen = _dirtyGen;
   setSyncIndicator('busy', 'Synchro GitHub…');
   try {
     // On garde users/role inchanges, on ne touche qu'a state.
@@ -2114,7 +2132,15 @@ async function pushToGitHub() {
     doc.updatedBy = (QASession.username && QASession.username()) || 'unknown';
     const sha = await QAGitHub.saveData(doc, (remote && remote.sha) || _githubSha, `Update state by ${doc.updatedBy}`);
     _githubSha = sha;
-    setSyncIndicator('ok', 'Synchronise sur GitHub');
+    if (_dirtyGen === gen) {
+      _dirty = false;
+      await dbSet('dirty', false);
+      setSyncIndicator('ok', 'Synchronisé sur GitHub');
+    } else {
+      // Des modifications sont arrivees pendant le push: on garde le drapeau et on repousse.
+      setSyncIndicator('busy', 'Nouvelles modifications · re-synchro…');
+      scheduleGithubSync();
+    }
   } catch (e) {
     console.warn('Push GitHub echoue', e);
     if (e.message === 'CONFLICT') {
@@ -2135,7 +2161,14 @@ function scheduleGithubSync() {
 
 async function save() {
   try {
-    await dbSet('state', state);
+    // Marque l'etat comme non synchronise tant que GitHub n'a pas confirme l'ecriture.
+    // Ce drapeau survit aux rechargements : au prochain load(), l'etat local prime et
+    // n'est jamais ecrase par la version distante tant qu'il reste des changements en attente.
+    _dirty = true;
+    _dirtyGen++;
+    // Ecriture ATOMIQUE state + dirty: un crash entre les deux ne peut pas laisser un
+    // nouvel etat marque "synchronise" (ce qui le ferait ecraser par le distant au reload).
+    await dbSetMany({ state, dirty: true });
     if (fileHandle) {
       syncToFile().then(ok => { if (!ok) console.warn('File sync skipped (no permission)'); });
     }
@@ -2150,28 +2183,52 @@ async function save() {
 
 async function load() {
   try {
-    // Fetch shared state from GitHub. If successful, it wins over local cache.
-    let loadedFromGitHub = false;
+    // Etat local + drapeau "changements non pousses" (persistes en IndexedDB).
+    const stored = await dbGet('state');
+    _dirty = (await dbGet('dirty')) === true;
+
+    // Tente de recuperer l'etat partage depuis GitHub.
+    let remote = null;
     try {
       setSyncIndicator('busy', 'Chargement GitHub…');
-      const remote = await QAGitHub.fetchData();
-      if (remote && remote.data && remote.data.state) {
-        state = Object.assign(state, remote.data.state);
-        _githubSha = remote.sha;
-        await dbSet('state', state);
-        setSyncIndicator(remote.source === 'cache' ? 'warn' : 'ok',
-          remote.source === 'cache' ? 'Cache local (hors ligne)' : 'Charge depuis GitHub');
-        loadedFromGitHub = remote.source !== 'cache';
-      } else {
-        setSyncIndicator('warn', 'data.json incomplet');
-      }
+      remote = await QAGitHub.fetchData();
     } catch (e) {
-      console.warn('Load GitHub echoue, fallback IndexedDB', e);
-      setSyncIndicator('warn', 'Hors ligne · IndexedDB');
+      console.warn('Load GitHub echoue', e);
     }
+    const hasPat = !!(window.QAGitHub && QAGitHub.getPat());
+    const remoteFresh = !!(remote && remote.data && remote.data.state && remote.source !== 'cache');
 
-    if (!loadedFromGitHub) {
-      // One-shot migration from localStorage if a previous version was used
+    if (_dirty && stored) {
+      // Des modifications locales n'ont pas encore ete confirmees sur GitHub.
+      // REGLE DE SECURITE : l'etat local PRIME et n'est JAMAIS ecrase par le distant
+      // tant que ces changements ne sont pas pousses — sinon on perdrait le travail.
+      state = Object.assign(state, stored);
+      if (remoteFresh) _githubSha = remote.sha; // vise la derniere version distante pour le prochain push
+      if (hasPat) {
+        setSyncIndicator('warn', 'Modifications locales · synchronisation…');
+        scheduleGithubSync();                    // pousse les changements en attente
+      } else {
+        setSyncIndicator('err', 'Non synchronisé · PAT requis (Administration)');
+      }
+    } else if (remoteFresh) {
+      // Aucun changement local en attente : la version GitHub fait foi.
+      state = Object.assign(state, remote.data.state);
+      _githubSha = remote.sha;
+      await dbSet('state', state);
+      _dirty = false;
+      await dbSet('dirty', false);
+      setSyncIndicator('ok', 'Chargé depuis GitHub');
+    } else if (remote && remote.source === 'cache' && remote.data && remote.data.state) {
+      // Hors ligne : on repart du cache distant conserve par le client GitHub.
+      state = Object.assign(state, remote.data.state);
+      setSyncIndicator('warn', 'Cache local (hors ligne)');
+    } else if (stored) {
+      // Pas de distant exploitable : on conserve l'etat local existant.
+      state = Object.assign(state, stored);
+      setSyncIndicator('warn', 'Hors ligne · données locales');
+    } else {
+      // Tout premier lancement, aucune donnee locale : migration eventuelle
+      // depuis l'ancien stockage localStorage.
       const legacy = localStorage.getItem(STORAGE_KEY_LEGACY);
       if (legacy) {
         try {
@@ -2183,9 +2240,6 @@ async function load() {
         } catch (e) {
           console.warn('Legacy migration failed', e);
         }
-      } else {
-        const stored = await dbGet('state');
-        if (stored) state = Object.assign(state, stored);
       }
     }
     // Restore file handle (permission re-validated lazily on first save)
@@ -9952,6 +10006,15 @@ function renderSessionBar() {
 
 async function init() {
   renderSessionBar();
+  // Demande au navigateur de NE PAS evincer le stockage de ce site (localStorage +
+  // IndexedDB). Sans ca, Chrome/Edge peuvent purger le PAT et la session sous pression
+  // disque ou apres inactivite. A accorder une fois; persiste ensuite pour l'origine.
+  try {
+    if (navigator.storage && navigator.storage.persist) {
+      const already = navigator.storage.persisted && await navigator.storage.persisted();
+      if (!already) await navigator.storage.persist();
+    }
+  } catch (e) { /* non bloquant */ }
   await load();
   buildNav();
   switchTab('dashboard');
@@ -9975,6 +10038,16 @@ async function init() {
   };
   // Applique les droits sur les boutons de la sidebar (export/import) une fois le DOM pret.
   if (window.QAPerm) QAPerm.applyPermissionGates(document);
+
+  // Filet de securite: quand l'onglet se ferme/masque, pousse tout de suite les
+  // changements en attente au lieu d'attendre le debounce. Meilleur effort — le
+  // drapeau _dirty garantit de toute facon la re-synchro au prochain chargement.
+  window.addEventListener('pagehide', () => {
+    if (_dirty && window.QAGitHub && QAGitHub.getPat() && !_githubSyncBusy) {
+      if (_githubSyncTimer) clearTimeout(_githubSyncTimer);
+      pushToGitHub();
+    }
+  });
 }
 init();
 </script>
