@@ -23,7 +23,9 @@
 
   <div class="card">
     <h2>Connexion GitHub</h2>
-    <div class="subtitle">Un Personal Access Token GitHub est necessaire pour ecrire data.json. Scope requis : <code>repo</code> (classic) ou <code>contents:write</code> (fine-grained) sur ce repo.</div>
+    <div class="subtitle">Un Personal Access Token GitHub est necessaire pour ecrire data.json.<br>
+      <strong>Le plus simple :</strong> un token <strong>classic</strong> (commence par <code>ghp_</code>), scope <code>repo</code>, expiration <strong>No expiration</strong>.<br>
+      <strong>Piege :</strong> un token <strong>fine-grained</strong> (<code>github_pat_...</code>) doit avoir explicitement <code>Contents: Read and write</code> sur ce depot — sinon l'ecriture echoue <em>meme si le bouton Tester affiche OK</em>.</div>
     <div class="inline-form">
       <div class="form-row">
         <label for="pat">Personal Access Token</label>
@@ -315,7 +317,13 @@
     if (!val) { flash('Entrez un PAT.', 'error', 3000); return; }
     const r = await QAGitHub.checkPat(val);
     if (!r.ok) { flash('PAT invalide : ' + r.reason, 'error', 4000); return; }
-    flash(`PAT OK · ${r.repo}${r.canWrite ? ' (ecriture)' : ' (lecture seule)'}`, r.canWrite ? 'success' : 'warning', 5000);
+    if (r.archived) {
+      flash(`Depot ${r.repo} ARCHIVE = lecture seule. Desarchivez-le (Settings du depot > Danger Zone > Unarchive) pour pouvoir ecrire.`, 'error', 9000);
+    } else if (r.canWrite) {
+      flash(`Compte OK sur ${r.repo} (droit push). ATTENTION : ce test ne garantit pas l'ecriture d'un jeton fine-grained — il lui faut explicitement la permission "Contents: Read and write" sur ce depot, sinon la synchro echouera malgre ce message.`, 'success', 10000);
+    } else {
+      flash(`Lecture seule sur ${r.repo} : le compte n'a pas le droit push (ou jeton trop limite).`, 'warning', 7000);
+    }
   };
   document.getElementById('pat-save').onclick = async () => {
     const val = document.getElementById('pat').value.trim();

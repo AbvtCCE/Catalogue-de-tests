@@ -100,9 +100,15 @@
     });
     if (!res.ok) {
       const txt = await res.text();
+      let ghMsg = txt;
+      try { ghMsg = (JSON.parse(txt).message) || txt; } catch (e) { /* corps non-JSON */ }
       if (res.status === 409) throw new Error('CONFLICT');
-      if (res.status === 401 || res.status === 403) throw new Error('PAT invalide ou sans droits ecriture');
-      throw new Error(`GitHub PUT ${res.status}: ${txt}`);
+      // On remonte le VRAI message GitHub : il dit exactement pourquoi l'ecriture est refusee
+      // (ex: "Resource not accessible by personal access token" = jeton fine-grained sans
+      //  droit Contents:write ; "Repository was archived so is read-only" = depot archive).
+      if (res.status === 401) throw new Error(`Jeton invalide (401) : ${ghMsg}`);
+      if (res.status === 403) throw new Error(`Ecriture refusee (403) : ${ghMsg}`);
+      throw new Error(`GitHub PUT ${res.status} : ${ghMsg}`);
     }
     const json = await res.json();
     cacheSet(data, json.content.sha);
@@ -117,8 +123,14 @@
       });
       if (!res.ok) return { ok: false, reason: `HTTP ${res.status}` };
       const json = await res.json();
-      const canWrite = !!(json.permissions && (json.permissions.push || json.permissions.admin || json.permissions.maintain));
-      return { ok: true, canWrite, repo: json.full_name };
+      // ATTENTION: json.permissions refletent le role du COMPTE sur le depot, PAS ce que
+      // le jeton (surtout fine-grained) est reellement autorise a faire. Un depot archive
+      // est aussi en lecture seule quel que soit le role. On ne garantit donc "ecriture"
+      // que si le compte peut push ET que le depot n'est pas archive — le seul test 100%
+      // fiable reste une vraie ecriture (cf. saveData).
+      const hasPushRole = !!(json.permissions && (json.permissions.push || json.permissions.admin || json.permissions.maintain));
+      const archived = !!json.archived;
+      return { ok: true, canWrite: hasPushRole && !archived, hasPushRole, archived, repo: json.full_name };
     } catch (e) {
       return { ok: false, reason: e.message };
     }
