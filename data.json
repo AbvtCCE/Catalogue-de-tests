@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-07T12:43:51.218Z",
+  "updatedAt": "2026-08-07T12:43:59.104Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -4619,13 +4619,12 @@
         "steps": [
           {
             "action": "",
-            "expected": "",
-            "type": "step"
+            "expected": ""
           }
         ],
         "screenshots": [],
         "automated": false,
-        "toAutomate": false,
+        "toAutomate": true,
         "estimatedTime": "",
         "ready": false,
         "types": [
