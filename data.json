@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-07T12:45:08.653Z",
+  "updatedAt": "2026-08-07T12:47:11.450Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -378,7 +378,7 @@
         "divisionIds": [
           "180f9b83-d46a-42de-a79c-c37077fa5495"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-587",
@@ -415,7 +415,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-154",
@@ -515,7 +515,7 @@
         "divisionIds": [
           "180f9b83-d46a-42de-a79c-c37077fa5495"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 12,
         "linkedCaseIds": []
@@ -548,7 +548,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 17,
         "linkedCaseIds": []
@@ -643,7 +643,7 @@
         "divisionIds": [
           "180f9b83-d46a-42de-a79c-c37077fa5495"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 16,
         "linkedCaseIds": []
@@ -676,7 +676,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 21,
         "linkedCaseIds": []
@@ -1038,7 +1038,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 30,
         "linkedCaseIds": []
@@ -1109,7 +1109,7 @@
         "divisionIds": [
           "180f9b83-d46a-42de-a79c-c37077fa5495"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 28,
         "linkedCaseIds": []
@@ -1142,7 +1142,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 33,
         "linkedCaseIds": []
@@ -1174,7 +1174,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 34,
         "linkedCaseIds": []
@@ -1244,7 +1244,7 @@
         "divisionIds": [
           "180f9b83-d46a-42de-a79c-c37077fa5495"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 32,
         "linkedCaseIds": []
@@ -1276,7 +1276,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 37,
         "linkedCaseIds": []
@@ -1308,7 +1308,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 38,
         "linkedCaseIds": []
@@ -1378,7 +1378,7 @@
         "divisionIds": [
           "180f9b83-d46a-42de-a79c-c37077fa5495"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 36,
         "linkedCaseIds": []
@@ -1410,7 +1410,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 41,
         "linkedCaseIds": []
@@ -1442,7 +1442,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 51,
         "linkedCaseIds": []
@@ -1512,7 +1512,7 @@
         "divisionIds": [
           "180f9b83-d46a-42de-a79c-c37077fa5495"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 40,
         "linkedCaseIds": []
@@ -1544,7 +1544,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 54,
         "linkedCaseIds": []
@@ -2013,7 +2013,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-409",
@@ -2087,7 +2087,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 101,
         "linkedCaseIds": []
@@ -2246,7 +2246,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-150",
@@ -2282,7 +2282,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-325",
@@ -2351,7 +2351,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-149",
@@ -2387,7 +2387,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-329",
@@ -2423,7 +2423,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-335",
@@ -2460,7 +2460,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-155",
@@ -2575,7 +2575,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-166",
@@ -2649,7 +2649,7 @@
         "divisionIds": [
           "180f9b83-d46a-42de-a79c-c37077fa5495"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-382",
@@ -2686,7 +2686,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-342",
@@ -2791,7 +2791,7 @@
         "divisionIds": [
           "180f9b83-d46a-42de-a79c-c37077fa5495"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 72,
         "linkedCaseIds": []
@@ -2823,7 +2823,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-178",
@@ -2892,7 +2892,7 @@
         "divisionIds": [
           "180f9b83-d46a-42de-a79c-c37077fa5495"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-378",
@@ -2966,7 +2966,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-165",
@@ -3039,7 +3039,7 @@
         "divisionIds": [
           "180f9b83-d46a-42de-a79c-c37077fa5495"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-377",
@@ -3076,7 +3076,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-340",
@@ -3112,7 +3112,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-407",
@@ -3185,7 +3185,7 @@
         "divisionIds": [
           "180f9b83-d46a-42de-a79c-c37077fa5495"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 84,
         "linkedCaseIds": []
@@ -3217,7 +3217,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 81,
         "linkedCaseIds": []
@@ -3248,7 +3248,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 94,
         "linkedCaseIds": []
@@ -3311,7 +3311,7 @@
         "divisionIds": [
           "180f9b83-d46a-42de-a79c-c37077fa5495"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 88,
         "linkedCaseIds": []
@@ -3343,7 +3343,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 85,
         "linkedCaseIds": []
@@ -3374,7 +3374,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-406",
@@ -3447,7 +3447,7 @@
         "divisionIds": [
           "180f9b83-d46a-42de-a79c-c37077fa5495"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 92,
         "linkedCaseIds": []
@@ -3479,7 +3479,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 93,
         "linkedCaseIds": []
@@ -3508,7 +3508,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-408",
@@ -3582,7 +3582,7 @@
         "divisionIds": [
           "180f9b83-d46a-42de-a79c-c37077fa5495"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 100,
         "linkedCaseIds": []
@@ -3614,7 +3614,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 97,
         "linkedCaseIds": []
@@ -3646,7 +3646,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 58,
         "linkedCaseIds": []
@@ -3710,7 +3710,7 @@
         "divisionIds": [
           "180f9b83-d46a-42de-a79c-c37077fa5495"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 96,
         "linkedCaseIds": []
@@ -3742,7 +3742,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 89,
         "linkedCaseIds": []
@@ -3774,7 +3774,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-438",
@@ -3811,7 +3811,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-152",
@@ -3964,7 +3964,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-323",
@@ -4000,7 +4000,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-156",
@@ -4036,7 +4036,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-162",
@@ -4072,7 +4072,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-171",
@@ -4144,7 +4144,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-177",
@@ -4180,7 +4180,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-179",
@@ -4256,7 +4256,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-170",
@@ -4890,7 +4890,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-176",
@@ -5031,7 +5031,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-324",
@@ -5094,7 +5094,7 @@
         ],
         "screenshots": [],
         "automated": false,
-        "toAutomate": false,
+        "toAutomate": true,
         "estimatedTime": "",
         "ready": false,
         "types": [
@@ -5136,7 +5136,7 @@
         ],
         "screenshots": [],
         "automated": false,
-        "toAutomate": false,
+        "toAutomate": true,
         "estimatedTime": "",
         "ready": false,
         "types": [
@@ -5175,7 +5175,7 @@
         ],
         "screenshots": [],
         "automated": false,
-        "toAutomate": false,
+        "toAutomate": true,
         "estimatedTime": "",
         "ready": false,
         "types": [
@@ -5212,7 +5212,7 @@
         ],
         "screenshots": [],
         "automated": false,
-        "toAutomate": false,
+        "toAutomate": true,
         "estimatedTime": "",
         "ready": false,
         "types": [
@@ -5249,7 +5249,7 @@
         ],
         "screenshots": [],
         "automated": false,
-        "toAutomate": false,
+        "toAutomate": true,
         "estimatedTime": "",
         "ready": false,
         "types": [
@@ -5286,7 +5286,7 @@
         ],
         "screenshots": [],
         "automated": false,
-        "toAutomate": false,
+        "toAutomate": true,
         "estimatedTime": "",
         "ready": false,
         "types": [
@@ -5324,7 +5324,7 @@
         ],
         "screenshots": [],
         "automated": false,
-        "toAutomate": false,
+        "toAutomate": true,
         "estimatedTime": "",
         "ready": false,
         "types": [
@@ -5361,7 +5361,7 @@
         ],
         "screenshots": [],
         "automated": false,
-        "toAutomate": false,
+        "toAutomate": true,
         "estimatedTime": "",
         "ready": false,
         "types": [
@@ -5514,7 +5514,7 @@
         ],
         "screenshots": [],
         "automated": false,
-        "toAutomate": false,
+        "toAutomate": true,
         "estimatedTime": "",
         "ready": false,
         "types": [
@@ -5551,7 +5551,7 @@
         ],
         "screenshots": [],
         "automated": false,
-        "toAutomate": false,
+        "toAutomate": true,
         "estimatedTime": "",
         "ready": false,
         "types": [
@@ -5589,7 +5589,7 @@
         ],
         "screenshots": [],
         "automated": false,
-        "toAutomate": false,
+        "toAutomate": true,
         "estimatedTime": "",
         "ready": false,
         "types": [
@@ -5631,7 +5631,7 @@
         ],
         "screenshots": [],
         "automated": false,
-        "toAutomate": false,
+        "toAutomate": true,
         "estimatedTime": "",
         "ready": false,
         "types": [
