@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-07T12:44:15.029Z",
+  "updatedAt": "2026-08-07T12:44:19.814Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -7444,7 +7444,7 @@
         "screenshots": [],
         "ready": false,
         "automated": false,
-        "toAutomate": false,
+        "toAutomate": true,
         "estimatedTime": "",
         "types": [
           "acceptation"
