@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-07T12:45:03.069Z",
+  "updatedAt": "2026-08-07T12:45:08.653Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -829,8 +829,7 @@
         "steps": [
           {
             "action": "",
-            "expected": "",
-            "type": "step"
+            "expected": ""
           }
         ],
         "screenshots": [],
@@ -846,7 +845,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-405",
