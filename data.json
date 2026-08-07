@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-07-22T07:40:26.290Z",
+  "updatedAt": "2026-08-07T12:43:38.253Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -2485,8 +2485,7 @@
         "steps": [
           {
             "action": "",
-            "expected": "",
-            "type": "step"
+            "expected": ""
           }
         ],
         "screenshots": [],
@@ -2504,7 +2503,7 @@
           "9465d9fa-a88c-4893-80e0-c83134d1e9ea",
           "180f9b83-d46a-42de-a79c-c37077fa5495"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [
           {
             "key": "CSTQ-139",
