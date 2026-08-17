@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-07T12:49:27.130Z",
+  "updatedAt": "2026-08-17T08:26:40.301Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -82,7 +82,8 @@
         "steps": [
           {
             "action": "",
-            "expected": ""
+            "expected": "",
+            "type": "step"
           }
         ],
         "screenshots": [],
@@ -435,7 +436,8 @@
         "steps": [
           {
             "action": "",
-            "expected": ""
+            "expected": "",
+            "type": "step"
           }
         ],
         "screenshots": [],
@@ -563,7 +565,8 @@
         "steps": [
           {
             "action": "",
-            "expected": ""
+            "expected": "",
+            "type": "step"
           }
         ],
         "screenshots": [],
@@ -691,7 +694,8 @@
         "steps": [
           {
             "action": "",
-            "expected": ""
+            "expected": "",
+            "type": "step"
           }
         ],
         "screenshots": [],
@@ -828,7 +832,8 @@
         "steps": [
           {
             "action": "",
-            "expected": ""
+            "expected": "",
+            "type": "step"
           }
         ],
         "screenshots": [],
@@ -2486,7 +2491,7 @@
         "screenshots": [],
         "automated": false,
         "estimatedTime": 5,
-        "ready": false,
+        "ready": true,
         "types": [
           "integration",
           "smoke"
@@ -2519,7 +2524,8 @@
         "steps": [
           {
             "action": "",
-            "expected": ""
+            "expected": "",
+            "type": "step"
           }
         ],
         "screenshots": [],
@@ -2705,7 +2711,8 @@
         "steps": [
           {
             "action": "",
-            "expected": ""
+            "expected": "",
+            "type": "step"
           }
         ],
         "screenshots": [],
@@ -4462,7 +4469,8 @@
         "steps": [
           {
             "action": "",
-            "expected": ""
+            "expected": "",
+            "type": "step"
           }
         ],
         "screenshots": [],
@@ -4613,7 +4621,8 @@
         "steps": [
           {
             "action": "",
-            "expected": ""
+            "expected": "",
+            "type": "step"
           }
         ],
         "screenshots": [],
@@ -5050,7 +5059,8 @@
         "steps": [
           {
             "action": "",
-            "expected": ""
+            "expected": "",
+            "type": "step"
           }
         ],
         "screenshots": [],
@@ -5431,7 +5441,8 @@
         "steps": [
           {
             "action": "",
-            "expected": ""
+            "expected": "",
+            "type": "step"
           }
         ],
         "screenshots": [],
