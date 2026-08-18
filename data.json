@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-17T08:27:32.703Z",
+  "updatedAt": "2026-08-18T07:13:57.407Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -2485,7 +2485,8 @@
         "steps": [
           {
             "action": "",
-            "expected": ""
+            "expected": "",
+            "type": "step"
           }
         ],
         "screenshots": [],
@@ -2524,7 +2525,8 @@
         "steps": [
           {
             "action": "",
-            "expected": ""
+            "expected": "",
+            "type": "step"
           }
         ],
         "screenshots": [],
@@ -4206,7 +4208,8 @@
         "steps": [
           {
             "action": "",
-            "expected": ""
+            "expected": "",
+            "type": "step"
           }
         ],
         "screenshots": [],
@@ -4387,7 +4390,8 @@
         "steps": [
           {
             "action": "",
-            "expected": ""
+            "expected": "",
+            "type": "step"
           }
         ],
         "screenshots": [],
@@ -4426,7 +4430,8 @@
         "steps": [
           {
             "action": "",
-            "expected": ""
+            "expected": "",
+            "type": "step"
           }
         ],
         "screenshots": [],
@@ -5054,16 +5059,39 @@
         "isInterface": true,
         "steps": [
           {
-            "action": "",
+            "type": "block",
+            "blockId": "50e116fa-bf43-43f8-9254-1f3f172c2543"
+          },
+          {
+            "type": "step",
+            "action": "Aller dans l'onglet factures",
             "expected": "",
-            "type": "step"
+            "requiresScreenshot": false
+          },
+          {
+            "type": "step",
+            "action": "Ouvrir une facture ouverte",
+            "expected": "",
+            "requiresScreenshot": false
+          },
+          {
+            "type": "step",
+            "action": "Faire le processus de paiement",
+            "expected": "",
+            "requiresScreenshot": false
+          },
+          {
+            "type": "step",
+            "action": "Affichage de l'interface payrexx",
+            "expected": "",
+            "requiresScreenshot": true
           }
         ],
         "screenshots": [],
         "automated": true,
         "toAutomate": true,
         "estimatedTime": "",
-        "ready": false,
+        "ready": true,
         "types": [
           "integration",
           "regression",
