@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-18T07:21:14.691Z",
+  "updatedAt": "2026-08-18T07:32:12.229Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -375,15 +375,92 @@
         "isInterface": false,
         "steps": [
           {
-            "action": "",
-            "expected": "",
-            "type": "step"
+            "type": "block",
+            "blockId": "5341feba-bf15-4fd4-8f60-dac454d2813c"
+          },
+          {
+            "type": "step",
+            "action": "Lancer ZCIC0",
+            "expected": "L’écran Customer Interaction Center s’affiche sans erreur bloquante.",
+            "requiresScreenshot": false
+          },
+          {
+            "type": "step",
+            "action": "Rechercher et sélectionner le partenaire prévu pour le test.",
+            "expected": "Les informations du partenaire sont affichées dans la zone Partenaire.",
+            "requiresScreenshot": false
+          },
+          {
+            "type": "step",
+            "action": "Dans l’onglet Environnement, développer l’arborescence du partenaire.",
+            "expected": "Les objets associés au partenaire, notamment les installations, les comptes de contrats et les postes, sont visibles.",
+            "requiresScreenshot": false
+          },
+          {
+            "type": "step",
+            "action": "Identifier et sélectionner le compte de contrats contenant les postes à intégrer au plan d’apurement.",
+            "expected": "Le compte de contrats approprié est sélectionné dans l’arborescence.",
+            "requiresScreenshot": false
+          },
+          {
+            "type": "step",
+            "action": "Ouvrir le menu contextuel du compte de contrats.",
+            "expected": "Le menu contextuel affiche les actions disponibles pour le compte de contrats.",
+            "requiresScreenshot": false
+          },
+          {
+            "type": "step",
+            "action": "Sélectionner l’action Créer plan apurement.",
+            "expected": "L’écran Créer plan apurement : sélectionner postes et entrer param. s’affiche. Le partenaire et le compte de contrats sont automatiquement repris.",
+            "requiresScreenshot": false
+          },
+          {
+            "type": "step",
+            "action": "Sélectionner les postes à inclure dans le plan d’apurement.",
+            "expected": "Les lignes retenues sont sélectionnées. Les montants partiels associés sont repris dans la colonne Mntt part.",
+            "requiresScreenshot": false
+          },
+          {
+            "type": "step",
+            "action": "Dans la zone Param. plan d’apurement, saisir 0001 dans le champ Type plan apur.",
+            "expected": "La valeur 0001 est acceptée sans message d’erreur.",
+            "requiresScreenshot": false
+          },
+          {
+            "type": "step",
+            "action": "Saisir dans le champ Date de début le dernier jour du mois suivant.",
+            "expected": "La date est acceptée.",
+            "requiresScreenshot": false
+          },
+          {
+            "type": "step",
+            "action": "Appuyer sur la touche Entrée.",
+            "expected": "SAP contrôle les valeurs saisies et renseigne automatiquement les autres paramètres du plan d’apurement.",
+            "requiresScreenshot": false
+          },
+          {
+            "type": "step",
+            "action": "Continuer vers l’écran de fixation des échéances.",
+            "expected": "L’écran Créer plan apurement : fixer échéances s’affiche.",
+            "requiresScreenshot": true
+          },
+          {
+            "type": "step",
+            "action": "Enregistrer le plan d’apurement au moyen de la fonction Enregistrer.",
+            "expected": "La fenêtre Spécifier paramètres d’impression s’affiche.",
+            "requiresScreenshot": false
+          },
+          {
+            "type": "step",
+            "action": "Si la fenêtre Contrôle de la clé de rapprochement apparaît avec la question indiquant que la clé n’existe pas, cliquer sur Oui.",
+            "expected": "SAP crée la clé de rapprochement nécessaire et poursuit l’enregistrement. Aucun message d’erreur bloquant ne s’affiche.",
+            "requiresScreenshot": false
           }
         ],
         "screenshots": [],
         "automated": false,
         "estimatedTime": 20,
-        "ready": false,
+        "ready": true,
         "types": [
           "fonctionnel",
           "regression"
@@ -393,7 +470,7 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
-        "toAutomate": false,
+        "toAutomate": true,
         "jiraTickets": [],
         "sortOrder": 7,
         "linkedCaseIds": []
