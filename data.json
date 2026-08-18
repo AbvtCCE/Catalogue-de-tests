@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-18T07:13:57.407Z",
+  "updatedAt": "2026-08-18T07:21:14.691Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -117,15 +117,60 @@
         "isInterface": false,
         "steps": [
           {
-            "action": "",
+            "type": "block",
+            "blockId": "572755a6-c3cf-48ac-a965-04a851f032bd"
+          },
+          {
+            "type": "block",
+            "blockId": "5b29ed3a-d254-49a3-91d9-9e4673b1c326"
+          },
+          {
+            "type": "step",
+            "action": "Accéder à la vue Données contact.",
+            "expected": "La liste des actions disponibles et l’historique des contacts s’affichent.",
+            "requiresScreenshot": false
+          },
+          {
+            "type": "step",
+            "action": "Dans la liste des actions, sélectionner 6 Lettre neutre.",
+            "expected": "L’action 6 Lettre neutre est prise en compte et la génération de la lettre est initiée.",
+            "requiresScreenshot": true
+          },
+          {
+            "type": "step",
+            "action": "Compléter les informations nécessaires à la lettre, notamment l’objet et le contenu, puis valider la génération.",
+            "expected": "Les données saisies sont enregistrées et une lettre est générée.",
+            "requiresScreenshot": false
+          },
+          {
+            "type": "step",
+            "action": "Vérifier la section Pièces jointes.",
+            "expected": "Une nouvelle pièce jointe nommée 01 6 Lettre neutre apparaît dans la liste.",
+            "requiresScreenshot": false
+          },
+          {
+            "type": "step",
+            "action": "Sélectionner la pièce jointe 01 6 Lettre neutre.",
+            "expected": "La pièce jointe est sélectionnée et les fonctions disponibles dans la barre d’actions sont accessibles.",
+            "requiresScreenshot": false
+          },
+          {
+            "type": "step",
+            "action": "Cliquer sur le bouton Local.",
+            "expected": "Le téléchargement ou l’ouverture locale du fichier RTF est déclenché. Aucun message d’erreur bloquant ne s’affiche.",
+            "requiresScreenshot": true
+          },
+          {
+            "type": "step",
+            "action": "Validé que l'impression s'est fait localement",
             "expected": "",
-            "type": "step"
+            "requiresScreenshot": false
           }
         ],
         "screenshots": [],
         "automated": false,
         "estimatedTime": "",
-        "ready": false,
+        "ready": true,
         "types": [
           "fonctionnel",
           "regression"
