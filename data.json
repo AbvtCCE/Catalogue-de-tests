@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-08-18T07:32:12.229Z",
+  "updatedAt": "2026-10-05T12:08:56.054Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -68,6 +68,11 @@
       {
         "id": "2ca5d2f0-6c93-4b87-8388-34811ab1e68b",
         "title": "Nimbus",
+        "address": ""
+      },
+      {
+        "id": "049d090c-47ee-4b08-b38c-e3255dfceb4a",
+        "title": "Genesys",
         "address": ""
       }
     ],
