@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-05T16:15:22.719Z",
+  "updatedAt": "2026-10-05T16:15:28.014Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -13584,38 +13584,6 @@
         "sortOrder": 375
       },
       {
-        "id": "ab9c6900-6e3d-437d-8b22-f7623f2b5e2f",
-        "title": "Attente et call back_FR_1H_ATTENTE",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": true,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [],
-        "sortOrder": 377
-      },
-      {
         "id": "097bf622-94d7-4bec-a933-36ad865b753b",
         "title": "CAD, CG et CE Flow_CE_1_FR_3_PRODUCT_TARIFF",
         "environmentIds": [
@@ -18926,7 +18894,6 @@
           "c21843eb-d658-4fab-bccd-fa37957d9e6c",
           "d5ed2886-e55e-4e71-8cbc-6b2986891351",
           "f6c69d86-4ee5-4a90-802c-08a5e9ae4fc9",
-          "ab9c6900-6e3d-437d-8b22-f7623f2b5e2f",
           "6ab55c84-a06c-42f7-a136-d29ab5eade77",
           "27b98a95-ae5b-4813-93b7-7875bbd0a64a",
           "a68700b8-fea9-4514-9ef9-70e90c0cb554",
