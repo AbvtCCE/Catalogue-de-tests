@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-05T15:37:53.262Z",
+  "updatedAt": "2026-10-05T15:37:58.130Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -10766,80 +10766,6 @@
         "jiraTickets": [],
         "linkedCaseIds": [],
         "sortOrder": 287
-      },
-      {
-        "id": "d16db4b5-74bd-4aaa-ac6e-408abc957022",
-        "title": "CP & Gereance",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": false,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [
-          {
-            "key": "57",
-            "summary": ""
-          }
-        ],
-        "sortOrder": 346
-      },
-      {
-        "id": "3525d5f3-1983-48c0-9772-e11b5bd6b6bd",
-        "title": "CP & Gereance",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": false,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [
-          {
-            "key": "58",
-            "summary": ""
-          }
-        ],
-        "sortOrder": 347
       },
       {
         "id": "ccf5ac03-6c40-48ac-93c2-0757cd3f1840",
