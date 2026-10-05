@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-05T16:13:29.755Z",
+  "updatedAt": "2026-10-05T16:15:11.381Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -13808,38 +13808,6 @@
         "sortOrder": 382
       },
       {
-        "id": "891e45d0-bb60-4904-929b-681e6e91b3cd",
-        "title": "Reception_DE_FLUX_STANDARD",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": true,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [],
-        "sortOrder": 383
-      },
-      {
         "id": "097bf622-94d7-4bec-a933-36ad865b753b",
         "title": "CAD, CG et CE Flow_CE_1_FR_3_PRODUCT_TARIFF",
         "environmentIds": [
@@ -19145,7 +19113,6 @@
           "2b4cec08-5ae0-492d-98a3-de0e06e34979",
           "242d8d0c-08f9-4462-92d1-340fdba8d755",
           "4a03752c-62e6-49e3-b4e9-1a40135a0362",
-          "891e45d0-bb60-4904-929b-681e6e91b3cd",
           "243ec4d0-6c1d-4de6-9bce-c91b604cdaea",
           "321e2a5b-d452-4298-b5f1-1284ee272da4",
           "3079b17b-c9fa-49c7-96f4-809c1e6fbef2",
@@ -19694,7 +19661,8 @@
         "divisionIds": [
           "9979d8a3-73d8-4b31-8d74-d927a67c6752",
           "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ]
+        ],
+        "testCaseIds": []
       }
     ],
     "anomalies": [
