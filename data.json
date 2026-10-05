@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-05T12:08:56.054Z",
+  "updatedAt": "2026-10-05T12:11:29.580Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -10766,6 +10766,38 @@
         "jiraTickets": [],
         "linkedCaseIds": [],
         "sortOrder": 287
+      },
+      {
+        "id": "affc59c4-2ac2-44aa-b537-50d988b4c56f",
+        "title": "Test prompt flux Genesys",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "action": "",
+            "expected": ""
+          }
+        ],
+        "screenshots": [],
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": 120,
+        "ready": true,
+        "types": [
+          "fonctionnel",
+          "systeme",
+          "acceptation"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752"
+        ],
+        "jiraTickets": [],
+        "linkedCaseIds": [],
+        "sortOrder": 288
       }
     ],
     "testSuites": [
