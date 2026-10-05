@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-05T15:44:09.308Z",
+  "updatedAt": "2026-10-05T15:44:40.824Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -14497,6 +14497,20 @@
           "9979d8a3-73d8-4b31-8d74-d927a67c6752"
         ],
         "testCaseIds": []
+      },
+      {
+        "id": "02dedc23-7995-4e0f-946a-064921235e8b",
+        "title": "Plan de test prompt genesys",
+        "items": [
+          {
+            "type": "suite",
+            "id": "4301b2fc-0aaa-4fb3-b3bd-b824ee36370d"
+          }
+        ],
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ]
       }
     ],
     "anomalies": [
