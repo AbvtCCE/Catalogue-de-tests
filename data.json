@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-05T16:15:11.381Z",
+  "updatedAt": "2026-10-05T16:15:16.934Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -13712,102 +13712,6 @@
         "sortOrder": 379
       },
       {
-        "id": "321e2a5b-d452-4298-b5f1-1284ee272da4",
-        "title": "Reception_FR_PROMPT_GRAND_VOLUME",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": true,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [],
-        "sortOrder": 380
-      },
-      {
-        "id": "9b47b85a-b285-477d-a501-828b0eb35709",
-        "title": "Reception_FR_FLUX_STANDARD",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": true,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [],
-        "sortOrder": 381
-      },
-      {
-        "id": "243ec4d0-6c1d-4de6-9bce-c91b604cdaea",
-        "title": "Reception_DE_PROMPT_GRAND_VOLUME",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": true,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [],
-        "sortOrder": 382
-      },
-      {
         "id": "097bf622-94d7-4bec-a933-36ad865b753b",
         "title": "CAD, CG et CE Flow_CE_1_FR_3_PRODUCT_TARIFF",
         "environmentIds": [
@@ -19113,8 +19017,6 @@
           "2b4cec08-5ae0-492d-98a3-de0e06e34979",
           "242d8d0c-08f9-4462-92d1-340fdba8d755",
           "4a03752c-62e6-49e3-b4e9-1a40135a0362",
-          "243ec4d0-6c1d-4de6-9bce-c91b604cdaea",
-          "321e2a5b-d452-4298-b5f1-1284ee272da4",
           "3079b17b-c9fa-49c7-96f4-809c1e6fbef2",
           "e2ac042f-cc1e-4f9d-9dba-131a71564373",
           "ab1d5c17-be0a-4446-8007-1b020c66cbed",
@@ -19122,7 +19024,6 @@
           "c21843eb-d658-4fab-bccd-fa37957d9e6c",
           "d5ed2886-e55e-4e71-8cbc-6b2986891351",
           "f6c69d86-4ee5-4a90-802c-08a5e9ae4fc9",
-          "9b47b85a-b285-477d-a501-828b0eb35709",
           "ab9c6900-6e3d-437d-8b22-f7623f2b5e2f",
           "6ab55c84-a06c-42f7-a136-d29ab5eade77",
           "27b98a95-ae5b-4813-93b7-7875bbd0a64a",
