@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-05T15:35:52.968Z",
+  "updatedAt": "2026-10-05T15:35:59.973Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -10766,80 +10766,6 @@
         "jiraTickets": [],
         "linkedCaseIds": [],
         "sortOrder": 287
-      },
-      {
-        "id": "e530a7c5-e98e-4e5e-9a40-8a7ffecc8e91",
-        "title": "CAD, CG et CE Flow",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": false,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [
-          {
-            "key": "3",
-            "summary": ""
-          }
-        ],
-        "sortOrder": 292
-      },
-      {
-        "id": "9956ff33-349b-4602-9e66-4388fba06f66",
-        "title": "CAD, CG et CE Flow",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": false,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [
-          {
-            "key": "4",
-            "summary": ""
-          }
-        ],
-        "sortOrder": 293
       },
       {
         "id": "8e287011-12c7-46fd-97b3-46884497ad7b",
