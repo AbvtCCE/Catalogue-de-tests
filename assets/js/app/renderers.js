@@ -656,16 +656,68 @@ function parseCsv(text) {
 }
 
 function openCsvImportModal(view) {
-  // Two phases: phase 1 = paste/upload + defaults; phase 2 = preview before commit
+  // Trois phases : 1 = coller/importer + valeurs par défaut ; 2 = mapping des colonnes ; 3 = aperçu avant import.
   let phase = 1;
-  let parsedRows = [];
+  let rawText = '';        // texte CSV brut collé (pour restaurer la zone de texte au retour)
+  let allRows = [];        // toutes les lignes du CSV (ligne d'en-tête éventuelle incluse)
   let detectedSep = ';';
-  let importPlan = []; // { jiraKey, title, skip, reason? }
+  let colCount = 0;        // nombre de colonnes détecté (max sur toutes les lignes)
+  let hasHeader = true;    // la première ligne contient-elle les noms de colonnes ?
+  let headerNames = [];    // libellés d'en-tête (ou « Colonne N » si pas d'en-tête)
+  let mapping = [];        // rôle choisi par colonne : '' | 'title' | 'jira' | 'steps' | 'expected'
+  let importPlan = [];     // { jiraKey, title, steps, skip, reason?, warning? }
+
+  const ROLE_LABELS = { title: 'Titre', jira: 'Clé Jira', steps: 'Étapes', expected: 'Résultat attendu' };
+
+  // Une cellule « Étapes » / « Résultat attendu » = une entrée par ligne non vide.
+  function splitCellLines(cell) {
+    return String(cell == null ? '' : cell).replace(/\r/g, '').split('\n').map(s => s.trim()).filter(s => s.length);
+  }
+  // Construit les étapes à partir des cellules mappées « steps » et « expected », alignées par index.
+  function buildSteps(stepsCell, expectedCell) {
+    const acts = splitCellLines(stepsCell);
+    const exps = splitCellLines(expectedCell);
+    const n = Math.max(acts.length, exps.length);
+    if (n === 0) return [{ type: 'step', action: '', expected: '', requiresScreenshot: false }];
+    const out = [];
+    for (let k = 0; k < n; k++) out.push({ type: 'step', action: acts[k] || '', expected: exps[k] || '', requiresScreenshot: false });
+    return out;
+  }
+  // Devine le rôle d'une colonne d'après son libellé d'en-tête (attendu avant étape : « résultat attendu » ≠ étape).
+  function guessRole(name) {
+    const n = (name || '').toLowerCase().trim();
+    if (!n) return '';
+    if (/attendu|expected|r[ée]sultat/.test(n)) return 'expected';
+    if (/[ée]tape|step|action|proc[ée]dure|sc[ée]nario/.test(n)) return 'steps';
+    if (/jira|cl[ée]|ticket|\bkey\b/.test(n)) return 'jira';
+    if (/titre|title|r[ée]sum[ée]|summary|\bnom\b|libell|description/.test(n)) return 'title';
+    return '';
+  }
+  // Première ligne = en-tête si aucune cellule ne ressemble à une clé Jira ET au moins une ressemble à un libellé connu.
+  function looksLikeHeaderRow(row) {
+    if (!row || !row.length) return false;
+    if (row.some(c => /^[A-Za-z][A-Za-z0-9]*-\d+$/.test((c || '').trim()))) return false;
+    return row.some(c => guessRole(c) !== '');
+  }
+  // (Re)calcule les libellés d'en-tête et une proposition de mapping (un même rôle n'est deviné qu'une fois).
+  function computeHeaderAndGuess() {
+    headerNames = [];
+    mapping = [];
+    const headerRow = hasHeader ? allRows[0] : null;
+    const used = new Set();
+    for (let i = 0; i < colCount; i++) {
+      headerNames[i] = headerRow ? ((headerRow[i] || '').trim() || ('Colonne ' + (i + 1))) : ('Colonne ' + (i + 1));
+      let role = headerRow ? guessRole(headerRow[i]) : (i === 0 ? 'title' : '');
+      if (role && used.has(role)) role = '';
+      if (role) used.add(role);
+      mapping[i] = role;
+    }
+  }
 
   function modalHtmlPhase1() {
     return `
       <div style="font-size:13px;color:var(--text-soft);margin-bottom:12px;line-height:1.5;">
-        Collez le contenu CSV ci-dessous (séparateur <code>;</code>, ou auto-détecté si <code>,</code> ou tab). Format attendu : <code>cléJira;titre</code> par ligne. Une éventuelle ligne d'en-tête sera détectée automatiquement.
+        Collez le contenu CSV ci-dessous (séparateur <code>;</code>, ou auto-détecté si <code>,</code> ou tab). À l'étape suivante, vous associerez <strong>chaque colonne à un champ</strong> (Titre, Clé Jira, Étapes, Résultat attendu). Dans une colonne « Étapes », <strong>chaque retour à la ligne de la cellule devient une étape</strong>.
       </div>
 
       <div class="form-row">
@@ -768,10 +820,72 @@ function openCsvImportModal(view) {
     `;
   }
 
-  function modalHtmlPhase2() {
+  // Valeur d'exemple d'une colonne (première donnée non vide), tronquée et sur une seule ligne.
+  function sampleFor(colIdx) {
+    const dataRows = hasHeader ? allRows.slice(1) : allRows;
+    for (let r = 0; r < dataRows.length; r++) {
+      const v = (dataRows[r] && dataRows[r][colIdx] != null) ? String(dataRows[r][colIdx]).trim() : '';
+      if (v) {
+        const oneLine = v.replace(/\r/g, '').replace(/\n/g, ' ↵ ');
+        return oneLine.length > 70 ? oneLine.slice(0, 70) + '…' : oneLine;
+      }
+    }
+    return '';
+  }
+
+  // ---- Phase 2 : mapping des colonnes ----
+  function modalHtmlMap() {
+    const roleOptions = (sel) => [
+      ['', '— Ignorer —'], ['title', 'Titre'], ['jira', 'Clé Jira'],
+      ['steps', 'Étapes (1 par ligne)'], ['expected', 'Résultat attendu (1 par ligne)'],
+    ].map(([v, l]) => `<option value="${v}" ${sel === v ? 'selected' : ''}>${l}</option>`).join('');
+    return `
+      <div style="font-size:13px;color:var(--text-soft);margin-bottom:14px;line-height:1.5;">
+        Associez chaque colonne de votre CSV à un champ. Une colonne <strong>Étapes</strong> (ou <strong>Résultat attendu</strong>) crée <strong>une étape par ligne</strong> de la cellule. Le champ <strong>Titre</strong> est obligatoire.
+      </div>
+      <label class="switch" style="display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;cursor:pointer;">
+        <input type="checkbox" id="csv-has-header" ${hasHeader ? 'checked' : ''}><span class="switch-track"></span>
+        <span style="font-size:13px;">La première ligne contient les noms de colonnes</span>
+      </label>
+      <div style="max-height:360px;overflow-y:auto;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);">
+        <table style="width:100%;border-collapse:collapse;font-size:12.5px;">
+          <thead style="position:sticky;top:0;background:var(--surface-soft);">
+            <tr>
+              <th style="text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);width:34px;">#</th>
+              <th style="text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);">Colonne CSV</th>
+              <th style="text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);">Exemple (1<sup>re</sup> donnée)</th>
+              <th style="text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);width:230px;">Correspond à</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${Array.from({ length: colCount }, (_, i) => `
+              <tr>
+                <td style="padding:6px 10px;border-bottom:1px solid var(--border);color:var(--text-muted);">${i + 1}</td>
+                <td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:500;">${escapeHtml(headerNames[i] || ('Colonne ' + (i + 1)))}</td>
+                <td style="padding:6px 10px;border-bottom:1px solid var(--border);color:var(--text-muted);font-family:var(--font-mono);font-size:11.5px;">${sampleFor(i) ? escapeHtml(sampleFor(i)) : '<span style="opacity:.5;">(vide)</span>'}</td>
+                <td style="padding:6px 10px;border-bottom:1px solid var(--border);"><select data-map-col="${i}" style="width:100%;">${roleOptions(mapping[i] || '')}</select></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+      <div id="csv-map-error" style="font-size:12px;color:#8a3a2c;margin-top:10px;min-height:16px;"></div>
+    `;
+  }
+
+  function modalFooterMap() {
+    return `
+      <button class="btn" id="csv-map-back">← Retour</button>
+      <button class="btn btn-primary" id="csv-map-next">Aperçu →</button>
+    `;
+  }
+
+  // ---- Phase 3 : aperçu avant import ----
+  function modalHtmlPreview() {
     const total = importPlan.length;
     const willImport = importPlan.filter(p => !p.skip).length;
     const skipped = importPlan.filter(p => p.skip).length;
+    const showJira = mapping.includes('jira');
     return `
       <div style="font-size:13px;color:var(--text-soft);margin-bottom:14px;padding:10px 12px;background:var(--surface-soft);border-radius:var(--radius-sm);">
         Détecté : <strong style="color:var(--text);">${total}</strong> ligne${total > 1 ? 's' : ''} · <strong style="color:var(--success);">${willImport}</strong> à importer${skipped > 0 ? ` · <strong style="color:#8a4a1f;">${skipped}</strong> ignorée${skipped > 1 ? 's' : ''}` : ''}.
@@ -784,32 +898,36 @@ function openCsvImportModal(view) {
             <tr>
               <th style="text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);width:30px;"></th>
               <th style="text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);width:40px;">#</th>
-              <th style="text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);width:130px;">Clé Jira</th>
+              ${showJira ? '<th style="text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);width:120px;">Clé Jira</th>' : ''}
               <th style="text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);">Titre</th>
+              <th style="text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);width:90px;">Étapes</th>
               <th style="text-align:left;padding:8px 10px;border-bottom:1px solid var(--border);width:140px;">Statut</th>
             </tr>
           </thead>
           <tbody>
-            ${importPlan.map((p, i) => `
+            ${importPlan.map((p, i) => {
+              const stepCount = p.steps.filter(s => (s.action || '').trim() || (s.expected || '').trim()).length;
+              return `
               <tr style="${p.skip ? 'opacity:0.55;' : ''}">
                 <td style="padding:6px 10px;border-bottom:1px solid var(--border);"><input type="checkbox" data-csv-include="${i}" ${p.skip ? '' : 'checked'}></td>
                 <td style="padding:6px 10px;border-bottom:1px solid var(--border);color:var(--text-muted);">${i + 1}</td>
-                <td style="padding:6px 10px;border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:12px;">${escapeHtml(p.jiraKey || '—')}</td>
+                ${showJira ? `<td style="padding:6px 10px;border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:12px;">${escapeHtml(p.jiraKey || '—')}</td>` : ''}
                 <td style="padding:6px 10px;border-bottom:1px solid var(--border);">${escapeHtml(p.title || '(vide)')}</td>
+                <td style="padding:6px 10px;border-bottom:1px solid var(--border);color:var(--text-muted);">${stepCount > 0 ? stepCount : '—'}</td>
                 <td style="padding:6px 10px;border-bottom:1px solid var(--border);font-size:11.5px;">
                   ${p.skip
                     ? `<span style="color:#8a4a1f;">${escapeHtml(p.reason || 'ignoré')}</span>`
                     : (p.warning ? `<span style="color:#8a4a1f;">⚠ ${escapeHtml(p.warning)}</span>` : '<span style="color:var(--success);">✓ à importer</span>')}
                 </td>
               </tr>
-            `).join('')}
+            `;}).join('')}
           </tbody>
         </table>
       </div>
     `;
   }
 
-  function modalFooterPhase2() {
+  function modalFooterPreview() {
     const willImport = importPlan.filter(p => !p.skip).length;
     return `
       <button class="btn" id="csv-back">← Retour</button>
@@ -860,99 +978,140 @@ function openCsvImportModal(view) {
         dupMode: body.querySelector('#csv-dup-mode').value,
       };
 
+      rawText = text;
       const parsed = parseCsv(text);
       detectedSep = parsed.separator;
-      let rows = parsed.rows;
-      // Detect header: first row looks like a header if cell 0 is non-Jira-like (no dash-digit pattern)
-      if (rows.length > 0) {
-        const c0 = (rows[0][0] || '').trim();
-        const looksLikeKey = /^[A-Za-z][A-Za-z0-9]*-\d+$/.test(c0);
-        const looksLikeHeader = !looksLikeKey && c0 && c0.toLowerCase().match(/^(key|jira|ticket|cl[eé])/);
-        if (looksLikeHeader) rows = rows.slice(1);
-      }
-      parsedRows = rows;
-
-      // Build import plan
-      const seenKeys = new Set();
-      const existingKeys = new Set();
-      state.testCases.forEach(c => (c.jiraTickets || []).forEach(t => { if (t.key) existingKeys.add(t.key.toUpperCase()); }));
-
-      importPlan = parsedRows.map(row => {
-        const jiraKey = (row[0] || '').trim().toUpperCase();
-        const title = (row[1] || '').trim();
-        const item = { jiraKey, title, skip: false };
-        if (!title) {
-          item.skip = true;
-          item.reason = 'titre manquant';
-          return item;
-        }
-        if (jiraKey && existingKeys.has(jiraKey) && defaults.dupMode === 'skip') {
-          item.skip = true;
-          item.reason = 'clé Jira déjà liée';
-          return item;
-        }
-        if (jiraKey && seenKeys.has(jiraKey) && defaults.dupMode === 'skip') {
-          item.skip = true;
-          item.reason = 'doublon dans le CSV';
-          return item;
-        }
-        if (jiraKey) seenKeys.add(jiraKey);
-        if (!jiraKey) item.warning = 'sans clé Jira';
-        return item;
-      });
+      allRows = parsed.rows;
+      if (allRows.length === 0) { toast('Aucune ligne exploitable dans le CSV'); return; }
+      colCount = allRows.reduce((m, r) => Math.max(m, r.length), 0);
+      hasHeader = looksLikeHeaderRow(allRows[0]);
+      computeHeaderAndGuess();
 
       phase = 2;
-      document.getElementById('modal-body').innerHTML = modalHtmlPhase2();
-      document.getElementById('modal-footer').innerHTML = modalFooterPhase2();
-      mountPhase2(document.getElementById('modal-body'));
+      document.getElementById('modal-body').innerHTML = modalHtmlMap();
+      document.getElementById('modal-footer').innerHTML = modalFooterMap();
+      mountMap(document.getElementById('modal-body'));
     };
   }
 
-  function mountPhase2(body) {
-    body.querySelectorAll('[data-csv-include]').forEach(cb => {
-      cb.onchange = () => {
-        const i = +cb.dataset.csvInclude;
-        importPlan[i].skip = !cb.checked;
-        // Re-render only the footer count
-        document.getElementById('modal-footer').innerHTML = modalFooterPhase2();
-        wireFooter2();
-      };
-    });
-    wireFooter2();
+  // Lit les <select> de rôle dans le tableau de mapping et met à jour `mapping`.
+  function readMappingFromSelects(body) {
+    body.querySelectorAll('[data-map-col]').forEach(sel => { mapping[+sel.dataset.mapCol] = sel.value || ''; });
   }
 
-  function wireFooter2() {
-    const back = document.getElementById('csv-back');
+  // Construit le plan d'import (une entrée par ligne de données) à partir du mapping.
+  function buildPlan() {
+    const colOf = {};
+    mapping.forEach((role, i) => { if (role && colOf[role] == null) colOf[role] = i; });
+    const dataRows = hasHeader ? allRows.slice(1) : allRows;
+    const hasJira = colOf.jira != null;
+
+    const seenKeys = new Set();
+    const existingKeys = new Set();
+    state.testCases.forEach(c => (c.jiraTickets || []).forEach(t => { if (t.key) existingKeys.add(t.key.toUpperCase()); }));
+
+    importPlan = dataRows.map(row => {
+      const title = (row[colOf.title] || '').trim();
+      const jiraKey = hasJira ? (row[colOf.jira] || '').trim().toUpperCase() : '';
+      const steps = buildSteps(
+        colOf.steps != null ? row[colOf.steps] : '',
+        colOf.expected != null ? row[colOf.expected] : ''
+      );
+      const item = { jiraKey, title, steps, skip: false };
+      if (!title) { item.skip = true; item.reason = 'titre manquant'; return item; }
+      if (hasJira && jiraKey && existingKeys.has(jiraKey) && defaults.dupMode === 'skip') { item.skip = true; item.reason = 'clé Jira déjà liée'; return item; }
+      if (hasJira && jiraKey && seenKeys.has(jiraKey) && defaults.dupMode === 'skip') { item.skip = true; item.reason = 'doublon dans le CSV'; return item; }
+      if (hasJira && jiraKey) seenKeys.add(jiraKey);
+      return item;
+    });
+  }
+
+  // Restaure la zone de texte et les valeurs par défaut quand on revient à la phase 1.
+  function restorePhase1() {
+    const ta = document.getElementById('csv-text');
+    if (ta) ta.value = rawText;
+    if (!defaults) return;
+    defaults.environmentIds.forEach(id => {
+      const cb = document.querySelector(`#csv-envs input[value="${id}"]`);
+      if (cb) { cb.checked = true; cb.parentElement.classList.add('checked'); }
+    });
+    if (defaults.crud) document.getElementById('csv-crud').value = defaults.crud;
+    if (defaults.minLevelId) document.getElementById('csv-minlevel').value = defaults.minLevelId;
+    if (defaults.estimatedTime) document.getElementById('csv-time').value = defaults.estimatedTime;
+    defaults.divisionIds.forEach(id => {
+      const cb = document.querySelector(`#csv-divisions input[value="${id}"]`);
+      if (cb) { cb.checked = true; cb.parentElement.classList.add('checked'); }
+    });
+    defaults.types.forEach(id => {
+      const opt = document.querySelector(`#csv-types-helper option[value="${id}"]`);
+      if (opt) opt.selected = true;
+    });
+    const r = document.getElementById('csv-ready'); if (r) r.checked = defaults.ready;
+    const a = document.getElementById('csv-toauto'); if (a) a.checked = defaults.toAutomate;
+    const it = document.getElementById('csv-interface'); if (it) it.checked = defaults.isInterface;
+    const dm = document.getElementById('csv-dup-mode'); if (dm) dm.value = defaults.dupMode;
+  }
+
+  function mountMap(body) {
+    // Changer « première ligne = en-tête » : on conserve le mapping choisi, on recalcule les libellés/exemples.
+    const hdr = body.querySelector('#csv-has-header');
+    if (hdr) hdr.onchange = (e) => {
+      readMappingFromSelects(body);
+      hasHeader = e.target.checked;
+      const headerRow = hasHeader ? allRows[0] : null;
+      for (let i = 0; i < colCount; i++) {
+        headerNames[i] = headerRow ? ((headerRow[i] || '').trim() || ('Colonne ' + (i + 1))) : ('Colonne ' + (i + 1));
+      }
+      document.getElementById('modal-body').innerHTML = modalHtmlMap();
+      document.getElementById('modal-footer').innerHTML = modalFooterMap();
+      mountMap(document.getElementById('modal-body'));
+    };
+
+    const back = document.getElementById('csv-map-back');
     if (back) back.onclick = () => {
+      readMappingFromSelects(body);
       phase = 1;
       document.getElementById('modal-body').innerHTML = modalHtmlPhase1();
       document.getElementById('modal-footer').innerHTML = modalFooterPhase1();
-      // Restore textarea content
-      const ta = document.getElementById('csv-text');
-      if (ta) ta.value = parsedRows.map(r => r.join(detectedSep)).join('\n');
-      // Restore defaults selections
-      if (defaults) {
-        defaults.environmentIds.forEach(id => {
-          const cb = document.querySelector(`#csv-envs input[value="${id}"]`);
-          if (cb) { cb.checked = true; cb.parentElement.classList.add('checked'); }
-        });
-        if (defaults.crud) document.getElementById('csv-crud').value = defaults.crud;
-        if (defaults.minLevelId) document.getElementById('csv-minlevel').value = defaults.minLevelId;
-        if (defaults.estimatedTime) document.getElementById('csv-time').value = defaults.estimatedTime;
-        defaults.divisionIds.forEach(id => {
-          const cb = document.querySelector(`#csv-divisions input[value="${id}"]`);
-          if (cb) { cb.checked = true; cb.parentElement.classList.add('checked'); }
-        });
-        defaults.types.forEach(id => {
-          const opt = document.querySelector(`#csv-types-helper option[value="${id}"]`);
-          if (opt) opt.selected = true;
-        });
-        document.getElementById('csv-ready').checked = defaults.ready;
-        document.getElementById('csv-toauto').checked = defaults.toAutomate;
-        document.getElementById('csv-interface').checked = defaults.isInterface;
-        document.getElementById('csv-dup-mode').value = defaults.dupMode;
-      }
+      restorePhase1();
       mountPhase1(document.getElementById('modal-body'));
+    };
+
+    const next = document.getElementById('csv-map-next');
+    if (next) next.onclick = () => {
+      readMappingFromSelects(body);
+      const err = body.querySelector('#csv-map-error');
+      const counts = {};
+      mapping.forEach(r => { if (r) counts[r] = (counts[r] || 0) + 1; });
+      if (!counts.title) { if (err) err.textContent = 'Associez une colonne au champ « Titre » (obligatoire).'; return; }
+      const dup = Object.keys(counts).filter(r => counts[r] > 1);
+      if (dup.length) { if (err) err.textContent = 'Chaque champ ne peut être associé qu\'à une seule colonne : ' + dup.map(r => ROLE_LABELS[r]).join(', ') + '.'; return; }
+      buildPlan();
+      phase = 3;
+      document.getElementById('modal-body').innerHTML = modalHtmlPreview();
+      document.getElementById('modal-footer').innerHTML = modalFooterPreview();
+      mountPreview(document.getElementById('modal-body'));
+    };
+  }
+
+  function mountPreview(body) {
+    body.querySelectorAll('[data-csv-include]').forEach(cb => {
+      cb.onchange = () => {
+        importPlan[+cb.dataset.csvInclude].skip = !cb.checked;
+        document.getElementById('modal-footer').innerHTML = modalFooterPreview();
+        wirePreviewFooter();
+      };
+    });
+    wirePreviewFooter();
+  }
+
+  function wirePreviewFooter() {
+    const back = document.getElementById('csv-back');
+    if (back) back.onclick = () => {
+      phase = 2;
+      document.getElementById('modal-body').innerHTML = modalHtmlMap();
+      document.getElementById('modal-footer').innerHTML = modalFooterMap();
+      mountMap(document.getElementById('modal-body'));
     };
     const commit = document.getElementById('csv-commit');
     if (commit) commit.onclick = () => {
@@ -961,12 +1120,15 @@ function openCsvImportModal(view) {
       const maxOrder = state.testCases.reduce((m, c) => Math.max(m, c.sortOrder || 0), 0);
       let added = 0;
       toImport.forEach((p, i) => {
+        const steps = (p.steps && p.steps.length)
+          ? p.steps.map(s => ({ type: 'step', action: s.action || '', expected: s.expected || '', requiresScreenshot: false }))
+          : [{ type: 'step', action: '', expected: '', requiresScreenshot: false }];
         const tc = {
           id: uid(),
           title: p.title,
           environmentIds: [...defaults.environmentIds],
           isInterface: defaults.isInterface,
-          steps: [{ type: 'step', action: '', expected: '', requiresScreenshot: false }],
+          steps,
           screenshots: [],
           ready: defaults.ready,
           automated: false,
