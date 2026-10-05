@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-05T15:36:31.962Z",
+  "updatedAt": "2026-10-05T15:36:37.540Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -13282,117 +13282,6 @@
           }
         ],
         "sortOrder": 380
-      },
-      {
-        "id": "7ce5e696-39df-4cd0-bcbf-dce4a1b10e67",
-        "title": "Attente et call back",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": false,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [
-          {
-            "key": "92",
-            "summary": ""
-          }
-        ],
-        "sortOrder": 381
-      },
-      {
-        "id": "e38691fa-8741-43d8-9495-b60e4785a255",
-        "title": "Reception",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": false,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [
-          {
-            "key": "93",
-            "summary": ""
-          }
-        ],
-        "sortOrder": 382
-      },
-      {
-        "id": "463a1295-511d-4ec6-8098-84e94f9feddf",
-        "title": "Reception",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": false,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [
-          {
-            "key": "94",
-            "summary": ""
-          }
-        ],
-        "sortOrder": 383
       }
     ],
     "testSuites": [
