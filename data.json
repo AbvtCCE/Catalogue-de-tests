@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-05T15:35:59.973Z",
+  "updatedAt": "2026-10-05T15:36:04.688Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -10766,117 +10766,6 @@
         "jiraTickets": [],
         "linkedCaseIds": [],
         "sortOrder": 287
-      },
-      {
-        "id": "8e287011-12c7-46fd-97b3-46884497ad7b",
-        "title": "CAD, CG et CE Flow",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": false,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [
-          {
-            "key": "5",
-            "summary": ""
-          }
-        ],
-        "sortOrder": 294
-      },
-      {
-        "id": "5b2ed86a-c153-4647-aff7-c1af37ea2a58",
-        "title": "CAD, CG et CE Flow",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": false,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [
-          {
-            "key": "6",
-            "summary": ""
-          }
-        ],
-        "sortOrder": 295
-      },
-      {
-        "id": "52a23d54-05ca-4d2a-b72f-8a41ad04a0bc",
-        "title": "CAD, CG et CE Flow",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": false,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [
-          {
-            "key": "7",
-            "summary": ""
-          }
-        ],
-        "sortOrder": 296
       },
       {
         "id": "70ed8d6b-6a1b-493f-bb9b-b0ebce5156a2",
