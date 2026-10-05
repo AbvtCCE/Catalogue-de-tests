@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-05T16:15:16.934Z",
+  "updatedAt": "2026-10-05T16:15:22.719Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -13584,38 +13584,6 @@
         "sortOrder": 375
       },
       {
-        "id": "e2ac042f-cc1e-4f9d-9dba-131a71564373",
-        "title": "Attente et call back_FR_1H_ATTENTE",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": true,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [],
-        "sortOrder": 376
-      },
-      {
         "id": "ab9c6900-6e3d-437d-8b22-f7623f2b5e2f",
         "title": "Attente et call back_FR_1H_ATTENTE",
         "environmentIds": [
@@ -13646,70 +13614,6 @@
         ],
         "jiraTickets": [],
         "sortOrder": 377
-      },
-      {
-        "id": "3079b17b-c9fa-49c7-96f4-809c1e6fbef2",
-        "title": "Attente et call back_DE_1H_ATTENTE",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": true,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [],
-        "sortOrder": 378
-      },
-      {
-        "id": "e77717b4-652b-4e9e-b7da-89784233cc3e",
-        "title": "Attente et call back_DE_1H_ATTENTE",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": true,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [],
-        "sortOrder": 379
       },
       {
         "id": "097bf622-94d7-4bec-a933-36ad865b753b",
@@ -19017,8 +18921,6 @@
           "2b4cec08-5ae0-492d-98a3-de0e06e34979",
           "242d8d0c-08f9-4462-92d1-340fdba8d755",
           "4a03752c-62e6-49e3-b4e9-1a40135a0362",
-          "3079b17b-c9fa-49c7-96f4-809c1e6fbef2",
-          "e2ac042f-cc1e-4f9d-9dba-131a71564373",
           "ab1d5c17-be0a-4446-8007-1b020c66cbed",
           "ac400cd3-dc19-40e8-a06e-c166fc6d9ca5",
           "c21843eb-d658-4fab-bccd-fa37957d9e6c",
@@ -19032,7 +18934,6 @@
           "e34d0e63-2e66-4304-bd17-54ac0edfa6c1",
           "539ea91a-4f45-4b82-b861-5cd025161445",
           "640abf74-7ba6-4750-b41f-038842cadcac",
-          "e77717b4-652b-4e9e-b7da-89784233cc3e",
           "4a4ee736-ce93-4146-b8e3-f9d5500fe68f",
           "cc18ff6b-84e5-4ead-b4d0-849d16e8e8fd",
           "445cd297-696c-4fb8-a106-51499e96560a",
