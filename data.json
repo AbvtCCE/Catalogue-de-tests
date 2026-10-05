@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-05T15:37:28.553Z",
+  "updatedAt": "2026-10-05T15:37:34.309Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -10766,117 +10766,6 @@
         "jiraTickets": [],
         "linkedCaseIds": [],
         "sortOrder": 287
-      },
-      {
-        "id": "cc768bdb-a9bc-4718-8b9f-2453b05d2c1a",
-        "title": "Fermetures",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": false,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [
-          {
-            "key": "41",
-            "summary": ""
-          }
-        ],
-        "sortOrder": 330
-      },
-      {
-        "id": "1b24aa75-5b3d-43f4-a4aa-acd53ade01f7",
-        "title": "Fermetures",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": false,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [
-          {
-            "key": "42",
-            "summary": ""
-          }
-        ],
-        "sortOrder": 331
-      },
-      {
-        "id": "bc06e550-ce7b-46c7-ba56-12ec941fc539",
-        "title": "Fermetures",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": false,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [
-          {
-            "key": "43",
-            "summary": ""
-          }
-        ],
-        "sortOrder": 332
       },
       {
         "id": "86eb83ab-457b-4ada-8bea-98499116105b",
