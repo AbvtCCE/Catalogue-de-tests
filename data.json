@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-05T12:12:39.881Z",
+  "updatedAt": "2026-10-05T15:34:57.370Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -10798,6 +10798,3595 @@
         "jiraTickets": [],
         "linkedCaseIds": [],
         "sortOrder": 288
+      },
+      {
+        "id": "3dbb748f-d073-461a-af78-1da421d76e83",
+        "title": "Flux",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "N�",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 289
+      },
+      {
+        "id": "9ffb0d85-27ab-4d05-8d4d-a2e037d892f1",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "1",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 290
+      },
+      {
+        "id": "648a1d95-b6e3-41c1-8070-c68ebf640335",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "2",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 291
+      },
+      {
+        "id": "e530a7c5-e98e-4e5e-9a40-8a7ffecc8e91",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "3",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 292
+      },
+      {
+        "id": "9956ff33-349b-4602-9e66-4388fba06f66",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "4",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 293
+      },
+      {
+        "id": "8e287011-12c7-46fd-97b3-46884497ad7b",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "5",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 294
+      },
+      {
+        "id": "5b2ed86a-c153-4647-aff7-c1af37ea2a58",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "6",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 295
+      },
+      {
+        "id": "52a23d54-05ca-4d2a-b72f-8a41ad04a0bc",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "7",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 296
+      },
+      {
+        "id": "70ed8d6b-6a1b-493f-bb9b-b0ebce5156a2",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "8",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 297
+      },
+      {
+        "id": "f684466d-b024-40dc-99aa-dc4784f2faf4",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "9",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 298
+      },
+      {
+        "id": "219949bc-2a79-4786-a26c-e0ca499efe04",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "10",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 299
+      },
+      {
+        "id": "bd66503c-99df-4781-87cc-a9995986052f",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "11",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 300
+      },
+      {
+        "id": "9e5d7ce0-faec-4661-abe8-c2657256f2ff",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "12",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 301
+      },
+      {
+        "id": "99744564-766a-4fe7-befa-fea23ae9b6e6",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "13",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 302
+      },
+      {
+        "id": "8645a0f9-83b7-45ba-8121-eeede8bce9a3",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "14",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 303
+      },
+      {
+        "id": "607ff71e-e362-4263-8832-f84e2c5ed36c",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "15",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 304
+      },
+      {
+        "id": "daecddc5-704f-4a77-a28d-375f62e5a078",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "16",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 305
+      },
+      {
+        "id": "190a794f-2d99-4852-9ba1-3fda7f09eb15",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "17",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 306
+      },
+      {
+        "id": "196efdff-c5ca-4b44-887d-3bd2c583f214",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "18",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 307
+      },
+      {
+        "id": "84f3a9ab-af52-4898-a743-956d97ded5fc",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "19",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 308
+      },
+      {
+        "id": "58c671da-16cf-4cfb-9053-984104a00c3c",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "20",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 309
+      },
+      {
+        "id": "4cbbe75f-2086-45ea-82bf-78075e98e4ed",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "21",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 310
+      },
+      {
+        "id": "e8b5f28d-074d-4df9-99cd-20aa00b4edef",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "22",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 311
+      },
+      {
+        "id": "dab2f78a-46b3-4564-a9bf-19bdfc3d9611",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "23",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 312
+      },
+      {
+        "id": "5c18f31b-42cc-494a-a649-067fe8de2d79",
+        "title": "CAD, CG et CE Flow",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "24",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 313
+      },
+      {
+        "id": "042411d1-985c-4be4-857f-413ad9509f46",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "25",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 314
+      },
+      {
+        "id": "61cde765-543b-4433-986b-e303583737d0",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "26",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 315
+      },
+      {
+        "id": "cc844523-bdc7-4f7e-b1b3-832967594c18",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "27",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 316
+      },
+      {
+        "id": "8ef7ba32-c8a8-4a45-a71e-e8d750a43c0c",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "28",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 317
+      },
+      {
+        "id": "7eed18db-a982-41aa-9f54-01afc487d859",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "29",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 318
+      },
+      {
+        "id": "2b930445-428e-4744-8197-832bbe55ce1a",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "30",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 319
+      },
+      {
+        "id": "9925fa4f-05b9-46cf-a559-6d3f126542c9",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "31",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 320
+      },
+      {
+        "id": "93962717-7ac0-45d7-9e22-c3e40fd2fd91",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "32",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 321
+      },
+      {
+        "id": "4b5d2173-09a7-4ade-8dff-7b451180bd54",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "33",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 322
+      },
+      {
+        "id": "f5da85e3-920e-44be-aa6e-4a2373e685e9",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "34",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 323
+      },
+      {
+        "id": "216f584f-66e1-4365-9719-20787946f0d7",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "35",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 324
+      },
+      {
+        "id": "f4f74299-64c5-4a2a-97b4-ef1ed6ab30a3",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "36",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 325
+      },
+      {
+        "id": "91d16a74-9bcf-48a9-9e35-5a5955cf73b3",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "37",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 326
+      },
+      {
+        "id": "69c0adaa-bb63-4362-ae79-8272c0bd7eab",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "38",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 327
+      },
+      {
+        "id": "2ef4f2df-324f-4ff8-b105-5d7afecb6ab4",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "39",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 328
+      },
+      {
+        "id": "8a0ac46e-3e46-4b73-8655-c29929870d40",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "40",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 329
+      },
+      {
+        "id": "cc768bdb-a9bc-4718-8b9f-2453b05d2c1a",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "41",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 330
+      },
+      {
+        "id": "1b24aa75-5b3d-43f4-a4aa-acd53ade01f7",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "42",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 331
+      },
+      {
+        "id": "bc06e550-ce7b-46c7-ba56-12ec941fc539",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "43",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 332
+      },
+      {
+        "id": "86eb83ab-457b-4ada-8bea-98499116105b",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "44",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 333
+      },
+      {
+        "id": "e42058a2-5934-4e23-ba39-591d72c2bd04",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "45",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 334
+      },
+      {
+        "id": "0cbd095c-a97e-4d46-916b-9b939159c84a",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "46",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 335
+      },
+      {
+        "id": "787a27f9-d5da-489d-9b0a-cfe6692a0ad9",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "47",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 336
+      },
+      {
+        "id": "6e718f09-0113-44c7-b74a-adf46132a5d5",
+        "title": "Fermetures",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "48",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 337
+      },
+      {
+        "id": "85369b1a-a309-463e-ba10-2d2176e9a144",
+        "title": "CP & Gereance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "49",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 338
+      },
+      {
+        "id": "f71a65b6-8054-486c-acd1-6932f1267f62",
+        "title": "CP & Gereance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "50",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 339
+      },
+      {
+        "id": "a2c7bc23-09aa-49e8-b41d-56430f6c3a3f",
+        "title": "CP & Gereance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "51",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 340
+      },
+      {
+        "id": "34e60131-b375-4e49-89a6-0c784181e6e2",
+        "title": "CP & Gereance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "52",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 341
+      },
+      {
+        "id": "cfa88a17-c388-4f59-ab2f-b4bc7053e139",
+        "title": "CP & Gereance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "53",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 342
+      },
+      {
+        "id": "9bb0d5d1-1454-461a-a143-9f1a5d646475",
+        "title": "CP & Gereance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "54",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 343
+      },
+      {
+        "id": "e66b1919-e929-4d47-b675-1920c8c95b96",
+        "title": "CP & Gereance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "55",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 344
+      },
+      {
+        "id": "07c332a0-492c-4d2d-a6e4-e63e5320c7c8",
+        "title": "CP & Gereance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "56",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 345
+      },
+      {
+        "id": "d16db4b5-74bd-4aaa-ac6e-408abc957022",
+        "title": "CP & Gereance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "57",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 346
+      },
+      {
+        "id": "3525d5f3-1983-48c0-9772-e11b5bd6b6bd",
+        "title": "CP & Gereance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "58",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 347
+      },
+      {
+        "id": "ccf5ac03-6c40-48ac-93c2-0757cd3f1840",
+        "title": "CP & Gereance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "59",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 348
+      },
+      {
+        "id": "198a9cd5-bf09-41e5-91ad-07a1121a2ec4",
+        "title": "CP & Gereance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "60",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 349
+      },
+      {
+        "id": "6247c5dc-32ca-429e-b151-cc754f9669c3",
+        "title": "CP & Gereance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "61",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 350
+      },
+      {
+        "id": "0fc1ca9e-e68b-4260-9dac-6f1778beb015",
+        "title": "CP & Gereance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "62",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 351
+      },
+      {
+        "id": "6c62b56b-2962-4f77-b69e-101f558ffb51",
+        "title": "CP & Gereance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "63",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 352
+      },
+      {
+        "id": "d71c0da7-4e0b-47f6-869a-bf1d6388b9ab",
+        "title": "CP & Gereance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "64",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 353
+      },
+      {
+        "id": "1941ff67-9127-40e1-9647-fb3250478a6c",
+        "title": "CP & Gereance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "65",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 354
+      },
+      {
+        "id": "510709e3-d61c-4592-9be9-65ff4991afbe",
+        "title": "CP & Gereance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "66",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 355
+      },
+      {
+        "id": "988da02b-ad89-4d12-b9c8-f439ee650e97",
+        "title": "Gerance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "67",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 356
+      },
+      {
+        "id": "fb42db75-82b4-4171-8e79-09b65b463cd0",
+        "title": "Gerance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "68",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 357
+      },
+      {
+        "id": "a9e4cf8a-4c5a-40d4-b265-4961b333b8d7",
+        "title": "Gerance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "69",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 358
+      },
+      {
+        "id": "0e25a5dc-7bc8-46a1-952b-df04dbacecdf",
+        "title": "Gerance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "70",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 359
+      },
+      {
+        "id": "c6d3c6f1-84fd-4a58-aed0-2d9f188578c2",
+        "title": "Gerance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "71",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 360
+      },
+      {
+        "id": "3ca2d9d1-435a-4ecb-ad4e-27da2d6907b9",
+        "title": "Gerance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "72",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 361
+      },
+      {
+        "id": "9bc492f7-1b8c-44e7-a64c-eefed6275146",
+        "title": "Gerance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "73",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 362
+      },
+      {
+        "id": "7dc78706-76ff-46bf-b58d-da3139708a66",
+        "title": "Gerance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "74",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 363
+      },
+      {
+        "id": "4d387981-0c85-4282-a81f-dc44a7949eca",
+        "title": "Gerance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "75",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 364
+      },
+      {
+        "id": "4508846a-edc2-45d2-ab0c-559a7748042d",
+        "title": "Gerance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "76",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 365
+      },
+      {
+        "id": "f5df1092-204c-4fb4-8c34-0fc89a4d3ec0",
+        "title": "Gerance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "77",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 366
+      },
+      {
+        "id": "7b5bf4fe-d6ce-46b2-8c26-75b3c3e091ec",
+        "title": "Gerance",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "78",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 367
+      },
+      {
+        "id": "1a1f9705-6cb7-45a9-bb48-f703037ac157",
+        "title": "Hotline",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "79",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 368
+      },
+      {
+        "id": "10583c18-0ee6-41a7-b4fb-6b49ca3aa7e0",
+        "title": "Hotline",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "80",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 369
+      },
+      {
+        "id": "4b10c086-0cca-4ef6-a52c-391ed88f96b6",
+        "title": "Hotline",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "81",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 370
+      },
+      {
+        "id": "489ef644-5f66-4529-88c6-61becdda9b59",
+        "title": "Hotline",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "82",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 371
+      },
+      {
+        "id": "0c397d32-b6f5-44dd-8c7b-e371ba2d6730",
+        "title": "Hotline",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "83",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 372
+      },
+      {
+        "id": "1db04561-f3bd-41b7-9ff6-69d0e9de08b6",
+        "title": "Hotline",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "84",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 373
+      },
+      {
+        "id": "c6baeb34-a9fb-4c27-afdf-424b988278b6",
+        "title": "PowerUser",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "85",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 374
+      },
+      {
+        "id": "aa450479-c5c2-4690-8f35-c9deae10a0a6",
+        "title": "PowerUser",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "86",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 375
+      },
+      {
+        "id": "fdc83b2f-8055-4ee6-ad84-1d15c1288f4d",
+        "title": "PowerUser",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "87",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 376
+      },
+      {
+        "id": "041be07c-76f4-4c3b-a187-2e145f2ed306",
+        "title": "PowerUser",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "88",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 377
+      },
+      {
+        "id": "b20f1b6c-b3ff-44a6-a1f5-c6c258526a9d",
+        "title": "Attente et call back",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "89",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 378
+      },
+      {
+        "id": "392d4ef1-3194-47f0-8338-5eb8c7c47d03",
+        "title": "Attente et call back",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "90",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 379
+      },
+      {
+        "id": "4d52be3a-c7ef-401c-a788-e67c2e7edeab",
+        "title": "Attente et call back",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "91",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 380
+      },
+      {
+        "id": "7ce5e696-39df-4cd0-bcbf-dce4a1b10e67",
+        "title": "Attente et call back",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "92",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 381
+      },
+      {
+        "id": "e38691fa-8741-43d8-9495-b60e4785a255",
+        "title": "Reception",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "93",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 382
+      },
+      {
+        "id": "463a1295-511d-4ec6-8098-84e94f9feddf",
+        "title": "Reception",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "94",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 383
+      },
+      {
+        "id": "aab8f7fa-a1d4-46a9-a189-2a7b6aeaea77",
+        "title": "Reception",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "95",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 384
+      },
+      {
+        "id": "f27402c1-51af-4594-aa50-54027e11c666",
+        "title": "Reception",
+        "environmentIds": [
+          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
+        ],
+        "isInterface": false,
+        "steps": [
+          {
+            "type": "step",
+            "action": "",
+            "expected": "",
+            "requiresScreenshot": false
+          }
+        ],
+        "screenshots": [],
+        "ready": false,
+        "automated": false,
+        "toAutomate": false,
+        "estimatedTime": "2",
+        "types": [
+          "fonctionnel"
+        ],
+        "crud": "read",
+        "minLevelId": null,
+        "divisionIds": [
+          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
+          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+        ],
+        "jiraTickets": [
+          {
+            "key": "96",
+            "summary": ""
+          }
+        ],
+        "sortOrder": 385
       }
     ],
     "testSuites": [
