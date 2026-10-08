@@ -500,6 +500,7 @@ function renderTestCases(view) {
         <button class="btn btn-sm" id="tc-select-filtered">Sélectionner tous les cas filtrés</button>
         <button class="btn btn-sm" id="tc-select-clear">Tout désélectionner</button>
         <button class="btn btn-sm btn-primary" id="tc-bulk-edit">${ICON.edit}<span>Modifier en masse…</span></button>
+        ${(window.QAPerm && QAPerm.canManageUsers()) ? `<button class="btn btn-sm btn-danger" id="tc-bulk-delete">${ICON.trash}<span>Supprimer la sélection</span></button>` : ''}
       </div>
     </div>
 
@@ -595,6 +596,24 @@ function renderTestCases(view) {
   };
   const bulkEditBtn = document.getElementById('tc-bulk-edit');
   if (bulkEditBtn) bulkEditBtn.onclick = () => openBulkEditModal(view);
+  const bulkDeleteBtn = document.getElementById('tc-bulk-delete');
+  if (bulkDeleteBtn) bulkDeleteBtn.onclick = () => {
+    // Suppression groupée réservée à l'admin (qa_manager). Double-contrôle logique en plus du masquage du bouton.
+    if (!(window.QAPerm && QAPerm.canManageUsers())) { toast('Action réservée à l\'administrateur'); return; }
+    const ids = new Set(tcSelection);
+    if (ids.size === 0) return;
+    const n = ids.size;
+    confirmDialog(`Supprimer définitivement ${n} cas de test sélectionné${n > 1 ? 's' : ''} ? Ils seront retirés des suites, des plans et des liaisons.`, () => {
+      state.testCases = state.testCases.filter(c => !ids.has(c.id));
+      state.testCases.forEach(c => { if (Array.isArray(c.linkedCaseIds)) c.linkedCaseIds = c.linkedCaseIds.filter(x => !ids.has(x)); });
+      state.testSuites.forEach(s => s.testCaseIds = (s.testCaseIds || []).filter(x => !ids.has(x)));
+      state.testPlans.forEach(p => p.testCaseIds = (p.testCaseIds || []).filter(x => !ids.has(x)));
+      tcSelection.clear();
+      save();
+      renderTestCases(view);
+      toast(`${n} cas supprimé${n > 1 ? 's' : ''}`);
+    });
+  };
   // Restore focus to search if user was typing
   const fs = document.getElementById('f-search');
   if (tcFilters.search) { fs.focus(); fs.setSelectionRange(fs.value.length, fs.value.length); }
@@ -669,19 +688,27 @@ function openCsvImportModal(view) {
 
   const ROLE_LABELS = { title: 'Titre', jira: 'Clé Jira', steps: 'Étapes', expected: 'Résultat attendu' };
 
-  // Une cellule « Étapes » / « Résultat attendu » = une entrée par ligne non vide.
+  // Une cellule « Étapes » / « Résultat attendu » = une entrée par ligne. On CONSERVE les lignes vides
+  // internes (sinon l'alignement steps/expected par index se décale) ; seules les lignes vides finales
+  // sont retirées.
   function splitCellLines(cell) {
-    return String(cell == null ? '' : cell).replace(/\r/g, '').split('\n').map(s => s.trim()).filter(s => s.length);
+    const arr = String(cell == null ? '' : cell).replace(/\r/g, '').split('\n').map(s => s.trim());
+    while (arr.length && !arr[arr.length - 1]) arr.pop();
+    return arr;
   }
-  // Construit les étapes à partir des cellules mappées « steps » et « expected », alignées par index.
+  // Construit les étapes à partir des cellules mappées « steps » et « expected », alignées par index,
+  // puis supprime les étapes vides DANS LES DEUX colonnes.
   function buildSteps(stepsCell, expectedCell) {
     const acts = splitCellLines(stepsCell);
     const exps = splitCellLines(expectedCell);
     const n = Math.max(acts.length, exps.length);
-    if (n === 0) return [{ type: 'step', action: '', expected: '', requiresScreenshot: false }];
     const out = [];
-    for (let k = 0; k < n; k++) out.push({ type: 'step', action: acts[k] || '', expected: exps[k] || '', requiresScreenshot: false });
-    return out;
+    for (let k = 0; k < n; k++) {
+      const action = acts[k] || '';
+      const expected = exps[k] || '';
+      if (action || expected) out.push({ type: 'step', action, expected, requiresScreenshot: false });
+    }
+    return out.length ? out : [{ type: 'step', action: '', expected: '', requiresScreenshot: false }];
   }
   // Devine le rôle d'une colonne d'après son libellé d'en-tête (attendu avant étape : « résultat attendu » ≠ étape).
   function guessRole(name) {
@@ -693,11 +720,17 @@ function openCsvImportModal(view) {
     if (/titre|title|r[ée]sum[ée]|summary|\bnom\b|libell|description/.test(n)) return 'title';
     return '';
   }
-  // Première ligne = en-tête si aucune cellule ne ressemble à une clé Jira ET au moins une ressemble à un libellé connu.
+  // Première ligne = en-tête si aucune cellule ne ressemble à une clé Jira ET au moins une cellule COURTE
+  // (libellé terse) correspond à un rôle. Le garde de longueur évite de prendre une phrase-titre contenant
+  // un mot-clé (« Scénario de connexion ») pour un en-tête et de supprimer ainsi le premier vrai cas.
   function looksLikeHeaderRow(row) {
     if (!row || !row.length) return false;
     if (row.some(c => /^[A-Za-z][A-Za-z0-9]*-\d+$/.test((c || '').trim()))) return false;
-    return row.some(c => guessRole(c) !== '');
+    return row.some(c => {
+      const t = (c || '').trim();
+      if (!t || t.length > 32 || t.split(/\s+/).length > 4) return false;
+      return guessRole(t) !== '';
+    });
   }
   // (Re)calcule les libellés d'en-tête et une proposition de mapping (un même rôle n'est deviné qu'une fois).
   function computeHeaderAndGuess() {
@@ -909,7 +942,7 @@ function openCsvImportModal(view) {
               const stepCount = p.steps.filter(s => (s.action || '').trim() || (s.expected || '').trim()).length;
               return `
               <tr style="${p.skip ? 'opacity:0.55;' : ''}">
-                <td style="padding:6px 10px;border-bottom:1px solid var(--border);"><input type="checkbox" data-csv-include="${i}" ${p.skip ? '' : 'checked'}></td>
+                <td style="padding:6px 10px;border-bottom:1px solid var(--border);"><input type="checkbox" data-csv-include="${i}" ${p.skip ? (p.reason === 'titre manquant' ? 'disabled' : '') : 'checked'}></td>
                 <td style="padding:6px 10px;border-bottom:1px solid var(--border);color:var(--text-muted);">${i + 1}</td>
                 ${showJira ? `<td style="padding:6px 10px;border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:12px;">${escapeHtml(p.jiraKey || '—')}</td>` : ''}
                 <td style="padding:6px 10px;border-bottom:1px solid var(--border);">${escapeHtml(p.title || '(vide)')}</td>
@@ -969,7 +1002,7 @@ function openCsvImportModal(view) {
         environmentIds: envIds,
         crud: body.querySelector('#csv-crud').value || null,
         minLevelId: body.querySelector('#csv-minlevel').value || null,
-        estimatedTime: body.querySelector('#csv-time').value || '',
+        estimatedTime: body.querySelector('#csv-time').value ? Number(body.querySelector('#csv-time').value) : '',
         divisionIds: Array.from(body.querySelectorAll('#csv-divisions input:checked') || []).map(i => i.value),
         types: Array.from(body.querySelector('#csv-types-helper').selectedOptions).map(o => o.value),
         ready: body.querySelector('#csv-ready').checked,
@@ -1097,7 +1130,16 @@ function openCsvImportModal(view) {
   function mountPreview(body) {
     body.querySelectorAll('[data-csv-include]').forEach(cb => {
       cb.onchange = () => {
-        importPlan[+cb.dataset.csvInclude].skip = !cb.checked;
+        const p = importPlan[+cb.dataset.csvInclude];
+        p.skip = !cb.checked;
+        const tr = cb.closest('tr');
+        if (tr) {
+          tr.style.opacity = p.skip ? '0.55' : '';
+          const statusCell = tr.lastElementChild;
+          if (statusCell) statusCell.innerHTML = p.skip
+            ? `<span style="color:#8a4a1f;">${escapeHtml(p.reason || 'ignoré')}</span>`
+            : (p.warning ? `<span style="color:#8a4a1f;">⚠ ${escapeHtml(p.warning)}</span>` : '<span style="color:var(--success);">✓ à importer</span>');
+        }
         document.getElementById('modal-footer').innerHTML = modalFooterPreview();
         wirePreviewFooter();
       };
@@ -1115,7 +1157,7 @@ function openCsvImportModal(view) {
     };
     const commit = document.getElementById('csv-commit');
     if (commit) commit.onclick = () => {
-      const toImport = importPlan.filter(p => !p.skip);
+      const toImport = importPlan.filter(p => !p.skip && (p.title || '').trim());
       if (toImport.length === 0) { toast('Rien à importer'); return; }
       const maxOrder = state.testCases.reduce((m, c) => Math.max(m, c.sortOrder || 0), 0);
       let added = 0;
@@ -1139,6 +1181,7 @@ function openCsvImportModal(view) {
           minLevelId: defaults.minLevelId,
           divisionIds: [...defaults.divisionIds],
           jiraTickets: p.jiraKey ? [{ key: p.jiraKey, summary: '' }] : [],
+          linkedCaseIds: [],
           sortOrder: maxOrder + i + 1,
         };
         state.testCases.push(tc);
