@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Catalogue de Tests</title>
-  <link rel="stylesheet" href="assets/css/app.css">
+  <link rel="stylesheet" href="assets/css/app.css?v=2026.10.08.1">
 
-<script src="assets/js/config.js"></script>
-<script src="assets/js/crypto-utils.js"></script>
-<script src="assets/js/github-api.js"></script>
-<script src="assets/js/session.js"></script>
-<script src="assets/js/permissions.js"></script>
+<script src="assets/js/config.js?v=2026.10.08.1"></script>
+<script src="assets/js/crypto-utils.js?v=2026.10.08.1"></script>
+<script src="assets/js/github-api.js?v=2026.10.08.1"></script>
+<script src="assets/js/session.js?v=2026.10.08.1"></script>
+<script src="assets/js/permissions.js?v=2026.10.08.1"></script>
 <script>
   /* Auth guard - bloque le rendu si non connecte. */
   if (!window.QASession.requireAuth()) {
@@ -106,13 +106,17 @@
 
 <div class="toast" id="toast"></div>
 
-  <script src="assets/js/app/data-model.js"></script>
-  <script src="assets/js/app/helpers.js"></script>
-  <script src="assets/js/app/persistence.js"></script>
-  <script src="assets/js/app/renderers.js"></script>
-  <script src="assets/js/app/reports-export.js"></script>
-  <script src="assets/js/app/free-report.js"></script>
-  <script src="assets/js/app/ui-nav.js"></script>
-  <script src="assets/js/app/main.js"></script>
+<!-- Indicateur de version : change à chaque déploiement. Permet de vérifier que la
+     dernière version est bien servie par GitHub Pages (hors cache). -->
+<div id="app-version" style="position:fixed;bottom:6px;left:8px;z-index:9999;font:11px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--text-muted,#8a8a8a);background:var(--surface,rgba(255,255,255,.75));padding:2px 7px;border-radius:6px;border:1px solid var(--border,rgba(0,0,0,.08));opacity:.72;pointer-events:none;user-select:none;">v2026.10.08.1</div>
+
+  <script src="assets/js/app/data-model.js?v=2026.10.08.1"></script>
+  <script src="assets/js/app/helpers.js?v=2026.10.08.1"></script>
+  <script src="assets/js/app/persistence.js?v=2026.10.08.1"></script>
+  <script src="assets/js/app/renderers.js?v=2026.10.08.1"></script>
+  <script src="assets/js/app/reports-export.js?v=2026.10.08.1"></script>
+  <script src="assets/js/app/free-report.js?v=2026.10.08.1"></script>
+  <script src="assets/js/app/ui-nav.js?v=2026.10.08.1"></script>
+  <script src="assets/js/app/main.js?v=2026.10.08.1"></script>
 </body>
 </html>
