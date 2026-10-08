@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-05T16:15:28.014Z",
+  "updatedAt": "2026-10-08T11:51:50.682Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -10768,38 +10768,6 @@
         "sortOrder": 287
       },
       {
-        "id": "ba0d616d-83e0-4db0-bf7b-d88a43b87a3e",
-        "title": "CAD, CG et CE Flow_CE_1_FR_3_PRODUCT_TARIFF",
-        "environmentIds": [
-          "049d090c-47ee-4b08-b38c-e3255dfceb4a"
-        ],
-        "isInterface": false,
-        "steps": [
-          {
-            "type": "step",
-            "action": "",
-            "expected": "",
-            "requiresScreenshot": false
-          }
-        ],
-        "screenshots": [],
-        "ready": true,
-        "automated": false,
-        "toAutomate": false,
-        "estimatedTime": "2",
-        "types": [
-          "fonctionnel"
-        ],
-        "crud": "read",
-        "minLevelId": null,
-        "divisionIds": [
-          "9979d8a3-73d8-4b31-8d74-d927a67c6752",
-          "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
-        ],
-        "jiraTickets": [],
-        "sortOrder": 288
-      },
-      {
         "id": "e2bed01e-92d4-4eff-b6fa-dc76897695ac",
         "title": "CAD, CG et CE Flow_CE_1_FR_4_OTHERS_DEFAULT",
         "environmentIds": [
@@ -18879,7 +18847,6 @@
         "id": "4301b2fc-0aaa-4fb3-b3bd-b824ee36370d",
         "title": "Test flux Call Genesys",
         "testCaseIds": [
-          "ba0d616d-83e0-4db0-bf7b-d88a43b87a3e",
           "e2bed01e-92d4-4eff-b6fa-dc76897695ac",
           "afdf4bb9-5820-4e79-8b4d-084573c0679c",
           "14ef58b7-043c-4054-9fcf-0eb118350db6",
