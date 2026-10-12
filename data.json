@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-08T12:00:15.248Z",
+  "updatedAt": "2026-10-12T07:46:40.404Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -73,7 +73,7 @@
       {
         "id": "049d090c-47ee-4b08-b38c-e3255dfceb4a",
         "title": "Genesys",
-        "address": ""
+        "address": "https://apps.euc2.pure.cloud/directory/#/home"
       }
     ],
     "testCases": [
