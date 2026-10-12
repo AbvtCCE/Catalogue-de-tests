@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-12T07:49:12.212Z",
+  "updatedAt": "2026-10-12T07:49:24.830Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -17217,6 +17217,11 @@
       {
         "id": "aaf9dccf-a3c9-48cf-aa93-083d94d6e083",
         "name": "Virtual supervisor",
+        "parentId": "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+      },
+      {
+        "id": "189ddeba-54ae-4e7a-86a3-825d9ffe7860",
+        "name": "Reporting",
         "parentId": "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
       }
     ],
