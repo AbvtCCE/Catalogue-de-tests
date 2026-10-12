@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-12T07:49:24.830Z",
+  "updatedAt": "2026-10-12T07:49:37.905Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -17222,6 +17222,11 @@
       {
         "id": "189ddeba-54ae-4e7a-86a3-825d9ffe7860",
         "name": "Reporting",
+        "parentId": "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+      },
+      {
+        "id": "5c9e9287-f3db-4d4e-881f-79621410c6a9",
+        "name": "Application mobile",
         "parentId": "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
       }
     ],
