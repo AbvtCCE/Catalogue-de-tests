@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-12T07:48:57.933Z",
+  "updatedAt": "2026-10-12T07:49:12.212Z",
   "updatedBy": "abvt",
   "users": [
     {
@@ -17212,6 +17212,11 @@
       {
         "id": "83973559-a5f5-4ce3-a12a-94a596c6fe3c",
         "name": "WFM",
+        "parentId": "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
+      },
+      {
+        "id": "aaf9dccf-a3c9-48cf-aa93-083d94d6e083",
+        "name": "Virtual supervisor",
         "parentId": "37f106c5-d4d1-46b1-a412-2f6d5490aa8d"
       }
     ],
